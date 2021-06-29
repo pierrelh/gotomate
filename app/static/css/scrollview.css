@@ -1,0 +1,19 @@
+.fiber-scroll {
+    position: fixed;
+    top: 0;
+    left: 20%;
+    width: 80%;
+    height: 100%;
+    overflow: scroll;
+    padding: 0;
+    margin: 0;
+}
+
+.fiber-scroll > div {
+    top: 0;
+    left: 0;
+    width: 2000px;
+    height: 2000px;
+    background-image: url("../../../img/background.png");
+    background-repeat: repeat;
+}
