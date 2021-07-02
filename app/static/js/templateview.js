@@ -28,7 +28,7 @@ class TemplateView {
             this.DataID = id // Set the id of the instruction
             this.Params.innerHTML = "" // Delete the content of the section
     
-            var fields = callback.Content.Fields // Get the fields of callback
+            var fields = callback.Content // Get the fields of callback
             for (let index = 0; index < fields.length; index++) {
                 var ul = document.createElement("ul") // Create a new field list
                 var isVar = false
@@ -37,7 +37,7 @@ class TemplateView {
                 }
     
                 // Create a label if needed
-                if (fields[index].Label != null) {
+                if (fields[index].Label != null && fields[index].Label.ElementType != "") {
                     var labelLi = document.createElement("li")
                     labelLi.classList = "label"
     
@@ -51,7 +51,7 @@ class TemplateView {
                     ul.appendChild(labelLi)
                 }
     
-                if (fields[index].Input != null) { // Create an Input if needed
+                if (fields[index].Input != null && fields[index].Input.ElementType != "") { // Create an Input if needed
                     var li = document.createElement("li")
                     li.classList = "input"
 
@@ -87,7 +87,7 @@ class TemplateView {
                 }
     
                 // Create a variable toggler if needed
-                if (fields[index].VariableToggler != null) {
+                if (fields[index].VariableToggler != null && fields[index].VariableToggler.ElementType != "") {
                     var checkboxLi = document.createElement("li")
                     checkboxLi.classList = "check"
     
@@ -134,27 +134,28 @@ class TemplateView {
     }
     // Send the setted datas in the template view to Go
     SendData() {
-        var fields = this.Data.Fields
-        for (let index = 0; index < fields.length; index++) {
-            if (fields[index].Input != null) {
+        for (let index = 0; index < this.Data.length; index++) {
+            if (this.Data[index].Input.ElementType != "") {
                 var input = this.Params.children[index].querySelector('.input').children[0]
-                switch (fields[index].Input.ElementType) {
+                switch (this.Data[index].Input.ElementType) {
                     // Set the required values of the form data
                     case "input":
-                        if (fields[index].Input.Type == "number" && input.value == "") {
-                            fields[index].Input.Value = "0";
+                        if (this.Data[index].Input.Type == "number" && input.value == "") {
+                            this.Data[index].Input.Value = "0";
                         }else {
-                            fields[index].Input.Value = input.value;
+                            this.Data[index].Input.Value = input.value;
                         }
                         break;
     
                     case "select":
-                        fields[index].Input.Value = input.value;
-                        fields[index].Input.Name = input.options[input.selectedIndex].text;
+                        this.Data[index].Input.Value = input.value;
+                        if (input.options[input.selectedIndex] != undefined) {
+                            this.Data[index].Input.Name = input.options[input.selectedIndex].text;
+                        }
                         break;
     
                     case "textarea":
-                        fields[index].Input.Value = input.innerHTML;
+                        this.Data[index].Input.Value = input.innerHTML;
                         break;
     
                     default:
@@ -162,8 +163,8 @@ class TemplateView {
                 }
             }
     
-            if (fields[index].VariableToggler != null) {
-                fields[index].VariableToggler.Checked = this.Params.children[index].querySelector('.check').children[1].checked;
+            if (this.Data[index].VariableToggler != null) {
+                this.Data[index].VariableToggler.Checked = this.Params.children[index].querySelector('.check').children[1].checked;
             }
         }
         data.Identifier = "SetDatabinderDatas";

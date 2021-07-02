@@ -1,10 +1,10 @@
-class Dialog {
+class InfoWindow {
     constructor() {
-        this.View    = document.getElementById("Dialog");
-        this.Title   = document.getElementById("DLGTitle");
-        this.Confirm = document.getElementById("DLGConfirm");
-        this.Cancel  = document.getElementById("DLGCancel");
-        this.OK      = document.getElementById("DLGOK");
+        this.View    = document.getElementById("InfoWindow");
+        this.Title   = document.getElementById("InfoTitle");
+        this.Confirm = document.getElementById("InfoConfirm");
+        this.Cancel  = document.getElementById("InfoCancel");
+        this.OK      = document.getElementById("InfoOK");
         this.Options = {
             0: {
                 identifier: "CreateNewFiber",
@@ -13,13 +13,17 @@ class Dialog {
             1: {
                 identifier: false,
                 title: "Give a name to your fiber to save her.",
+            },
+            2: {
+                identifier: "OpenSavedFiber",
+                title: "Your current fiber isn't saved do you want to proceed ?",
             }
         }
         
         this.Cancel.addEventListener("click", evt => this.Hide(evt))
         this.OK.addEventListener("click", evt => this.Hide(evt))
     }
-    Set(id) {
+    Set(id, content) {
         if (this.Options[id] != undefined) {
             this.Title.innerHTML = this.Options[id].title
             if (!this.Options[id].identifier) {
@@ -30,32 +34,27 @@ class Dialog {
                 if (!this.OK.classList.contains("hidden")){this.OK.classList.add("hidden")}
                 if (this.Confirm.classList.contains("hidden")){this.Confirm.classList.remove("hidden")}
                 if (this.Cancel.classList.contains("hidden")){this.Cancel.classList.remove("hidden")}
-                this.Confirm.addEventListener("click", evt => this.SendDlg(id))
+                this.Confirm.addEventListener("click", evt => this.SendDlg(id, content))
             }
             this.Show()
         }
     }
-    SendDlg(id) {
+    SendDlg(id, content) {
         data.Identifier = this.Options[id].identifier;
-        data.Content = null;
+        data.Content = {data: content};
         astilectron.sendMessage(data);
         this.Hide();
     }
-    CancelDlg() {
-        if (this.View.classList.contains("dialog-show")) {
-            this.View.classList.remove("dialog-show")
-        }
-    }
     Show() {
-        if (!this.View.classList.contains("dialog-show")) {
-            this.View.classList.add("dialog-show")
+        if (!this.View.classList.contains("info-show")) {
+            this.View.classList.add("info-show")
         }
     }
     Hide() {
-        if (this.View.classList.contains("dialog-show")) {
-            this.View.classList.remove("dialog-show")
+        if (this.View.classList.contains("info-show")) {
+            this.View.classList.remove("info-show")
         }
     }
 }
 
-var dialog = new Dialog
+var infoWindow = new InfoWindow

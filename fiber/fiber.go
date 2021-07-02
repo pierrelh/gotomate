@@ -11,7 +11,11 @@ import (
 	// DON'T REMOVE ME / New packages inserted here
 
 	"gotomate-astilectron/fiber/instructions"
+	"gotomate-astilectron/fiber/packages"
+	algorithmic "gotomate-astilectron/fiber/packages/Algorithmic"
 	flow "gotomate-astilectron/fiber/packages/Flow"
+	sleep "gotomate-astilectron/fiber/packages/Sleep"
+	"gotomate-astilectron/fiber/template"
 	"gotomate-astilectron/fiber/variable"
 	"reflect"
 	"sort"
@@ -36,11 +40,11 @@ type Fiber struct {
 }
 
 // New Clean the current fiber a hydrate herself with a new instructions that she return
-func (fiber *Fiber) New() *instructions.Instruction {
+func (fiber *Fiber) New() *Fiber {
 	fiber.Clean()
 	inst := new(instructions.FiberInstructions).Hydrate()
 	fiber.Instructions = append(fiber.Instructions, inst)
-	return inst
+	return fiber
 }
 
 // SetName set the name of the fiber
@@ -61,8 +65,12 @@ func (fiber *Fiber) CreateInstruction(content map[string]interface{}) *instructi
 }
 
 // Save Save the current fiber
-func (fiber *Fiber) Save() {
-	fullPath := "saves/" + fiber.Name + ".json"
+func (fiber *Fiber) Save(filePath ...string) {
+	path := "saves/"
+	if len(filePath) > 0 {
+		path = filePath[0]
+	}
+	fullPath := path + fiber.Name + ".json"
 	file, _ := json.Marshal(fiber)
 	ioutil.WriteFile(fullPath, file, 0644)
 }
@@ -88,21 +96,72 @@ func (fiber *Fiber) IsSaved() bool {
 	return saved
 }
 
-func (fiber *Fiber) Export() {
+// Open Open a saved fiber from the menu My Fibers
+func (fiber *Fiber) Open(path string) *Fiber {
+	jsonFile, err := os.Open(path)
 
+	if err != nil {
+		fmt.Println("GOTOMATE ERROR: Unable to open the saved fiber")
+		return nil
+	}
+	byteValue, _ := ioutil.ReadAll(jsonFile)
+	var loadingFiber LoadingFiber
+	err = json.Unmarshal(byteValue, &loadingFiber)
+	if err != nil {
+		fmt.Println("GOTOMATE ERROR: Unable to extract the saved fiber")
+	}
+
+	fiber.Clean()
+	fiber.Name = loadingFiber.Name
+
+	for _, instruction := range loadingFiber.Instructions {
+
+		newInstruction := &instructions.Instruction{
+			ID:       instruction.ID,
+			Package:  instruction.Package,
+			FuncName: instruction.FuncName,
+			X:        instruction.X,
+			Y:        instruction.Y,
+			IconPath: instruction.IconPath,
+			NextID:   instruction.NextID,
+		}
+		databinder, fields := packages.PackageDecode(instruction.Package, instruction.FuncName)
+		var temp = make([]template.Field, len(fields))
+		if databinder != nil && fields != nil {
+
+			if err := json.Unmarshal(instruction.Datas, databinder); err != nil {
+				fmt.Println("GOTOMATE ERROR: Unable to convert the saved instruction")
+			}
+
+			if err := json.Unmarshal(instruction.Template, &temp); err != nil {
+				fmt.Println("GOTOMATE ERROR: Unable to convert the saved template")
+			}
+			// newInstruction.Template = &temp
+			newInstruction.Datas = databinder
+		}
+
+		fiber.Instructions = append(fiber.Instructions, newInstruction)
+	}
+	return fiber
 }
 
-func (fiber *Fiber) InitImport() {
-
+// Export Export the current fiber to a specified path
+func (fiber *Fiber) Export(filePath string) {
+	fiber.Save(filePath)
 }
 
-// CleanFiber Delete all the instructions of the current fiber
+// Import Import a new fiber from a specified path
+func (fiber *Fiber) Import(filePath string) {
+	fiber.Open(filePath)
+}
+
+// Clean Delete all the instructions of the current fiber
 func (fiber *Fiber) Clean() {
 	p := reflect.ValueOf(fiber).Elem()
 	p.Set(reflect.Zero(p.Type()))
 }
 
-// StopFiber stop the current fiber
+// Stop Stop the current fiber
 func (fiber *Fiber) Stop() {
 	if running == 1 {
 		fmt.Println("| Fiber Stopped |")
@@ -114,7 +173,7 @@ func (fiber *Fiber) Stop() {
 	}
 }
 
-// RunFiber run the current fiber
+// Run Run the current fiber
 func (fiber *Fiber) Run() {
 	running++
 	if running > 1 {
@@ -130,7 +189,10 @@ func (fiber *Fiber) Run() {
 			default:
 				nextID := -1
 				funcName := instruction.FuncName
-				instructionData := reflect.ValueOf(instruction.Datas).Elem()
+				var instructionData reflect.Value
+				if instruction.Datas != nil {
+					instructionData = reflect.ValueOf(instruction.Datas).Elem()
+				}
 				switch instruction.Package {
 				case "Flow":
 					ended := flow.Processing(funcName, instructionData, finished)
@@ -139,6 +201,10 @@ func (fiber *Fiber) Run() {
 						return
 					}
 				// DON'T REMOVE ME / New processing inserted here
+				case "Algorithmic":
+					nextID = algorithmic.Processing(funcName, instructionData, finished)
+				case "Sleep":
+					nextID = sleep.Processing(funcName, instructionData, finished)
 				default:
 					fmt.Println("FIBER WARNING: This package is not integrated yet: " + instruction.Package)
 					continue

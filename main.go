@@ -8,7 +8,6 @@ import (
 	"gotomate-astilectron/fiber/packages"
 
 	"github.com/asticode/go-astilectron"
-	"github.com/mitchellh/mapstructure"
 )
 
 var newFiber = fiber.NewFiber
@@ -34,7 +33,7 @@ func main() {
 
 	// Initializing the first instruction & the fiber's instructions
 	a.Window.SendMessage(
-		message.New("InitFiber", newFiber.New()),
+		message.New("NewFiber", newFiber.New()),
 	)
 
 	// Blocking pattern
@@ -56,7 +55,7 @@ func getEvents() {
 		// Process message
 		switch s.Identifier {
 		case "CreateInstruction":
-			return newFiber.CreateInstruction(s.Content.(map[string]interface{}))
+			return newFiber.CreateInstruction(content)
 
 		case "UpdateInstructionPosition":
 			if instruction := newFiber.Instructions.FindInstructionById(int(content["ID"].(float64))); instruction != nil && content["X"] != nil && content["Y"] != nil {
@@ -79,16 +78,27 @@ func getEvents() {
 
 		case "SetDatabinderDatas":
 			inst := newFiber.Instructions.FindInstructionById(int(content["ID"].(float64)))
-			mapstructure.Decode(content["Template"], inst.Template)
+			inst.TemplateDecode(content["Template"].([]interface{}))
 			inst.SetDatabinder()
 
 		case "CreateNewFiber":
 			a.Window.SendMessage(
-				message.New("InitFiber", newFiber.New()),
+				message.New("NewFiber", newFiber.New()),
 			)
 
 		case "UpdateFiberName":
 			newFiber.SetName(content["name"].(string))
+
+		case "OpenSavedFiber":
+			a.Window.SendMessage(
+				message.New("NewFiber", fiber.NewFiber.Open(content["data"].(string))),
+			)
+
+		case "RunFiber":
+			go fiber.NewFiber.Run()
+
+		case "StopFiber":
+			go fiber.NewFiber.Stop()
 
 		default:
 			a.Log.Fatal(fmt.Println("GOTOMATE ERROR: Unknown identifier received: ", s.Identifier))
