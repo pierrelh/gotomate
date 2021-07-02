@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"gotomate-astilectron/app/message"
 	"gotomate-astilectron/fiber"
-	"gotomate-astilectron/fiber/packages"
 	"log"
 	"os"
 	"os/exec"
@@ -92,7 +91,17 @@ func (a *App) UpdateSavedFibersMenu() []*astilectron.MenuItemOptions {
 			subMenu := &astilectron.MenuItemOptions{
 				Label: astikit.StrPtr(name),
 				OnClick: func(e astilectron.Event) (deleteListener bool) {
-					fmt.Println(fullPath)
+					if fiber.NewFiber.IsSaved() {
+						a.Window.SendMessage(
+							message.New("NewFiber", fiber.NewFiber.Open(fullPath)),
+						)
+					} else {
+						m := make(map[string]string)
+						m["Path"] = fullPath
+						a.Window.SendMessage(
+							message.New("EraseUnamedFiber", m),
+						)
+					}
 					return
 				},
 			}
@@ -100,16 +109,6 @@ func (a *App) UpdateSavedFibersMenu() []*astilectron.MenuItemOptions {
 		}
 		return nil
 	})
-
-	// var ni = a.Menu.NewItem(&astilectron.MenuItemOptions{
-	// 	Label:   astikit.StrPtr("My Fibers"),
-	// 	SubMenu: subMenus,
-	// })
-	// s, _ := a.Menu.SubMenu(0)
-	// ms, _ := s.Item(3)
-	// ms.SubMenu() = ni
-	// // delete ms.SubMenu() = ni
-	// s.Append(3, ni)
 	return subMenus
 }
 
@@ -127,7 +126,7 @@ func (a *App) CreateMenu() {
 					OnClick: func(e astilectron.Event) (deleteListener bool) {
 						if fiber.NewFiber.IsSaved() {
 							a.Window.SendMessage(
-								message.New("InitFiber", fiber.NewFiber.New()),
+								message.New("NewFiber", fiber.NewFiber.New()),
 							)
 						} else {
 							a.Window.SendMessage(
@@ -136,20 +135,28 @@ func (a *App) CreateMenu() {
 						}
 						return
 					}},
-				{
-					Label: astikit.StrPtr("Import"),
-					OnClick: func(e astilectron.Event) (deleteListener bool) {
-						fiber.NewFiber.InitImport()
-						return
-					},
-				},
-				{
-					Label: astikit.StrPtr("Export"),
-					OnClick: func(e astilectron.Event) (deleteListener bool) {
-						fiber.NewFiber.Export()
-						return
-					},
-				},
+				// {
+				// 	Label: astikit.StrPtr("Import"),
+				// 	OnClick: func(e astilectron.Event) (deleteListener bool) {
+				// 		if fiber.NewFiber.IsSaved() {
+				// 			a.Window.SendMessage(
+				// 				message.New("ImportFiber", fiber.NewFiber.New()),
+				// 			)
+				// 		} else {
+				// 			a.Window.SendMessage(
+				// 				message.New("InitImportFiber", nil),
+				// 			)
+				// 		}
+				// 		return
+				// 	},
+				// },
+				// {
+				// 	Label: astikit.StrPtr("Export"),
+				// 	OnClick: func(e astilectron.Event) (deleteListener bool) {
+				// 		fiber.NewFiber.Export()
+				// 		return
+				// 	},
+				// },
 				{
 					Label:   astikit.StrPtr("My Fibers"),
 					SubMenu: a.UpdateSavedFibersMenu(),
@@ -179,13 +186,13 @@ func (a *App) CreateMenu() {
 				},
 			},
 		},
-		{
-			Label: astikit.StrPtr("Import Package"),
-			OnClick: func(e astilectron.Event) (deleteListener bool) {
-				packages.InitImportPackage()
-				return
-			},
-		},
+		// {
+		// 	Label: astikit.StrPtr("Import Package"),
+		// 	OnClick: func(e astilectron.Event) (deleteListener bool) {
+		// 		packages.InitImportPackage()
+		// 		return
+		// 	},
+		// },
 		{
 			Label: astikit.StrPtr("Fiber"),
 			SubMenu: []*astilectron.MenuItemOptions{

@@ -37,18 +37,22 @@ class Instruction {
             this.FuncName    = data.FuncName;
             this.IconPath    = data.IconPath;
             this.NextID      = data.NextID;
-            this.X           = 0;
-            this.Y           = 0;
+            this.X           = data.X;
+            this.Y           = data.Y;
             this.Moved       = false
             this.InLine      = [];
             this.OutLine     = null;
             this.Create()       
+        } else {
+            delete this
         }
     }
     // Create a new Instruction to the fiber
     Create() {
         this.Div.id = "Instruction" + this.ID
         this.Div.className = "instruction"
+        this.Div.style.top = this.X + "px";
+        this.Div.style.left = this.Y + "px";
 
         var ul = document.createElement("ul")
 

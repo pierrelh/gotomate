@@ -1,6 +1,6 @@
 var data = {
     Identifier: null,
-    Content: null,
+    Content: {},
 };
 
 document.addEventListener('astilectron-ready', function() {
@@ -9,19 +9,31 @@ document.addEventListener('astilectron-ready', function() {
             case "InitPackages":
                 sideBar.Init(message.Content.Packages)                
                 break;
-            case "InitFiber":
+
+            case "NewFiber":
                 scrollView.Clean()
-                new Instruction(message.Content)
+                sideBar.SetFiberName(message.Content.Name)
+                for (let i = 0; i < message.Content.Instructions.length; i++) {
+                    new Instruction(message.Content.Instructions[i])                    
+                }
                 break;
+
             case "CreateInstruction":
                 new Instruction(message.Content)
                 break;
+
             case "InitNewFiber":
-                dialog.Set(0)
+                infoWindow.Set(0)
                 break;
+
             case "FiberUnamed":
-                dialog.Set(1)
+                infoWindow.Set(1)
                 break;
+
+            case "EraseUnamedFiber":
+                infoWindow.Set(2, message.Content.Path)
+                break;
+
             default:
                 console.log("Unknown Identifier received")
                 break;

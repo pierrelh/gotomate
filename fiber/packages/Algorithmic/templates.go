@@ -18,8 +18,8 @@ func Comparators() []template.Option {
 }
 
 // ForTemplate Dialog's For Template
-var ForTemplate = []template.Field{
-	{
+var ForTemplate = template.Template{
+	template.Field{
 		Label: template.Label{
 			Text:     "Variable to increment",
 			AssignTo: "Var",
@@ -34,8 +34,8 @@ var ForTemplate = []template.Field{
 			Checked:  true,
 			Disabled: true,
 		}.NewElement(),
-	},
-	{
+	}.Build(),
+	template.Field{
 		Label: template.Label{
 			Text:     "Comparator",
 			AssignTo: "ComparatorSelect",
@@ -45,8 +45,8 @@ var ForTemplate = []template.Field{
 			ID:      "ComparatorSelect",
 			Options: Comparators(),
 		}.NewElement(),
-	},
-	{
+	}.Build(),
+	template.Field{
 		Label: template.Label{
 			Text:     "Value to compare",
 			AssignTo: "Compare",
@@ -61,8 +61,8 @@ var ForTemplate = []template.Field{
 			AssignTo: "Compare",
 			Bind:     "TwoIsVar",
 		}.NewElement(),
-	},
-	{
+	}.Build(),
+	template.Field{
 		Label: template.Label{
 			Text:     "Increment",
 			AssignTo: "Increment",
@@ -77,8 +77,8 @@ var ForTemplate = []template.Field{
 			AssignTo: "Increment",
 			Bind:     "IncrementIsVar",
 		}.NewElement(),
-	},
-	{
+	}.Build(),
+	template.Field{
 		Label: template.Label{
 			Text:     "Else instruction ID",
 			AssignTo: "FalseInstruction",
@@ -93,12 +93,12 @@ var ForTemplate = []template.Field{
 			AssignTo: "FalseInstruction",
 			Bind:     "FalseInstructionIsVar",
 		}.NewElement(),
-	},
+	}.Build(),
 }
 
 // IfTemplate Dialog's If Template
-var IfTemplate = []template.Field{
-	{
+var IfTemplate = template.Template{
+	template.Field{
 		Label: template.Label{
 			Text:     "Value 1",
 			AssignTo: "ValueOneID",
@@ -113,8 +113,8 @@ var IfTemplate = []template.Field{
 			AssignTo: "ValueOneID",
 			Bind:     "OneIsVar",
 		}.NewElement(),
-	},
-	{
+	}.Build(),
+	template.Field{
 		Label: template.Label{
 			Text:     "Comparator",
 			AssignTo: "ComparatorSelect",
@@ -124,8 +124,8 @@ var IfTemplate = []template.Field{
 			ID:      "ComparatorSelect",
 			Options: Comparators(),
 		}.NewElement(),
-	},
-	{
+	}.Build(),
+	template.Field{
 		Label: template.Label{
 			Text:     "Value 2",
 			AssignTo: "ValueTwoID",
@@ -140,8 +140,8 @@ var IfTemplate = []template.Field{
 			AssignTo: "ValueTwoID",
 			Bind:     "TwoIsVar",
 		}.NewElement(),
-	},
-	{
+	}.Build(),
+	template.Field{
 		Label: template.Label{
 			Text:     "Else instruction ID",
 			AssignTo: "FalseInstruction",
@@ -156,5 +156,5 @@ var IfTemplate = []template.Field{
 			AssignTo: "FalseInstruction",
 			Bind:     "FalseInstructionIsVar",
 		}.NewElement(),
-	},
+	}.Build(),
 }

@@ -5,8 +5,8 @@ import (
 )
 
 // StartTemplate Dialog's FlowStart Template
-var StartTemplate = []template.Field{
-	{
+var StartTemplate = template.Template{
+	template.Field{
 		Label: template.Label{
 			Text:     "Flow Name",
 			AssignTo: "FlowNameInput",
@@ -16,5 +16,5 @@ var StartTemplate = []template.Field{
 			Bind: "FlowName",
 			ID:   "FlowNameInput",
 		}.NewElement(),
-	},
+	}.Build(),
 }

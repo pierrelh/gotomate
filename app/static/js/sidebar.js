@@ -1,27 +1,55 @@
-var packages
-
 class SideBar {
     constructor() {
         this.View      = document.getElementById("PackagesList");
         this.FiberName = document.getElementById("FiberName")
+        this.Run       = document.getElementById("FiberRunButton")
+        this.Stop      = document.getElementById("FiberStopButton")
         this.Packages  = []
+        this.Data      = null
 
         this.FiberName.addEventListener("keyup", evt => this.SaveFiberName())
+        this.Run.addEventListener("click", evt => this.FiberRun())
+        this.Stop.addEventListener("click", evt => this.FiberStop())
     }
+
+    // Init Fill the sidebar with all the fiber's packages
     Init(content) {
-        packages = content
-        for (let x = 0; x < packages.length; x++) {
-            var newPackage = new Packages(x, packages[x].Name).Create()
+        this.Data = content
+        for (let x = 0; x < this.Data.length; x++) {
+            var newPackage = new Packages(x, this.Data[x].Name).Create()
             this.Packages.push(newPackage)
             PackagesList.appendChild(newPackage)
         }
     }
+    
+    // FiberRun Send message to run the fiber
+    FiberRun() {
+        data.Identifier = "RunFiber";
+        data.Content = {};
+        astilectron.sendMessage(data);
+    }
+    
+    // FiberStop Send message to stop the fiber
+    FiberStop() {
+        data.Identifier = "StopFiber";
+        data.Content = {};
+        astilectron.sendMessage(data);
+    }
+
+    // SaveFiberName Save the setted fiber name
     SaveFiberName() {
         data.Identifier = "UpdateFiberName";
         data.Content = {"name": this.FiberName.value};
         astilectron.sendMessage(data);
     }
+
+    // SaveFiberName Set the fiber's name when opening a fiber
+    SetFiberName(name) {
+        this.FiberName.value = name
+    }
 }
+
+sideBar = new SideBar
 
 class Packages {
     constructor(id, name) {
@@ -39,8 +67,8 @@ class Packages {
         this.Element.appendChild(this.Span)
 
         this.FuncList.classList = "nested"
-        for (var x = 0; x < packages[this.ID].Functions.length; x++) {
-            var func = new Function(x, this.Name, packages[this.ID].Functions[x]).Create(this.ID)
+        for (var x = 0; x < sideBar.Data[this.ID].Functions.length; x++) {
+            var func = new Function(x, this.Name, sideBar.Data[this.ID].Functions[x]).Create(this.ID)
             this.FuncList.appendChild(func)
         }
         this.Element.appendChild(this.FuncList)
@@ -79,7 +107,7 @@ class Function {
     }
     Create(parentID) {
         var functionSpan = document.createElement("span")
-        functionSpan.innerHTML = packages[parentID].Functions[this.ID]
+        functionSpan.innerHTML = sideBar.Data[parentID].Functions[this.ID]
         this.Element.appendChild(functionSpan)
         this.Element.addEventListener("click", evt => this.Open(evt));
         return this.Element
@@ -95,5 +123,3 @@ class Function {
         });
     }
 }
-
-sideBar = new SideBar

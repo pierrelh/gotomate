@@ -10,8 +10,6 @@ import (
 	"strconv"
 )
 
-// https://anseki.github.io/leader-line/
-
 // FiberInstructions Create the automate's list of instructions
 type FiberInstructions []*Instruction
 
@@ -25,7 +23,7 @@ type Instruction struct {
 	IconPath string
 	NextID   int
 	Datas    interface{}
-	Template *template.Template
+	Template template.Template
 }
 
 // FiberLoadingInstruction Create the automate's list of instructions
@@ -40,18 +38,18 @@ type LoadingInstruction struct {
 	Y        int
 	IconPath string
 	NextID   int
-	Datas    interface{}
+	Datas    json.RawMessage
 	Template json.RawMessage
 }
 
 // Hydrate the new Fiber's instructions
 func (fi *FiberInstructions) Hydrate() *Instruction {
 	databinder, fields := packages.PackageDecode("Flow", "Start")
-	flds := make([]template.Field, len(fields))
-	copy(flds, fields)
-	temp := &template.Template{
-		Fields: flds,
-	}
+	// flds := make([]template.Field, len(fields))
+	// copy(flds, fields)
+	// temp := &template.Template{
+	// 	Fields: flds,
+	// }
 	newInstruction := &Instruction{
 		ID:       0,
 		Package:  "Flow",
@@ -61,7 +59,7 @@ func (fi *FiberInstructions) Hydrate() *Instruction {
 		IconPath: "../fiber/packages/Flow/icon.png",
 		NextID:   1,
 		Datas:    databinder,
-		Template: temp,
+		Template: fields,
 	}
 	*fi = append(*fi, newInstruction)
 	return newInstruction
@@ -103,11 +101,9 @@ func (inst *Instruction) Build(id int, content map[string]interface{}) *Instruct
 	databinder, fields := packages.PackageDecode(content["PackageName"].(string), content["FuncName"].(string))
 
 	if databinder != nil && fields != nil {
-		flds := make([]template.Field, len(fields))
-		copy(flds, fields)
-		inst.Template = &template.Template{
-			Fields: flds,
-		}
+		// flds := make([]template.Field, len(fields))
+		// copy(flds, fields)
+		inst.Template = fields
 	} else {
 		inst.Template = nil
 	}
@@ -127,6 +123,23 @@ func (inst *Instruction) UpdatePosition(x, y int) {
 	inst.Y = y
 }
 
+// TemplateDecode Decode the received template from JS
+func (inst *Instruction) TemplateDecode(fields []interface{}) {
+	var dest = []map[string]map[string]interface{}{}
+	for i := 0; i < len(fields); i++ {
+		b := []byte(`"key":{"key":"value"}`)
+		json.Unmarshal(b, &fields[i])
+		elements := fields[i].(map[string]interface{})
+		var m = map[string]map[string]interface{}{}
+		for element, content := range elements {
+			m[element] = content.(map[string]interface{})
+		}
+		dest = append(dest, m)
+	}
+	inst.Template = dest
+}
+
+// getAttr Get the databinder field to bind value
 func getAttr(obj interface{}, fieldName string) reflect.Value {
 	pointToStruct := reflect.ValueOf(obj)
 	curStruct := pointToStruct.Elem()
@@ -140,29 +153,29 @@ func getAttr(obj interface{}, fieldName string) reflect.Value {
 	return curField
 }
 
+// SetDatabinder Fill the instruction databinder with the template's parameters
 func (inst *Instruction) SetDatabinder() {
 	databinder := inst.Datas
-	for i := 0; i < len(inst.Template.Fields); i++ {
-		if inst.Template.Fields[i].Input != nil {
+	for i := 0; i < len(inst.Template); i++ {
+		if inst.Template[i]["Input"] != nil {
 			isVar := false
-			if inst.Template.Fields[i].VariableToggler != nil {
-				varToggler := reflect.ValueOf(inst.Template.Fields[i].VariableToggler)
-				isVar = varToggler.FieldByName("Checked").Interface().(bool)
-				if bind := varToggler.FieldByName("Bind").String(); bind != "" {
+			if inst.Template[i]["VariableToggler"] != nil {
+				isVar := inst.Template[i]["VariableToggler"]["Checked"].(bool)
+				if bind := inst.Template[i]["VariableToggler"]["Bind"].(string); bind != "" {
 					databinderInsert(getAttr(databinder, bind), isVar)
 				}
 			}
-			input := reflect.ValueOf(inst.Template.Fields[i].Input)
-			if bind := input.FieldByName("Bind").String(); bind != "" && !isVar {
-				databinderInsert(getAttr(databinder, bind), input.FieldByName("Value").Interface())
-			} else if bind := input.FieldByName("BindVariable").String(); bind != "" && isVar {
-				databinderInsert(getAttr(databinder, bind), input.FieldByName("Value").Interface())
+
+			if bind := inst.Template[i]["Input"]["Bind"].(string); bind != "" && !isVar {
+				databinderInsert(getAttr(databinder, bind), inst.Template[i]["Input"]["Value"])
+			} else if bindVar := inst.Template[i]["Input"]["BindVariable"].(string); bindVar != "" && isVar {
+				databinderInsert(getAttr(databinder, bindVar), inst.Template[i]["Input"]["Value"])
 			}
 		}
 	}
-	fmt.Printf("%+v\n", inst.Datas)
 }
 
+// databinderInsert Insert in the reflect value of the databinder, the val by her type
 func databinderInsert(r reflect.Value, val interface{}) {
 	switch r.Kind() {
 	case reflect.Bool:
