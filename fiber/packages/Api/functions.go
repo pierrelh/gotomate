@@ -2,7 +2,7 @@ package api
 
 import (
 	"fmt"
-	variable "gotomate/fiber/variable"
+	variable "gotomate-astilectron/fiber/variable"
 	"io/ioutil"
 	"net/http"
 	"reflect"

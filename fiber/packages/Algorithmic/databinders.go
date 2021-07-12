@@ -2,11 +2,11 @@ package algorithmic
 
 // ForDatabinder Define the For parameters
 type ForDatabinder struct {
-	VarOneName              string
+	ValueOneVarName         string
 	Comparator              string
 	ValueTwo                int
-	VarTwoName              string
-	TwoIsVar                bool
+	ValueTwoVarName         string
+	ValueTwoIsVar           bool
 	IncrementVarName        string
 	Increment               int
 	IncrementIsVar          bool
@@ -18,12 +18,12 @@ type ForDatabinder struct {
 // IfDatabinder Define the If parameters
 type IfDatabinder struct {
 	ValueOne                interface{}
-	VarOneName              string
-	OneIsVar                bool
+	ValueOneVarName         string
+	ValueOneIsVar           bool
 	Comparator              string
 	ValueTwo                interface{}
-	VarTwoName              string
-	TwoIsVar                bool
+	ValueTwoVarName         string
+	ValueTwoIsVar           bool
 	FalseInstruction        int
 	FalseInstructionVarName string
 	FalseInstructionIsVar   bool

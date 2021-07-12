@@ -7,13 +7,13 @@ import (
 // Comparators Define the possibles values of algorithmic comparators
 func Comparators() []template.Option {
 	return []template.Option{
-		template.Option{Name: "", Value: ""}.NewElement(),
-		template.Option{Name: "==", Value: "=="}.NewElement(),
-		template.Option{Name: "!=", Value: "!="}.NewElement(),
-		template.Option{Name: ">", Value: ">"}.NewElement(),
-		template.Option{Name: ">=", Value: ">="}.NewElement(),
-		template.Option{Name: "<", Value: "<"}.NewElement(),
-		template.Option{Name: "<=", Value: "<="}.NewElement(),
+		{Name: "", Value: ""},
+		{Name: "==", Value: "=="},
+		{Name: "!=", Value: "!="},
+		{Name: ">", Value: ">"},
+		{Name: ">=", Value: ">="},
+		{Name: "<", Value: "<"},
+		{Name: "<=", Value: "<="},
 	}
 }
 
@@ -21,78 +21,60 @@ func Comparators() []template.Option {
 var ForTemplate = template.Template{
 	template.Field{
 		Label: template.Label{
-			Text:     "Variable to increment",
-			AssignTo: "Var",
-		}.NewElement(),
-		Input: template.Input{
-			Type:         template.Text,
-			BindVariable: "VarOneName",
-			ID:           "Var",
-		}.NewElement(),
+			Text: "Variable to increment",
+		},
+		Input: template.TextInput{
+			BindVariable: "ValueOneVarName",
+		},
 		VariableToggler: template.VariableToggler{
-			AssignTo: "Var",
 			Checked:  true,
 			Disabled: true,
-		}.NewElement(),
+		},
 	}.Build(),
 	template.Field{
 		Label: template.Label{
-			Text:     "Comparator",
-			AssignTo: "ComparatorSelect",
-		}.NewElement(),
+			Text: "Comparator",
+		},
 		Input: template.Select{
 			Bind:    "Comparator",
-			ID:      "ComparatorSelect",
 			Options: Comparators(),
-		}.NewElement(),
+		},
 	}.Build(),
 	template.Field{
 		Label: template.Label{
-			Text:     "Value to compare",
-			AssignTo: "Compare",
-		}.NewElement(),
-		Input: template.Input{
-			Type:         template.Number,
+			Text: "Value to compare",
+		},
+		Input: template.NumberInput{
 			Bind:         "ValueTwo",
-			BindVariable: "VarTwoName",
-			ID:           "Compare",
-		}.NewElement(),
+			BindVariable: "ValueTwoVarName",
+		},
 		VariableToggler: template.VariableToggler{
-			AssignTo: "Compare",
-			Bind:     "TwoIsVar",
-		}.NewElement(),
+			Bind: "ValueTwoIsVar",
+		},
 	}.Build(),
 	template.Field{
 		Label: template.Label{
-			Text:     "Increment",
-			AssignTo: "Increment",
-		}.NewElement(),
-		Input: template.Input{
-			Type:         template.Number,
+			Text: "Increment",
+		},
+		Input: template.NumberInput{
 			Bind:         "Increment",
 			BindVariable: "IncrementVarName",
-			ID:           "Increment",
-		}.NewElement(),
+		},
 		VariableToggler: template.VariableToggler{
-			AssignTo: "Increment",
-			Bind:     "IncrementIsVar",
-		}.NewElement(),
+			Bind: "IncrementIsVar",
+		},
 	}.Build(),
 	template.Field{
 		Label: template.Label{
-			Text:     "Else instruction ID",
-			AssignTo: "FalseInstruction",
-		}.NewElement(),
-		Input: template.Input{
-			Type:         template.Number,
+			Text: "Else instruction ID",
+		},
+		Input: template.NumberInput{
 			Bind:         "FalseInstruction",
 			BindVariable: "FalseInstructionVarName",
-			ID:           "FalseInstruction",
-		}.NewElement(),
+		},
 		VariableToggler: template.VariableToggler{
-			AssignTo: "FalseInstruction",
-			Bind:     "FalseInstructionIsVar",
-		}.NewElement(),
+			Bind: "FalseInstructionIsVar",
+		},
 	}.Build(),
 }
 
@@ -100,61 +82,47 @@ var ForTemplate = template.Template{
 var IfTemplate = template.Template{
 	template.Field{
 		Label: template.Label{
-			Text:     "Value 1",
-			AssignTo: "ValueOneID",
-		}.NewElement(),
-		Input: template.Input{
+			Text: "Value 1",
+		},
+		Input: template.TextInput{
 			Bind:         "ValueOne",
-			BindVariable: "VarOneName",
-			ID:           "ValueOneID",
-			Type:         template.Text,
-		}.NewElement(),
+			BindVariable: "ValueOneVarName",
+		},
 		VariableToggler: template.VariableToggler{
-			AssignTo: "ValueOneID",
-			Bind:     "OneIsVar",
-		}.NewElement(),
+			Bind: "ValueOneIsVar",
+		},
 	}.Build(),
 	template.Field{
 		Label: template.Label{
-			Text:     "Comparator",
-			AssignTo: "ComparatorSelect",
-		}.NewElement(),
+			Text: "Comparator",
+		},
 		Input: template.Select{
 			Bind:    "Comparator",
-			ID:      "ComparatorSelect",
 			Options: Comparators(),
-		}.NewElement(),
+		},
 	}.Build(),
 	template.Field{
 		Label: template.Label{
-			Text:     "Value 2",
-			AssignTo: "ValueTwoID",
-		}.NewElement(),
-		Input: template.Input{
+			Text: "Value 2",
+		},
+		Input: template.TextInput{
 			Bind:         "ValueTwo",
-			BindVariable: "VarTwoName",
-			ID:           "ValueTwoID",
-			Type:         template.Text,
-		}.NewElement(),
+			BindVariable: "ValueTwoVarName",
+		},
 		VariableToggler: template.VariableToggler{
-			AssignTo: "ValueTwoID",
-			Bind:     "TwoIsVar",
-		}.NewElement(),
+			Bind: "ValueTwoIsVar",
+		},
 	}.Build(),
 	template.Field{
 		Label: template.Label{
-			Text:     "Else instruction ID",
-			AssignTo: "FalseInstruction",
-		}.NewElement(),
-		Input: template.Input{
-			Type:         template.Number,
+			Text: "Else instruction ID",
+		},
+		Input: template.NumberInput{
 			Bind:         "FalseInstruction",
 			BindVariable: "FalseInstructionVarName",
-			ID:           "FalseInstruction",
-		}.NewElement(),
+		},
 		VariableToggler: template.VariableToggler{
-			AssignTo: "FalseInstruction",
-			Bind:     "FalseInstructionIsVar",
-		}.NewElement(),
+			Bind: "FalseInstructionIsVar",
+		},
 	}.Build(),
 }

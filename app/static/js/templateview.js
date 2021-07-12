@@ -32,6 +32,7 @@ class TemplateView {
             for (let index = 0; index < fields.length; index++) {
                 var ul = document.createElement("ul") // Create a new field list
                 var isVar = false
+                var fieldID = "Field" + index;
                 if (fields[index].VariableToggler != null && fields[index].VariableToggler.Checked) {
                     isVar = true                
                 }
@@ -44,7 +45,7 @@ class TemplateView {
                     // Set the label parameters
                     var label = new Label({
                         InnerHTML: fields[index].Label.Text,
-                        HtmlFor: fields[index].Label.AssignTo
+                        HtmlFor: fieldID
                     })
                     labelLi.appendChild(label.Create())
     
@@ -57,7 +58,7 @@ class TemplateView {
 
                     var inputData = {
                         ElementType: fields[index].Input.ElementType,
-                        ID: fields[index].Input.ID,
+                        ID: fieldID,
                         IsVar: isVar
                     }
     
@@ -95,7 +96,7 @@ class TemplateView {
                         ID: "VariableToggler" + index,
                         Checked: fields[index].VariableToggler.Checked,
                         Disabled: fields[index].VariableToggler.Disabled,
-                        AssignTo: fields[index].VariableToggler.AssignTo,
+                        AssignTo: fieldID,
                         Type: fields[index].Input.Type,
                     })
     

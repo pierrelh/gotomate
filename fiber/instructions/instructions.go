@@ -148,7 +148,7 @@ func getAttr(obj interface{}, fieldName string) reflect.Value {
 	}
 	curField := curStruct.FieldByName(fieldName)
 	if !curField.IsValid() {
-		panic("GOTOMATE ERROR: Field not found in template databinder")
+		fmt.Println("GOTOMATE ERROR: Field", fieldName, "not found in template databinder, please check the databinder or the template")
 	}
 	return curField
 }
@@ -160,16 +160,23 @@ func (inst *Instruction) SetDatabinder() {
 		if inst.Template[i]["Input"] != nil {
 			isVar := false
 			if inst.Template[i]["VariableToggler"] != nil {
-				isVar := inst.Template[i]["VariableToggler"]["Checked"].(bool)
-				if bind := inst.Template[i]["VariableToggler"]["Bind"].(string); bind != "" {
-					databinderInsert(getAttr(databinder, bind), isVar)
+				isVar = inst.Template[i]["VariableToggler"]["Checked"].(bool)
+				if bind := inst.Template[i]["VariableToggler"]["Bind"]; bind != nil {
+					// Checking if the field is found in the databinder
+					if attr := getAttr(databinder, bind.(string)); attr.IsValid() {
+						// Insert the new data in the databinder
+						databinderInsert(attr, isVar)
+					}
 				}
 			}
-
-			if bind := inst.Template[i]["Input"]["Bind"].(string); bind != "" && !isVar {
-				databinderInsert(getAttr(databinder, bind), inst.Template[i]["Input"]["Value"])
-			} else if bindVar := inst.Template[i]["Input"]["BindVariable"].(string); bindVar != "" && isVar {
-				databinderInsert(getAttr(databinder, bindVar), inst.Template[i]["Input"]["Value"])
+			if bind := inst.Template[i]["Input"]["Bind"]; bind != nil && !isVar {
+				if attr := getAttr(databinder, bind.(string)); attr.IsValid() {
+					databinderInsert(attr, inst.Template[i]["Input"]["Value"])
+				}
+			} else if bindVar := inst.Template[i]["Input"]["BindVariable"]; bindVar != nil && isVar {
+				if attr := getAttr(databinder, bindVar.(string)); attr.IsValid() {
+					databinderInsert(attr, inst.Template[i]["Input"]["Value"])
+				}
 			}
 		}
 	}

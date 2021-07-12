@@ -10,13 +10,13 @@ import (
 func For(instructionData reflect.Value, finished chan bool) int {
 	fmt.Println("FIBER INFO: For Statement ...")
 
-	valueOne, err := variable.GetValue(instructionData, "VarOneName")
+	valueOne, err := variable.GetValue(instructionData, "ValueOneVarName")
 	if err != nil {
 		finished <- true
 		return -1
 	}
 
-	valueTwo, err := variable.GetValue(instructionData, "VarTwoName", "TwoIsVar", "ValueTwo")
+	valueTwo, err := variable.GetValue(instructionData, "ValueTwoVarName", "ValueTwoIsVar", "ValueTwo")
 	if err != nil {
 		finished <- true
 		return -1
@@ -58,7 +58,7 @@ func For(instructionData reflect.Value, finished chan bool) int {
 			return -1
 		}
 
-		variable.SetVariable(instructionData.FieldByName("VarOneName").Interface().(string), variable.GetFloat(valueOne)+float64(increment.(int)))
+		variable.SetVariable(instructionData.FieldByName("ValueOneVarName").Interface().(string), variable.GetFloat(valueOne)+float64(increment.(int)))
 		finished <- true
 		return -1
 	} else {
@@ -76,13 +76,13 @@ func For(instructionData reflect.Value, finished chan bool) int {
 func If(instructionData reflect.Value, finished chan bool) int {
 	fmt.Println("FIBER INFO: If Statement ...")
 
-	valueOne, err := variable.GetValue(instructionData, "VarOneName", "OneIsVar", "ValueOne")
+	valueOne, err := variable.GetValue(instructionData, "ValueOneVarName", "ValueOneIsVar", "ValueOne")
 	if err != nil {
 		finished <- true
 		return -1
 	}
 
-	valueTwo, err := variable.GetValue(instructionData, "VarTwoName", "TwoIsVar", "ValueTwo")
+	valueTwo, err := variable.GetValue(instructionData, "ValueTwoVarName", "ValueTwoIsVar", "ValueTwo")
 	if err != nil {
 		finished <- true
 		return -1
