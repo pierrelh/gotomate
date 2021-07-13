@@ -22,7 +22,7 @@ func PackageDecode(packageName string, funcName string) (interface{}, template.T
 	case "Sleep":
 		return sleep.Build(funcName)
 	default:
-		fmt.Println("GOTOMATE ERROR: Unable to find the dialog's package")
+		fmt.Println("GOTOMATE ERROR: Unable to find the dialog's package", packageName, "for the function", funcName)
 		return nil, nil
 	}
 }

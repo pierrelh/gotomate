@@ -35,6 +35,7 @@ class Instruction {
             this.NextIDInput = document.createElement("input");
             this.ID          = data.ID;
             this.FuncName    = data.FuncName;
+            this.Package     = data.Package;
             this.IconPath    = data.IconPath;
             this.NextID      = data.NextID;
             this.X           = data.X;
@@ -51,11 +52,12 @@ class Instruction {
     Create() {
         this.Div.id = "Instruction" + this.ID
         this.Div.className = "instruction"
-        this.Div.style.top = this.X + "px";
-        this.Div.style.left = this.Y + "px";
+        this.Div.style.top = this.Y + "px";
+        this.Div.style.left = this.X + "px";
 
         var ul = document.createElement("ul")
 
+        // Creating the instruction ID
         var IDLi = document.createElement("li")
         IDLi.className = "id"
         var IDP = document.createElement("p")
@@ -63,6 +65,7 @@ class Instruction {
         IDLi.appendChild(IDP)
         ul.appendChild(IDLi)
 
+        // Creating the instruction image
         var IMGLi = document.createElement("li")
         IMGLi.className = "func-img"
         var img = document.createElement("img")
@@ -70,6 +73,7 @@ class Instruction {
         IMGLi.appendChild(img)
         ul.appendChild(IMGLi)
 
+        // Creating the Instruction name
         var NameLi = document.createElement("li")
         NameLi.className = "func-name"
         var NameP = document.createElement("p")
@@ -77,17 +81,20 @@ class Instruction {
         NameLi.appendChild(NameP)
         ul.appendChild(NameLi)
 
+        // Creating the Next ID input if the instruction is not a flow's end instruction
         var NextLi = document.createElement("li")
         NextLi.className = "next-instruction"
-        var NextLabel = document.createElement("label")
-        NextLabel.innerHTML = "Next:"
-        NextLi.appendChild(NextLabel)
-
-        this.NextIDInput.value = this.NextID
-        this.NextIDInput.type = "number"
-        this.NextIDInput.min = 0
-        this.NextIDInput.addEventListener("change", evt => this.CreateOutLine(evt))
-        NextLi.appendChild(this.NextIDInput)
+        if (this.Package != "Flow" || this.FuncName != "End") {
+            var NextLabel = document.createElement("label")
+            NextLabel.innerHTML = "Next:"
+            NextLi.appendChild(NextLabel)
+    
+            this.NextIDInput.value = this.NextID
+            this.NextIDInput.type = "number"
+            this.NextIDInput.min = 0
+            this.NextIDInput.addEventListener("change", evt => this.CreateOutLine(evt))
+            NextLi.appendChild(this.NextIDInput)
+        }
         ul.appendChild(NextLi)
 
         this.Div.appendChild(ul)
@@ -235,6 +242,7 @@ class Instruction {
             this.OutLine.remove()
             this.OutLine = null
         }
+        // Creating a new line if the instruction with the id exist & if it's not this
         if (document.getElementById(nextID) != undefined && nextID != this.Div.id) {
             var line = new LeaderLine(
                 document.getElementById(this.Div.id),
@@ -258,6 +266,13 @@ class Instruction {
                 }
             }
         }
+        data.Identifier = "UpdateInstructionNextID";
+        data.Content = {
+            ID: parseInt(this.ID),
+            NextID: parseInt(this.NextIDInput.value),
+        };
+        // Sending the data to Go
+        astilectron.sendMessage(data);
     }
     // Create a line that came in of this instruction
     CreateInLine(out) {

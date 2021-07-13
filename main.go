@@ -100,6 +100,11 @@ func getEvents() {
 		case "StopFiber":
 			go fiber.NewFiber.Stop()
 
+		case "UpdateInstructionNextID":
+			if instruction := newFiber.Instructions.FindInstructionById(int(content["ID"].(float64))); instruction != nil {
+				instruction.UpdateNextID(int(content["NextID"].(float64)))
+			}
+
 		default:
 			a.Log.Fatal(fmt.Println("GOTOMATE ERROR: Unknown identifier received: ", s.Identifier))
 			return nil

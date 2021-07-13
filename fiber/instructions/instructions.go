@@ -45,11 +45,6 @@ type LoadingInstruction struct {
 // Hydrate the new Fiber's instructions
 func (fi *FiberInstructions) Hydrate() *Instruction {
 	databinder, fields := packages.PackageDecode("Flow", "Start")
-	// flds := make([]template.Field, len(fields))
-	// copy(flds, fields)
-	// temp := &template.Template{
-	// 	Fields: flds,
-	// }
 	newInstruction := &Instruction{
 		ID:       0,
 		Package:  "Flow",
@@ -101,8 +96,6 @@ func (inst *Instruction) Build(id int, content map[string]interface{}) *Instruct
 	databinder, fields := packages.PackageDecode(content["PackageName"].(string), content["FuncName"].(string))
 
 	if databinder != nil && fields != nil {
-		// flds := make([]template.Field, len(fields))
-		// copy(flds, fields)
 		inst.Template = fields
 	} else {
 		inst.Template = nil
@@ -117,10 +110,15 @@ func (inst *Instruction) Build(id int, content map[string]interface{}) *Instruct
 	return inst
 }
 
-// UpdatePosition update the position of an instruction in the datas
+// UpdatePosition Update the position of an instruction in the datas
 func (inst *Instruction) UpdatePosition(x, y int) {
 	inst.X = x
 	inst.Y = y
+}
+
+// UpdateNextID Update the NextID of an instruction in the datas
+func (inst *Instruction) UpdateNextID(nextID int) {
+	inst.NextID = nextID
 }
 
 // TemplateDecode Decode the received template from JS

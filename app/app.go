@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"gotomate-astilectron/app/message"
 	"gotomate-astilectron/fiber"
+	"gotomate-astilectron/fiber/packages"
 	"log"
 	"os"
 	"os/exec"
@@ -186,13 +187,13 @@ func (a *App) CreateMenu() {
 				},
 			},
 		},
-		// {
-		// 	Label: astikit.StrPtr("Import Package"),
-		// 	OnClick: func(e astilectron.Event) (deleteListener bool) {
-		// 		packages.InitImportPackage()
-		// 		return
-		// 	},
-		// },
+		{
+			Label: astikit.StrPtr("Import Package"),
+			OnClick: func(e astilectron.Event) (deleteListener bool) {
+				packages.InitImportPackage()
+				return
+			},
+		},
 		{
 			Label: astikit.StrPtr("Fiber"),
 			SubMenu: []*astilectron.MenuItemOptions{
