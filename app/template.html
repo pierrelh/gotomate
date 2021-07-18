@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="./static/css/info-window.css">
         <link rel="stylesheet" href="./static/css/scrollview.css">
         <link rel="stylesheet" href="./static/css/instruction.css">
+        <link rel="stylesheet" href="./static/css/dialog.css">
         <link rel="stylesheet" href="./static/css/templateview.css">
     </head>
     <body>
@@ -26,6 +27,29 @@
                     </li>
                     <li class="info-ok">
                         <button id="InfoOK">Ok</button>
+                    </li>
+                </ul>
+            </section>
+        </section>
+        <section id="Dialog">
+            <section>
+                <ul id="DirPath"></ul>
+                <div id="Content">
+                    <ul id="ContentList"></ul>
+                </div>
+                <ul id="DialogActions">
+                    <li>
+                        <p id="FileTypeHint"></p>
+                    </li>
+                    <li>
+                        <button id="DialogSelect">
+                            Select
+                        </button>
+                    </li>
+                    <li>
+                        <button id="DialogCancel">
+                            Cancel
+                        </button>
                     </li>
                 </ul>
             </section>
@@ -80,5 +104,6 @@
     <script src="./static/js/instructions.js"></script>
     <script src="./static/js/templateview.js"></script>
     <script src="./static/js/info-window.js"></script>
+    <script src="./static/js/dialog.js"></script>
     <script src="./static/libs/leader-line.min.js"></script>
 </html>

@@ -5,6 +5,7 @@
     background-color: #292a2d;
     color: white;
     z-index: 999;
+    overflow: hidden;
 }
 
 .sidebar > div {
@@ -117,4 +118,7 @@
     font-size: 1.4em;
     padding: 5px;
     cursor: pointer;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }

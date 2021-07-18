@@ -1,37 +1,46 @@
 var click
 
+// Setting the class of the ScrollView
 class ScrollView {
-    constructor() {
-        this.View         = document.getElementById("ScrollView")
-        this.Fiber        = document.getElementById("Fiber");
-        this.Lines        = []
-        this.Instructions = []
 
-        this.View.addEventListener("scroll", evt => this.Scrolled())
+    constructor() {
+        this.View         = document.getElementById("ScrollView");
+        this.Fiber        = document.getElementById("Fiber");
+        this.Lines        = [];
+        this.Instructions = [];
+
+        this.View.addEventListener("scroll", evt => this.Scrolled());
     }
+
+    // Trigger the scroll on the ScrollView
     Scrolled() {
+        // Update all the lines's positions
         for (let i = 0; i < this.Lines.length; i++) {
-            this.Lines[i].position()
+            this.Lines[i].position();
         }
     }
+
+    // Clean the ScrollView by removing all the instructions & lines
     Clean() {
         for (let i = 0; i < this.Lines.length; i++) {
-            this.Lines[i].remove()
+            this.Lines[i].remove();
         }
         this.Lines = []
         for (let key in this.Instructions) {
-            delete this.Instructions[key]
+            delete this.Instructions[key];
         }
-        this.Fiber.innerHTML = ""
+        this.Fiber.innerHTML = "";
     }
-}
+};
 
-var scrollView = new ScrollView
+var scrollView = new ScrollView;
 
+// Setting the class of an Instruction
 class Instruction {
+
     constructor(data) {
         if (data != undefined) {
-            this.Div         = document.createElement("div")
+            this.Div         = document.createElement("div");
             this.NextIDInput = document.createElement("input");
             this.ID          = data.ID;
             this.FuncName    = data.FuncName;
@@ -43,102 +52,105 @@ class Instruction {
             this.Moved       = false
             this.InLine      = [];
             this.OutLine     = null;
-            this.Create()       
+            this.Create();
         } else {
-            delete this
+            delete this;
         }
     }
+
     // Create a new Instruction to the fiber
     Create() {
-        this.Div.id = "Instruction" + this.ID
-        this.Div.className = "instruction"
+        this.Div.id = "Instruction" + this.ID;
+        this.Div.className = "instruction";
         this.Div.style.top = this.Y + "px";
         this.Div.style.left = this.X + "px";
 
-        var ul = document.createElement("ul")
+        var ul = document.createElement("ul");
 
         // Creating the instruction ID
-        var IDLi = document.createElement("li")
-        IDLi.className = "id"
-        var IDP = document.createElement("p")
-        IDP.innerHTML = this.ID
-        IDLi.appendChild(IDP)
-        ul.appendChild(IDLi)
+        var IDLi = document.createElement("li");
+        IDLi.className = "id";
+        var IDP = document.createElement("p");
+        IDP.innerHTML = this.ID;
+        IDLi.appendChild(IDP);
+        ul.appendChild(IDLi);
 
         // Creating the instruction image
-        var IMGLi = document.createElement("li")
-        IMGLi.className = "func-img"
-        var img = document.createElement("img")
-        img.src = this.IconPath
-        IMGLi.appendChild(img)
-        ul.appendChild(IMGLi)
+        var IMGLi = document.createElement("li");
+        IMGLi.className = "func-img";
+        var img = document.createElement("img");
+        img.src = this.IconPath;
+        IMGLi.appendChild(img);
+        ul.appendChild(IMGLi);
 
         // Creating the Instruction name
-        var NameLi = document.createElement("li")
-        NameLi.className = "func-name"
-        var NameP = document.createElement("p")
-        NameP.innerHTML = this.FuncName
-        NameLi.appendChild(NameP)
-        ul.appendChild(NameLi)
+        var NameLi = document.createElement("li");
+        NameLi.className = "func-name";
+        var NameP = document.createElement("p");
+        NameP.innerHTML = this.FuncName;
+        NameLi.appendChild(NameP);
+        ul.appendChild(NameLi);
 
         // Creating the Next ID input if the instruction is not a flow's end instruction
-        var NextLi = document.createElement("li")
-        NextLi.className = "next-instruction"
+        var NextLi = document.createElement("li");
+        NextLi.className = "next-instruction";
         if (this.Package != "Flow" || this.FuncName != "End") {
             var NextLabel = document.createElement("label")
-            NextLabel.innerHTML = "Next:"
-            NextLi.appendChild(NextLabel)
-    
-            this.NextIDInput.value = this.NextID
-            this.NextIDInput.type = "number"
-            this.NextIDInput.min = 0
-            this.NextIDInput.addEventListener("change", evt => this.CreateOutLine(evt))
-            NextLi.appendChild(this.NextIDInput)
-        }
-        ul.appendChild(NextLi)
+            NextLabel.innerHTML = "Next:";
+            NextLi.appendChild(NextLabel);
 
-        this.Div.appendChild(ul)
+            this.NextIDInput.value = this.NextID;
+            this.NextIDInput.type = "number";
+            this.NextIDInput.min = 0;
+            this.NextIDInput.addEventListener("change", evt => this.CreateOutLine(evt));
+            NextLi.appendChild(this.NextIDInput);
+        }
+        ul.appendChild(NextLi);
+
+        this.Div.appendChild(ul);
         this.Div.addEventListener("mousedown", evt => this.InstructionInteractions(evt));
-        scrollView.Instructions[this.Div.id] = this
-        scrollView.Fiber.appendChild(this.Div)
+        scrollView.Instructions[this.Div.id] = this;
+        scrollView.Fiber.appendChild(this.Div);
 
         for (var key in scrollView.Instructions) {
             if (scrollView.Instructions[key].NextIDInput.value == this.ID) {
-                this.CreateInLine(scrollView.Instructions[key])
+                this.CreateInLine(scrollView.Instructions[key]);
                 break;
             }
         }
     }
+
     // Delete the instruction from the fiber & the class
     Delete(callback) {
         if (callback != undefined) {
             if(Object.keys(this.InLine).length != 0) {
                 for (var key in this.InLine) {
-                    scrollView.Instructions[key].RemoveOutLine()
-                    this.InLine[key].remove()
+                    scrollView.Instructions[key].RemoveOutLine();
+                    this.InLine[key].remove();
                 }
             }
 
             if(this.OutLine != null) {
-                scrollView.Instructions[this.OutLine.end.id].RemoveInLine(this.Div.id)
-                this.OutLine.remove()
+                scrollView.Instructions[this.OutLine.end.id].RemoveInLine(this.Div.id);
+                this.OutLine.remove();
             }
-            
-            document.getElementById("Instruction" + this.ID).remove()
+
+            document.getElementById("Instruction" + this.ID).remove();
             if (templateView.DataID == this.ID) {
                 setTimeout(function(){
                     templateView.Clean();
                 }, templateView.GetTimeOut());
             }
             delete scrollView.Instructions[this.Div.id];
-            delete this
+            delete this;
         }
     }
+
     // Create all the interaction for an instruction
     InstructionInteractions(e) {
         if (e.target.localName != "input") {
-            click = e.which
-            
+            click = e.which;
+
             // Set the end of the drag on mouse up
             document.onmouseup = evt => this.CloseDrag(evt);
 
@@ -150,7 +162,8 @@ class Instruction {
                 document.onmousemove = evt => this.Drag(evt);
             }
         }
-    }       
+    }
+
     // Drag the instruction to the user cursor
     Drag(e) {
         e = e || window.event;
@@ -189,31 +202,34 @@ class Instruction {
                     this.Div.style.left = (this.Div.offsetLeft + 25) + "px";
                 }
                 this.X = e.clientX;
-            }            
+            }
         }
         if (this.OutLine != null) {
-            this.OutLine.position()
+            this.OutLine.position();
         }
-        
+
         if (Object.keys(this.InLine).length != 0) {
             for (var key in this.InLine) {
-                this.InLine[key].position()
+                this.InLine[key].position();
             }
         }
         this.Moved = true;
     }
+
     // End the drag interaction of the instruction
     CloseDrag() {
         // If the instruction hasn't been moved (just clicked) then show the instruction's menu
         if(!this.Moved) {
             if (click == 1 && this.ID != templateView.DataID) {
                 setTimeout(function(){
+
                     // Send request to get Button template in Go
                     data.Identifier = "GetInstructionTemplate";
                     data.Content = {"ID": parseInt(this.ID)};
                     astilectron.sendMessage(data, callback => templateView.Hydrate(callback, this.ID));
                 }.bind(this), templateView.GetTimeOut());
             } else if (click == 3 && this.ID != 0) {
+
                 // Send request to delete Button in Go
                 data.Identifier = "DeleteInstruction";
                 data.Content = {"ID": parseInt(this.ID)};
@@ -225,22 +241,23 @@ class Instruction {
             data.Content = {
                 "ID": parseInt(this.ID),
                 "X": parseInt(this.Div.style.left),
-                "Y": parseInt(this.Div.style.top)            
+                "Y": parseInt(this.Div.style.top)
             };
             astilectron.sendMessage(data);
         }
         // Unset the mouse up & mouse move event
         document.onmouseup = null;
         document.onmousemove = null;
-        this.Moved = false
+        this.Moved = false;
     }
+
     // Create a line that came out of this instruction
     CreateOutLine() {
-        var nextID = "Instruction" + this.NextIDInput.value
+        var nextID = "Instruction" + this.NextIDInput.value;
         if (this.OutLine != null) {
-            scrollView.Instructions[this.OutLine.end.id].RemoveInLine(this.Div.id)
-            this.OutLine.remove()
-            this.OutLine = null
+            scrollView.Instructions[this.OutLine.end.id].RemoveInLine(this.Div.id);
+            this.OutLine.remove();
+            this.OutLine = null;
         }
         // Creating a new line if the instruction with the id exist & if it's not this
         if (document.getElementById(nextID) != undefined && nextID != this.Div.id) {
@@ -255,13 +272,13 @@ class Instruction {
                     color:       "rgba(255, 255, 255, 0.8)",
                 }
             );
-            
-            this.OutLine = line
-            scrollView.Lines.push(line)
+
+            this.OutLine = line;
+            scrollView.Lines.push(line);
 
             for (var key in scrollView.Instructions) {
                 if (scrollView.Instructions[key].ID == this.NextIDInput.value) {
-                    scrollView.Instructions[key].AddInLine(this.Div.id, line)
+                    scrollView.Instructions[key].AddInLine(this.Div.id, line);
                     break;
                 }
             }
@@ -274,9 +291,10 @@ class Instruction {
         // Sending the data to Go
         astilectron.sendMessage(data);
     }
+
     // Create a line that came in of this instruction
     CreateInLine(out) {
-        var previousID = "Instruction" + out.ID
+        var previousID = "Instruction" + out.ID;
         if (document.getElementById(previousID) != undefined && previousID != this.Div.id) {
             var line = new LeaderLine(
                 document.getElementById(previousID),
@@ -289,36 +307,40 @@ class Instruction {
                     color:       "rgba(255, 255, 255, 0.8)",
                 }
             );
-            scrollView.Lines.push(line)
-            this.InLine[previousID] = line
-            out.AddOutLine(line)
+            scrollView.Lines.push(line);
+            this.InLine[previousID] = line;
+            out.AddOutLine(line);
         }
     }
+
     // Add a new in line
     AddInLine(id, line) {
-        this.InLine[id] = line
+        this.InLine[id] = line;
     }
+
     // Add a new out line
     AddOutLine(line) {
-        this.OutLine = line
+        this.OutLine = line;
     }
+
     // Remove an out line from the lines & from this element
     RemoveOutLine() {
         for (let i = 0; i < scrollView.Lines.length; i++) {
             if (this.OutLine == scrollView.Lines[i]) {
                 scrollView.Lines.splice(i, 1);
                 break;
-            }            
+            }
         }
-        this.OutLine = null
+        this.OutLine = null;
     }
+
     // Remove an in line from the lines & from this element
     RemoveInLine(id) {
         for (let i = 0; i < scrollView.Lines.length; i++) {
             if (scrollView.Lines[i] == this.InLine[id]) {
                 scrollView.Lines.splice(i, 1);
                 break;
-            }            
+            }
         }
         delete this.InLine[id];
     }

@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"gotomate-astilectron/app"
+	"gotomate-astilectron/app/files"
 	"gotomate-astilectron/app/message"
 	"gotomate-astilectron/fiber"
 	"gotomate-astilectron/fiber/packages"
@@ -104,6 +105,19 @@ func getEvents() {
 			if instruction := newFiber.Instructions.FindInstructionById(int(content["ID"].(float64))); instruction != nil {
 				instruction.UpdateNextID(int(content["NextID"].(float64)))
 			}
+
+		case "GoTroughFolder":
+			fmt.Println(content)
+			extension := content["Extension"].(string)
+			content, path := files.GetHomeJson(content["Path"].(string), extension)
+			data := map[string]interface{}{
+				"Path":      path,
+				"Files":     content,
+				"Extension": extension,
+			}
+			a.Window.SendMessage(
+				message.New("ImportFiber", data),
+			)
 
 		default:
 			a.Log.Fatal(fmt.Println("GOTOMATE ERROR: Unknown identifier received: ", s.Identifier))
