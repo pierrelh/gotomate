@@ -1,45 +1,45 @@
 .instruction {
-    position: absolute;
-    background-color: #6ad7e5;
-    width: 300px;
-    height: 150px;
-    border-radius: 10px;
-    cursor: pointer;
-    z-index: 1;
+	position: absolute;
+	background-color: #6ad7e5;
+	width: 300px;
+	height: 150px;
+	border-radius: 10px;
+	cursor: pointer;
+	z-index: 1;
 }
 
 .instruction > ul {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    list-style: none;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	list-style: none;
 }
 
 .instruction > ul > li {
-    height: 25%;
+	height: 25%;
 }
 
 .id > p {
-    margin: 0;
-    padding: 10px 0 0 10px;
+	margin: 0;
+	padding: 10px 0 0 10px;
 }
 
 .func-img > img {
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
 }
 
 .func-name > p {
-    text-align: center;
-    font-weight: bold;
-    margin: 0;
-    padding-top: 5px;
+	text-align: center;
+	font-weight: bold;
+	margin: 0;
+	padding-top: 5px;
 }
 
 .next-instruction {
-    text-align: center;
+	text-align: center;
 }

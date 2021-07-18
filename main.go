@@ -107,8 +107,8 @@ func getEvents() {
 			}
 
 		case "GoTroughFolder":
-			fmt.Println(content)
 			extension := content["Extension"].(string)
+			action := content["Action"].(string)
 			content, path := files.GetHomeJson(content["Path"].(string), extension)
 			data := map[string]interface{}{
 				"Path":      path,
@@ -116,8 +116,19 @@ func getEvents() {
 				"Extension": extension,
 			}
 			a.Window.SendMessage(
-				message.New("ImportFiber", data),
+				message.New(action, data),
 			)
+
+		case "ImportFiber":
+			a.Window.SendMessage(
+				message.New("NewFiber", fiber.NewFiber.Import(content["File"].(string))),
+			)
+
+		case "ExportFiber":
+			fiber.NewFiber.Export(content["File"].(string))
+
+		case "ImportPackage":
+			// packages.ImportPackage(content["File"].(string))
 
 		default:
 			a.Log.Fatal(fmt.Println("GOTOMATE ERROR: Unknown identifier received: ", s.Identifier))

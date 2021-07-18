@@ -5,7 +5,6 @@ import (
 	"gotomate-astilectron/app/files"
 	"gotomate-astilectron/app/message"
 	"gotomate-astilectron/fiber"
-	"gotomate-astilectron/fiber/packages"
 	"log"
 	"os"
 	"os/exec"
@@ -162,13 +161,22 @@ func (a *App) CreateMenu() {
 						return
 					},
 				},
-				// {
-				// 	Label: astikit.StrPtr("Export"),
-				// 	OnClick: func(e astilectron.Event) (deleteListener bool) {
-				// 		fiber.NewFiber.Export()
-				// 		return
-				// 	},
-				// },
+				{
+					Label: astikit.StrPtr("Export"),
+					OnClick: func(e astilectron.Event) (deleteListener bool) {
+						extension := "none"
+						content, path := files.GetHomeJson("home", extension)
+						data := map[string]interface{}{
+							"Path":      path,
+							"Files":     content,
+							"Extension": extension,
+						}
+						a.Window.SendMessage(
+							message.New("ExportFiber", data),
+						)
+						return
+					},
+				},
 				{
 					Label:   astikit.StrPtr("My Fibers"),
 					SubMenu: a.UpdateSavedFibersMenu(),
@@ -201,7 +209,16 @@ func (a *App) CreateMenu() {
 		{
 			Label: astikit.StrPtr("Import Package"),
 			OnClick: func(e astilectron.Event) (deleteListener bool) {
-				packages.InitImportPackage()
+				extension := ".zip"
+				content, path := files.GetHomeJson("home", extension)
+				data := map[string]interface{}{
+					"Path":      path,
+					"Files":     content,
+					"Extension": extension,
+				}
+				a.Window.SendMessage(
+					message.New("ImportPackage", data),
+				)
 				return
 			},
 		},

@@ -68,7 +68,7 @@ func (fiber *Fiber) CreateInstruction(content map[string]interface{}) *instructi
 func (fiber *Fiber) Save(filePath ...string) {
 	path := "saves/"
 	if len(filePath) > 0 {
-		path = filePath[0]
+		path = filePath[0] + "/"
 	}
 	fullPath := path + fiber.Name + ".json"
 	file, _ := json.Marshal(fiber)
@@ -151,8 +151,8 @@ func (fiber *Fiber) Export(filePath string) {
 }
 
 // Import Import a new fiber from a specified path
-func (fiber *Fiber) Import(filePath string) {
-	fiber.Open(filePath)
+func (fiber *Fiber) Import(filePath string) *Fiber {
+	return fiber.Open(filePath)
 }
 
 // Clean Delete all the instructions of the current fiber

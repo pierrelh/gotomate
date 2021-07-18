@@ -1,5 +1,5 @@
 * {	
-    font-family: "Roboto", sans-serif;
+	font-family: "Roboto", sans-serif;
 	user-select: none;
 }
 
@@ -213,9 +213,9 @@ template {
 }
 
 body > ul {
-    display: flex;
-    flex-direction: row;
-    padding: 0;
-    margin: 0;
-    list-style-type: none;
+	display: flex;
+	flex-direction: row;
+	padding: 0;
+	margin: 0;
+	list-style-type: none;
 }
