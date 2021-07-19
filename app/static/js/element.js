@@ -2,36 +2,39 @@
 class Input {
 
 	constructor(data){
-		this.ElementType = data.ElementType;
-		this.Value       = data.Value;
-		this.Options     = data.Options;
-		this.Name        = data.Name;
-		this.InnerHTML   = data.InnerHTML;
-		this.Type        = data.Type;
-		this.ID          = data.ID;
-		this.Disabled    = data.Disabled;
-		this.IsVar       = data.IsVar;
-		this.Input       = document.createElement(this.ElementType);
+		this.ElementType	= data.ElementType;
+		this.Value			= data.Value;
+		this.Options		= data.Options;
+		this.Type			= data.Type;
+		this.ID				= data.ID;
+		this.Disabled		= data.Disabled;
+		this.IsVar			= data.IsVar;
+		this.Input			= document.createElement(this.ElementType);
+		this.Element		= document.createElement("li");
 	}
 
 	// Create the input
 	Create() {
-		if (this.Type != null) {
-			this.Input.type = this.Type;
-		}
+		this.Element.classList = "input";
 
-		if (this.Value != null) {
+		this.Input.id = this.ID;
+
+		if (this.ElementType == "textarea") {
+			this.Input.InnerHTML = this.Value;
+		} else {
 			this.Input.value = this.Value;
-		} else if(this.Type == "number") {
-			this.Input.value = "0";
-		}
-
-		if (this.ID != null) {
-			this.Input.id = this.ID;
 		}
 
 		if (this.Disabled != null) {
 			this.Input.disabled = this.Disabled;
+		}
+
+		if (this.Type != null) {
+			if (this.IsVar) {
+				this.Input.type = "text";				
+			} else {
+				this.Input.type = this.Type;
+			}
 		}
 		
 		if (this.IsVar) {
@@ -44,7 +47,7 @@ class Input {
 				var opt = document.createElement('option');
 				opt.value = this.Options[i].Value;
 				opt.innerHTML = this.Options[i].Name;
-				if (this.Name == this.Options[i].Name && this.Value == this.Options[i].Value) {
+				if (this.Value == this.Options[i].Value) {
 					selected = i;
 				}
 				this.Input.appendChild(opt);
@@ -52,11 +55,8 @@ class Input {
 			this.Input.selectedIndex = selected;
 		}
 
-		if (this.InnerHTML != null) {
-			this.Input.InnerHTML = this.InnerHTML;
-		}
-
-		return this.Input;
+		this.Element.appendChild(this.Input)
+		return this.Element;
 	}
 };
 
@@ -64,17 +64,22 @@ class Input {
 class Label {
 
 	constructor(datas) {
-		this.InnerHTML = datas.InnerHTML;
-		this.HtmlFor   = datas.HtmlFor;
-		this.Label     = document.createElement("label")
+		this.InnerHTML	= datas.InnerHTML;
+		this.HtmlFor	= datas.HtmlFor;
+		this.Label		= document.createElement("label")
+		this.Element	= document.createElement("li");
 	}
 
 	// Create the label
 	Create() {
+		this.Element.classList = "label";
+
 		this.Label.innerHTML = this.InnerHTML != null ? this.InnerHTML : "";
 		this.Label.htmlFor = this.HtmlFor;
-		this.Label.classList = "labels"
-		return this.Label
+		this.Label.classList = "labels";
+
+		this.Element.appendChild(this.Label)
+		return this.Element;
 	}
 };
 
@@ -82,13 +87,22 @@ class Label {
 class VarToggler {
 
 	constructor(datas) {
-		this.ID                = datas.ID;
-		this.Checked           = datas.Checked;
-		this.Disabled          = datas.Disabled;
-		this.AssignTo          = datas.AssignTo;
-		this.OriginalFieldType = datas.Type;
-		this.Label             = document.createElement("label");
-		this.Checkbox          = document.createElement("input");
+		this.ID					= datas.ID;
+		this.Checked			= datas.Checked;
+		this.Disabled			= datas.Disabled;
+		this.AssignTo			= datas.AssignTo;
+		this.OriginalFieldType	= datas.Type;
+		this.Label				= document.createElement("label");
+		this.Checkbox			= document.createElement("input");
+		this.Element			= document.createElement("li");
+	}
+
+	// Creating the VariableToggler element
+	Create() {
+		this.Element.classList = "check";
+		this.Element.appendChild(this.CreateLabel());
+		this.Element.appendChild(this.CreateCheckbox());
+		return this.Element;
 	}
 
 	// Creating the label of the VarToggler

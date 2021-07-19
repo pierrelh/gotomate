@@ -279,7 +279,7 @@ func newMonthInput(f interface{}) map[string]interface{} {
 type NumberInput struct {
 	Bind         string // The name of the databinder entree to bind the raw value of the Input
 	BindVariable string // The name of the databinder entree to binder the variable name of the Input
-	Value        string // The value of the Input
+	Value        int    // The value of the Input
 	Disabled     bool   // Set if the input is disabled or not
 	Prefix       string // Set a Prefix for the input
 	Suffix       string // Set a Suffix for the input
@@ -304,7 +304,7 @@ func newNumberInput(f interface{}) map[string]interface{} {
 		input["Disabled"] = val
 	}
 
-	input["Value"] = reflected.FieldByName("Value").Interface().(string)
+	input["Value"] = reflected.FieldByName("Value").Interface().(int)
 	input["ElementType"] = TypeInput
 	input["Type"] = Number
 	return input
@@ -345,18 +345,20 @@ func newPasswordInput(f interface{}) map[string]interface{} {
 
 // Select Define a new select in a Template's Field
 type Select struct {
-	Bind         string      // The name of the databinder entree to bind the raw value of the Select
+	Bind         interface{} // The name of the databinder entree to bind the value of the selected Option
+	BindName     string      // The name of the databinder entree to bind the name of the selected Option
 	BindVariable string      // The name of the databinder entree to bind the variable value of the Select
 	Options      []Option    // The array of options contained in the Select
-	Name         string      // The name of the selected Option
-	Value        interface{} // The value of the selected Option
 	Disabled     bool        // Set if the input is disabled or not
 }
 
 func newSelectInput(f interface{}) map[string]interface{} {
 	var input = map[string]interface{}{}
 	reflected := reflect.ValueOf(f)
-	if val := reflected.FieldByName("Bind").Interface().(string); val != "" {
+	if val := reflected.FieldByName("BindName").Interface().(string); val != "" {
+		input["BindName"] = val
+	}
+	if val := reflected.FieldByName("Bind").Interface(); val != nil {
 		input["Bind"] = val
 	}
 	if val := reflected.FieldByName("BindVariable").Interface().(string); val != "" {
@@ -369,8 +371,6 @@ func newSelectInput(f interface{}) map[string]interface{} {
 		input["Options"] = val.([]Option)
 	}
 
-	input["Value"] = reflected.FieldByName("Value").Interface()
-	input["Name"] = reflected.FieldByName("Name").Interface().(string)
 	input["ElementType"] = TypeSelect
 	return input
 }

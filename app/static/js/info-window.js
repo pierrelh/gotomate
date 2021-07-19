@@ -2,25 +2,25 @@
 class InfoWindow {
 
 	constructor() {
-		this.View    = document.getElementById("InfoWindow");
-		this.Title   = document.getElementById("InfoTitle");
-		this.Confirm = document.getElementById("InfoConfirm");
-		this.Cancel  = document.getElementById("InfoCancel");
-		this.OK      = document.getElementById("InfoOK");
-		this.Options = {
-							0: {
-								identifier: "CreateNewFiber",
-								title: "This fiber isn't saved, do you really want to open a new one ?",
-							},
-							1: {
-								identifier: false,
-								title: "Give a name to your fiber to save her.",
-							},
-							2: {
-								identifier: "OpenSavedFiber",
-								title: "Your current fiber isn't saved do you want to proceed ?",
-							}
-						};
+		this.View		= document.getElementById("InfoWindow");
+		this.Title		= document.getElementById("InfoTitle");
+		this.Confirm	= document.getElementById("InfoConfirm");
+		this.Cancel		= document.getElementById("InfoCancel");
+		this.OK			= document.getElementById("InfoOK");
+		this.Options 	=	{
+								0: {
+									identifier: "CreateNewFiber",
+									title: "This fiber isn't saved, do you really want to open a new one ?",
+								},
+								1: {
+									identifier: false,
+									title: "Give a name to your fiber to save her.",
+								},
+								2: {
+									identifier: "OpenSavedFiber",
+									title: "Your current fiber isn't saved do you want to proceed ?",
+								}
+							};
 
 		this.Cancel.addEventListener("click", evt => this.Hide(evt));
 		this.OK.addEventListener("click", evt => this.Hide(evt));

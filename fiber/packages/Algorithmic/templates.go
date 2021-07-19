@@ -18,7 +18,7 @@ func Comparators() []template.Option {
 }
 
 // ForTemplate Dialog's For Template
-var ForTemplate = template.Template{
+var ForTemplate = &template.Template{
 	template.Field{
 		Label: template.Label{
 			Text: "Variable to increment",
@@ -79,7 +79,7 @@ var ForTemplate = template.Template{
 }
 
 // IfTemplate Dialog's If Template
-var IfTemplate = template.Template{
+var IfTemplate = &template.Template{
 	template.Field{
 		Label: template.Label{
 			Text: "Value 1",

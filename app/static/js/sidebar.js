@@ -2,12 +2,12 @@
 class SideBar {
 
 	constructor() {
-		this.View      = document.getElementById("PackagesList");
-		this.FiberName = document.getElementById("FiberName");
-		this.Run       = document.getElementById("FiberRunButton");
-		this.Stop      = document.getElementById("FiberStopButton");
-		this.Packages  = [];
-		this.Data      = null;
+		this.View		= document.getElementById("PackagesList");
+		this.FiberName	= document.getElementById("FiberName");
+		this.Run		= document.getElementById("FiberRunButton");
+		this.Stop		= document.getElementById("FiberStopButton");
+		this.Packages	= [];
+		this.Data		= null;
 
 		this.FiberName.addEventListener("keyup", evt => this.SaveFiberName());
 		this.Run.addEventListener("click", evt => this.FiberRun());
@@ -57,12 +57,12 @@ sideBar = new SideBar;
 class Packages {
 
 	constructor(id, name) {
-		this.ID        = id;
-		this.Name      = name;
-		this.Element   = document.createElement("li");
-		this.Span      = document.createElement("span")
-		this.FuncList  = document.createElement("ul");
-		this.Collapsed = true;
+		this.ID			= id;
+		this.Name		= name;
+		this.Element	= document.createElement("li");
+		this.Span		= document.createElement("span")
+		this.FuncList	= document.createElement("ul");
+		this.Collapsed	= true;
 	}
 
 	// Create a package in the Sidebar
@@ -110,10 +110,10 @@ class Packages {
 class Function {
 
 	constructor(id, packageName, funcName) {
-		this.ID          = id
-		this.PackageName = packageName;
-		this.FuncName    = funcName;
-		this.Element     = document.createElement("li");
+		this.ID				= id
+		this.PackageName	= packageName;
+		this.FuncName		= funcName;
+		this.Element		= document.createElement("li");
 	}
 
 	// Create a function in a package's list

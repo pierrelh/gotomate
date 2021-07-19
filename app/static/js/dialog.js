@@ -2,17 +2,17 @@
 class Dialog {
 
 	constructor() {
-		this.View        = document.getElementById("Dialog");
-		this.PathSection = document.getElementById("DirPath");
-		this.PathContent = [];
-		this.Path        = undefined;
-		this.ContentList = document.getElementById("ContentList");
-		this.Content     = [];
-		this.Select      = document.getElementById("DialogSelect");
-		this.Cancel      = document.getElementById("DialogCancel");
-		this.Extension   = undefined;
-		this.Hint        = document.getElementById("FileTypeHint");
-		this.Action      = undefined;
+		this.View			= document.getElementById("Dialog");
+		this.PathSection	= document.getElementById("DirPath");
+		this.PathContent	= [];
+		this.Path			= undefined;
+		this.ContentList	= document.getElementById("ContentList");
+		this.Content		= [];
+		this.Select			= document.getElementById("DialogSelect");
+		this.Cancel			= document.getElementById("DialogCancel");
+		this.Extension		= undefined;
+		this.Hint			= document.getElementById("FileTypeHint");
+		this.Action			= undefined;
 
 		this.Cancel.addEventListener("click", evt => this.Hide(evt));
 		this.Select.addEventListener("click", evt => this.Selected(evt));
@@ -157,11 +157,11 @@ dialog = new Dialog;
 class File {
 
 	constructor(data) {
-		this.Element  = document.createElement("li");
-		this.Button   = document.createElement("button");
-		this.IsDir    = data.IsDir;
-		this.Name     = data.Name;
-		this.Selected = false;
+		this.Element	= document.createElement("li");
+		this.Button		= document.createElement("button");
+		this.IsDir		= data.IsDir;
+		this.Name		= data.Name;
+		this.Selected	= false;
 		if (this.IsDir) {
 			this.Extension = "none";
 		} else {
@@ -238,11 +238,11 @@ class File {
 class Path {
 
 	constructor(fullpath, name) {
-		this.Element = document.createElement("li");
-		this.Button  = document.createElement("button");
-		this.Name    = name;
-		var path     = fullpath.split(name);
-		this.Path    = path[0] + name + "\\";
+		this.Element	= document.createElement("li");
+		this.Button		= document.createElement("button");
+		this.Name		= name;
+		var path		= fullpath.split(name);
+		this.Path		= path[0] + name + "\\";
 
 		this.Button.addEventListener("click", evt => this.Select(evt));
 		return this;

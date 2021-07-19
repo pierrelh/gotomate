@@ -15,7 +15,6 @@ import (
 	algorithmic "gotomate-astilectron/fiber/packages/Algorithmic"
 	flow "gotomate-astilectron/fiber/packages/Flow"
 	sleep "gotomate-astilectron/fiber/packages/Sleep"
-	"gotomate-astilectron/fiber/template"
 	"gotomate-astilectron/fiber/variable"
 	"reflect"
 	"sort"
@@ -66,11 +65,22 @@ func (fiber *Fiber) CreateInstruction(content map[string]interface{}) *instructi
 
 // Save Save the current fiber
 func (fiber *Fiber) Save(filePath ...string) {
+
+	// Getting the path where to save the fiber
 	path := "saves/"
 	if len(filePath) > 0 {
 		path = filePath[0] + "/"
 	}
-	fullPath := path + fiber.Name + ".json"
+
+	toSave := fiber
+
+	// Removing the templates from the save
+	for i := 0; i < len(toSave.Instructions); i++ {
+		toSave.Instructions[i].Template = nil
+	}
+
+	// Saving the fiber
+	fullPath := path + toSave.Name + ".json"
 	file, _ := json.Marshal(fiber)
 	ioutil.WriteFile(fullPath, file, 0644)
 }
@@ -115,6 +125,7 @@ func (fiber *Fiber) Open(path string) *Fiber {
 	fiber.Name = loadingFiber.Name
 
 	for _, instruction := range loadingFiber.Instructions {
+		databinder, fields := packages.PackageDecode(instruction.Package, instruction.FuncName)
 
 		newInstruction := &instructions.Instruction{
 			ID:       instruction.ID,
@@ -124,19 +135,12 @@ func (fiber *Fiber) Open(path string) *Fiber {
 			Y:        instruction.Y,
 			IconPath: instruction.IconPath,
 			NextID:   instruction.NextID,
+			Template: fields,
 		}
-		databinder, fields := packages.PackageDecode(instruction.Package, instruction.FuncName)
-		var temp = make([]template.Field, len(fields))
-		if databinder != nil && fields != nil {
-
+		if databinder != nil {
 			if err := json.Unmarshal(instruction.Datas, databinder); err != nil {
 				fmt.Println("GOTOMATE ERROR: Unable to convert the saved instruction")
 			}
-
-			if err := json.Unmarshal(instruction.Template, &temp); err != nil {
-				fmt.Println("GOTOMATE ERROR: Unable to convert the saved template")
-			}
-			// newInstruction.Template = &temp
 			newInstruction.Datas = databinder
 		}
 

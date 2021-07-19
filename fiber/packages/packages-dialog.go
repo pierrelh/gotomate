@@ -12,7 +12,7 @@ import (
 )
 
 // PackageDecode Getting the right databinder & the right template needed
-func PackageDecode(packageName string, funcName string) (interface{}, template.Template) {
+func PackageDecode(packageName string, funcName string) (interface{}, *template.Template) {
 	switch packageName {
 	case "Flow":
 		return flow.Build(funcName)

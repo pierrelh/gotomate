@@ -6,7 +6,7 @@ import (
 )
 
 // Build Return the right databinder & the right template for a flow instruction
-func Build(function string) (interface{}, template.Template) {
+func Build(function string) (interface{}, *template.Template) {
 	switch function {
 	case "For":
 		return new(ForDatabinder), ForTemplate

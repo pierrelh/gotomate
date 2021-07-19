@@ -4,10 +4,10 @@ var click
 class ScrollView {
 
 	constructor() {
-		this.View         = document.getElementById("ScrollView");
-		this.Fiber        = document.getElementById("Fiber");
-		this.Lines        = [];
-		this.Instructions = [];
+		this.View			= document.getElementById("ScrollView");
+		this.Fiber			= document.getElementById("Fiber");
+		this.Lines			= [];
+		this.Instructions	= [];
 
 		this.View.addEventListener("scroll", evt => this.Scrolled());
 	}
@@ -40,18 +40,18 @@ class Instruction {
 
 	constructor(data) {
 		if (data != undefined) {
-			this.Div         = document.createElement("div");
-			this.NextIDInput = document.createElement("input");
-			this.ID          = data.ID;
-			this.FuncName    = data.FuncName;
-			this.Package     = data.Package;
-			this.IconPath    = data.IconPath;
-			this.NextID      = data.NextID;
-			this.X           = data.X;
-			this.Y           = data.Y;
-			this.Moved       = false
-			this.InLine      = [];
-			this.OutLine     = null;
+			this.Div			= document.createElement("div");
+			this.NextIDInput	= document.createElement("input");
+			this.ID				= data.ID;
+			this.FuncName		= data.FuncName;
+			this.Package		= data.Package;
+			this.IconPath		= data.IconPath;
+			this.NextID			= data.NextID;
+			this.X				= data.X;
+			this.Y				= data.Y;
+			this.Moved			= false
+			this.InLine			= [];
+			this.OutLine		= null;
 			this.Create();
 		} else {
 			delete this;
@@ -264,12 +264,12 @@ class Instruction {
 			var line = new LeaderLine(
 				document.getElementById(this.Div.id),
 				document.getElementById(nextID), {
-					startSocket: "bottom",
-					endSocket:   "top",
-					path:        "grid",
-					startPlug:   "disc",
-					endPlug:     "disc",
-					color:       "rgba(255, 255, 255, 0.8)",
+					startSocket:	"bottom",
+					endSocket:		"top",
+					path:			"grid",
+					startPlug:		"disc",
+					endPlug:		"disc",
+					color:			"rgba(255, 255, 255, 0.8)",
 				}
 			);
 
@@ -299,12 +299,12 @@ class Instruction {
 			var line = new LeaderLine(
 				document.getElementById(previousID),
 				document.getElementById(this.Div.id), {
-					startSocket: "bottom",
-					endSocket:   "top",
-					path:        "grid",
-					startPlug:   "disc",
-					endPlug:     "disc",
-					color:       "rgba(255, 255, 255, 0.8)",
+					startSocket:	"bottom",
+					endSocket:		"top",
+					path:			"grid",
+					startPlug:		"disc",
+					endPlug:		"disc",
+					color:			"rgba(255, 255, 255, 0.8)",
 				}
 			);
 			scrollView.Lines.push(line);

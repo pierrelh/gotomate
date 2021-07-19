@@ -6,7 +6,7 @@ import (
 )
 
 // Build Return the right databinder & the right template for a sleep instruction
-func Build(function string) (interface{}, template.Template) {
+func Build(function string) (interface{}, *template.Template) {
 	switch function {
 	case "Sleep":
 		return new(Databinder), SleepTemplate

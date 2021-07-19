@@ -73,14 +73,17 @@ func getEvents() {
 
 		case "GetInstructionTemplate":
 			if instruction := newFiber.Instructions.FindInstructionById(int(content["ID"].(float64))); instruction != nil {
-				return message.New("true", &instruction.Template)
+				data := map[string]interface{}{
+					"Template":   &instruction.Template,
+					"Databinder": instruction.Datas,
+				}
+				return message.New("true", data)
 			}
 			return nil
 
 		case "SetDatabinderDatas":
-			inst := newFiber.Instructions.FindInstructionById(int(content["ID"].(float64)))
-			inst.TemplateDecode(content["Template"].([]interface{}))
-			inst.SetDatabinder()
+			instruction := newFiber.Instructions.FindInstructionById(int(content["ID"].(float64)))
+			instruction.UpdateDatabinder(content["Databinder"].(map[string]interface{}))
 
 		case "CreateNewFiber":
 			a.Window.SendMessage(
