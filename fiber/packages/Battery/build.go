@@ -1,8 +1,6 @@
 package battery
 
 import (
-	"fmt"
-
 	"github.com/lxn/walk/declarative"
 )
 
@@ -30,6 +28,5 @@ func Build(function string) (interface{}, []declarative.Widget) {
 	case "GetBatteryDesignVoltage":
 		return new(BatParameterDatabinder), ParametersTemplate
 	}
-	fmt.Println("GOTOMATE ERROR: Unable to find the function for instruction building")
 	return nil, nil
 }

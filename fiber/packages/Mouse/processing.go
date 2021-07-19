@@ -1,7 +1,6 @@
 package mouse
 
 import (
-	"fmt"
 	"reflect"
 )
 
@@ -40,7 +39,7 @@ func Processing(funcName string, instructionData reflect.Value, finished chan bo
 		}()
 		<-finished
 	default:
-		fmt.Println("FIBER ERROR: This function is not integrated yet: " + funcName)
+		return -2
 	}
 	return nextID
 }

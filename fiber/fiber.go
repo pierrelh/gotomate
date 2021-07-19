@@ -3,7 +3,6 @@ package fiber
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -16,6 +15,7 @@ import (
 	flow "gotomate-astilectron/fiber/packages/Flow"
 	sleep "gotomate-astilectron/fiber/packages/Sleep"
 	"gotomate-astilectron/fiber/variable"
+	"gotomate-astilectron/log"
 	"reflect"
 	"sort"
 )
@@ -111,14 +111,13 @@ func (fiber *Fiber) Open(path string) *Fiber {
 	jsonFile, err := os.Open(path)
 
 	if err != nil {
-		fmt.Println("GOTOMATE ERROR: Unable to open the saved fiber")
 		return nil
 	}
 	byteValue, _ := ioutil.ReadAll(jsonFile)
 	var loadingFiber LoadingFiber
 	err = json.Unmarshal(byteValue, &loadingFiber)
 	if err != nil {
-		fmt.Println("GOTOMATE ERROR: Unable to extract the saved fiber")
+		log.GotomateError("Unable to extract the saved fiber")
 	}
 
 	fiber.Clean()
@@ -139,7 +138,7 @@ func (fiber *Fiber) Open(path string) *Fiber {
 		}
 		if databinder != nil {
 			if err := json.Unmarshal(instruction.Datas, databinder); err != nil {
-				fmt.Println("GOTOMATE ERROR: Unable to convert the saved instruction")
+				log.GotomateError("Unable to convert the saved instruction")
 			}
 			newInstruction.Datas = databinder
 		}
@@ -168,12 +167,12 @@ func (fiber *Fiber) Clean() {
 // Stop Stop the current fiber
 func (fiber *Fiber) Stop() {
 	if running == 1 {
-		fmt.Println("| Fiber Stopped |")
 		finished <- true
 		running = 0
 		stop <- true
+		log.Plain("| Fiber Stopped |")
 	} else {
-		fmt.Println("FIBER WARNING: No running fiber")
+		log.FiberWarning("No running fiber")
 	}
 }
 
@@ -181,7 +180,7 @@ func (fiber *Fiber) Stop() {
 func (fiber *Fiber) Run() {
 	running++
 	if running > 1 {
-		fmt.Println("FIBER WARNING: A fiber is already running")
+		log.FiberWarning("A fiber is already running")
 	} else {
 		instruction := fiber.Instructions[0]
 		variable.FiberVariable = nil
@@ -199,19 +198,27 @@ func (fiber *Fiber) Run() {
 				}
 				switch instruction.Package {
 				case "Flow":
-					ended := flow.Processing(funcName, instructionData, finished)
-					if ended {
-						running = 0
-						return
-					}
+					nextID = flow.Processing(funcName, instructionData, finished)
 				// DON'T REMOVE ME / New processing inserted here
 				case "Algorithmic":
 					nextID = algorithmic.Processing(funcName, instructionData, finished)
 				case "Sleep":
 					nextID = sleep.Processing(funcName, instructionData, finished)
 				default:
-					fmt.Println("FIBER WARNING: This package is not integrated yet: " + instruction.Package)
+					log.FiberError("Package not found:", instruction.Package)
 					continue
+				}
+
+				// The error code for a finished fiber
+				if nextID == -99 {
+					running = 0
+					return
+				}
+
+				// The error code for an unknown function
+				if nextID == -2 {
+					log.FiberError("Function not found:", funcName)
+					nextID = -1
 				}
 
 				if nextID == -1 {
@@ -219,8 +226,7 @@ func (fiber *Fiber) Run() {
 						return fiber.Instructions[i].ID >= instruction.NextID
 					})
 					if idx == len(fiber.Instructions) {
-						fmt.Println("FIBER FATAL ERROR: The instruction with the id", instruction.NextID, "has no been founded")
-						fmt.Println("| Fiber Finished at Fatal Error |")
+						log.FiberFatalError("The instruction with the id", instruction.NextID, "has no been found")
 						running = 0
 						return
 					} else {

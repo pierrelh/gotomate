@@ -1,12 +1,12 @@
 package main
 
 import (
-	"fmt"
 	"gotomate-astilectron/app"
 	"gotomate-astilectron/app/files"
 	"gotomate-astilectron/app/message"
 	"gotomate-astilectron/fiber"
 	"gotomate-astilectron/fiber/packages"
+	"gotomate-astilectron/log"
 
 	"github.com/asticode/go-astilectron"
 )
@@ -134,7 +134,7 @@ func getEvents() {
 			// packages.ImportPackage(content["File"].(string))
 
 		default:
-			a.Log.Fatal(fmt.Println("GOTOMATE ERROR: Unknown identifier received: ", s.Identifier))
+			log.GotomateError("Unknown identifier received: " + s.Identifier)
 			return nil
 
 		}

@@ -6,6 +6,7 @@ import (
 	"go/ast"
 	"go/parser"
 	"go/token"
+	"gotomate-astilectron/log"
 	"io"
 	"io/ioutil"
 	"os"
@@ -38,8 +39,7 @@ func (gp *GotomatePackages) Hydrate() *GotomatePackages {
 			set := token.NewFileSet()
 			pack, err := parser.ParseFile(set, path, nil, 0)
 			if err != nil {
-				fmt.Println("GOTOMATE FATAL ERROR: Unable to parse the file", err)
-				os.Exit(1)
+				log.GotomateFatalError("Unable to parse the file", err)
 			}
 
 			for _, d := range pack.Decls {
@@ -59,7 +59,7 @@ func ImportPackage(path string) error {
 
 	r, err := zip.OpenReader(path)
 	if err != nil {
-		fmt.Println("GOTOMATE ERROR: Unable to open the zip reader.")
+		log.GotomateError("Unable to open the zip reader")
 		return err
 	}
 	defer r.Close()
@@ -75,7 +75,7 @@ func ImportPackage(path string) error {
 
 			// Check for ZipSlip. More Info: http://bit.ly/2MsjAWE
 			if !strings.HasPrefix(fpath, filepath.Clean("./fiber/packages")+string(os.PathSeparator)) {
-				fmt.Println("GOTOMATE ERROR: Illegal file path given.")
+				log.GotomateError("Illegal file path given")
 				return fmt.Errorf("%s: illegal file path", fpath)
 			}
 
@@ -87,19 +87,19 @@ func ImportPackage(path string) error {
 
 			// Make File
 			if err = os.MkdirAll(filepath.Dir(fpath), os.ModePerm); err != nil {
-				fmt.Println("GOTOMATE ERROR: Unable to create the new directory.")
+				log.GotomateError("Unable to create the new directory")
 				return err
 			}
 
 			outFile, err := os.OpenFile(fpath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, f.Mode())
 			if err != nil {
-				fmt.Println("GOTOMATE ERROR: Unable to open the new file.")
+				log.GotomateError("Unable to open the new file")
 				return err
 			}
 
 			rc, err := f.Open()
 			if err != nil {
-				fmt.Println("GOTOMATE ERROR: Unable to open the read closer.")
+				log.GotomateError("Unable to open the read closer")
 				return err
 			}
 
@@ -110,7 +110,7 @@ func ImportPackage(path string) error {
 			rc.Close()
 
 			if err != nil {
-				fmt.Println("GOTOMATE ERROR: Unable to copy the new files.")
+				log.GotomateError("Unable to copy the new files")
 				return err
 			}
 		}
@@ -125,7 +125,7 @@ func ImportPackage(path string) error {
 		// Write in fiber.go (import the package & insert the Processing function)
 		content, err := ioutil.ReadFile("./fiber/fiber.go")
 		if err != nil {
-			fmt.Println("GOTOMATE ERROR: Unable to read the file fiber.go.")
+			log.GotomateError("Unable to read the file fiber.go")
 			return err
 		}
 		SContent := string(content)
@@ -135,16 +135,16 @@ func ImportPackage(path string) error {
 
 		err = ioutil.WriteFile("./fiber/fiber.go", content, 0644)
 		if err != nil {
-			fmt.Println("GOTOMATE ERROR: Unable to write the file fiber.go.")
+			log.GotomateError("Unable to write the file fiber.go")
 			return err
 		}
 
 		// Write in packages-dialog.go (import the package & insert the Build function)
-		build := "// DON'T REMOVE ME / New Build inserted here\n" + "case \"" + dirs[i] + "\":\n return " + packageName + ".Build(funcName)"
+		build := "// DON'T REMOVE ME / New Build inserted here\n" + "case \"" + dirs[i] + "\":\n databinder, template = " + packageName + ".Build(funcName)"
 
 		content, err = ioutil.ReadFile("./fiber/packages/packages-dialog.go")
 		if err != nil {
-			fmt.Println("GOTOMATE ERROR: Unable to read the file packages-dialog.go.")
+			log.GotomateError("Unable to read the file packages-dialog.go")
 			return err
 		}
 		SContent = string(content)
@@ -154,7 +154,7 @@ func ImportPackage(path string) error {
 
 		err = ioutil.WriteFile("./fiber/packages/packages-dialog.go", content, 0644)
 		if err != nil {
-			fmt.Println("GOTOMATE ERROR: Unable to write the file packages-dialog.go.")
+			log.GotomateError("Unable to write the file packages-dialog.go")
 			return err
 		}
 	}
@@ -176,18 +176,18 @@ func ScanArchive(archive []*zip.File) (bool, []string) {
 						if matched, _ := regexp.Match(filenames[i]+".*", []byte(f.Name)); matched {
 							break
 						} else if i == len(filenames)-1 {
-							fmt.Println("GOTOMATE ERROR: Unknow file found in the archive.", f.Name)
+							log.GotomateError("Unknow file found in the archive", f.Name)
 							return false, dir
 						}
 					}
 				} else if i == len(dir)-1 {
-					fmt.Println("GOTOMATE ERROR: No files allowed at the archive root.", f.Name)
+					log.GotomateError("No files allowed at the archive root", f.Name)
 					return false, dir
 				}
 
 			}
 		} else {
-			fmt.Println("GOTOMATE ERROR: No files allowed at the archive root.", f.Name)
+			log.GotomateError("No files allowed at the archive root", f.Name)
 			return false, dir
 		}
 	}

@@ -1,8 +1,8 @@
 package screen
 
 import (
-	"fmt"
 	"gotomate-astilectron/fiber/variable"
+	"gotomate-astilectron/log"
 	"reflect"
 
 	"github.com/go-vgo/robotgo"
@@ -10,7 +10,7 @@ import (
 
 // GetMouseColor Get a pixel color by mouse position
 func GetMouseColor(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Getting mouse pixel color ...")
+	log.FiberInfo("Getting the mouse pixel color")
 
 	variable.SetVariable(instructionData.FieldByName("Output").Interface().(string), robotgo.GetMouseColor())
 	finished <- true
@@ -19,7 +19,7 @@ func GetMouseColor(instructionData reflect.Value, finished chan bool) int {
 
 // GetPixelColor Get a pixel color by a position
 func GetPixelColor(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Getting pixel color ...")
+	log.FiberInfo("Getting a pixel color")
 
 	x, err := variable.GetValue(instructionData, "XVarName", "XIsVar", "X")
 	if err != nil {
@@ -40,7 +40,7 @@ func GetPixelColor(instructionData reflect.Value, finished chan bool) int {
 
 // GetScreenSize Get the screen size
 func GetScreenSize(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Getting screen size ...")
+	log.FiberInfo("Getting the screen size")
 
 	w, h := robotgo.GetScreenSize()
 	variable.SetVariable(instructionData.FieldByName("HeightOutput").Interface().(string), h)
@@ -49,8 +49,9 @@ func GetScreenSize(instructionData reflect.Value, finished chan bool) int {
 	return -1
 }
 
+// PartScreenShot Take a screenshot from a part of the screen
 func PartScreenShot(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Saving screen shot ...")
+	log.FiberInfo("Taking a screen shot from a part of the screen")
 
 	path, err := variable.GetValue(instructionData, "PathVarName", "PathIsVar", "Path")
 	if err != nil {
@@ -87,9 +88,9 @@ func PartScreenShot(instructionData reflect.Value, finished chan bool) int {
 	return -1
 }
 
-// SaveCapture Save a screen shot
+// ScreenShot Save a screen shot
 func ScreenShot(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Saving screen shot ...")
+	log.FiberInfo("Taking a screen shot")
 
 	path, err := variable.GetValue(instructionData, "PathVarName", "PathIsVar", "Path")
 	if err != nil {

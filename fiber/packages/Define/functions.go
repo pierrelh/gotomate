@@ -1,8 +1,8 @@
 package define
 
 import (
-	"fmt"
 	"gotomate-astilectron/fiber/variable"
+	"gotomate-astilectron/log"
 	"reflect"
 	"strconv"
 	"strings"
@@ -10,7 +10,7 @@ import (
 
 // ArrayOfBool Define an array of bool in a flow
 func ArrayOfBool(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Defining an array of bool ...")
+	log.FiberInfo("Defining an array of Bools")
 
 	value, err := variable.GetValue(instructionData, "VarName", "IsVar", "Value")
 	if err != nil {
@@ -32,7 +32,7 @@ func ArrayOfBool(instructionData reflect.Value, finished chan bool) int {
 
 // ArrayOfFloat Define an array of float in a flow
 func ArrayOfFloat(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Defining an array of float ...")
+	log.FiberInfo("Defining an array of Floats")
 
 	value, err := variable.GetValue(instructionData, "VarName", "IsVar", "Value")
 	if err != nil {
@@ -54,7 +54,7 @@ func ArrayOfFloat(instructionData reflect.Value, finished chan bool) int {
 
 // ArrayOfInt Define an array of int in a flow
 func ArrayOfInt(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Defining an array of int ...")
+	log.FiberInfo("Defining an array of Ints")
 
 	value, err := variable.GetValue(instructionData, "VarName", "IsVar", "Value")
 	if err != nil {
@@ -76,7 +76,7 @@ func ArrayOfInt(instructionData reflect.Value, finished chan bool) int {
 
 // ArrayOfString Define an array of string in a flow
 func ArrayOfString(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Defining an array of string ...")
+	log.FiberInfo("Defining an array of Strings")
 
 	value, err := variable.GetValue(instructionData, "VarName", "IsVar", "Value")
 	if err != nil {
@@ -91,7 +91,7 @@ func ArrayOfString(instructionData reflect.Value, finished chan bool) int {
 
 // Bool Define a bool value in a flow
 func Bool(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Defining a bool value ...")
+	log.FiberInfo("Defining a Bool value")
 
 	value, err := variable.GetValue(instructionData, "VarName", "IsVar", "Value")
 	if err != nil {
@@ -106,7 +106,7 @@ func Bool(instructionData reflect.Value, finished chan bool) int {
 
 // Float Define a float value in a flow
 func Float(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Defining a float value ...")
+	log.FiberInfo("Defining a Float value")
 
 	value, err := variable.GetValue(instructionData, "VarName", "IsVar", "Value")
 	if err != nil {
@@ -121,7 +121,7 @@ func Float(instructionData reflect.Value, finished chan bool) int {
 
 // Int Define an int value in a flow
 func Int(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Defining an int value ...")
+	log.FiberInfo("Defining an Int value")
 
 	value, err := variable.GetValue(instructionData, "VarName", "IsVar", "Value")
 	if err != nil {
@@ -136,7 +136,7 @@ func Int(instructionData reflect.Value, finished chan bool) int {
 
 // String Define a string value in a flow
 func String(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Defining a string value ...")
+	log.FiberInfo("Defining a String value")
 
 	value, err := variable.GetValue(instructionData, "VarName", "IsVar", "Value")
 	if err != nil {

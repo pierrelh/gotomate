@@ -1,15 +1,15 @@
 package arithmetic
 
 import (
-	"fmt"
 	"gotomate-astilectron/fiber/variable"
+	"gotomate-astilectron/log"
 	"math"
 	"reflect"
 )
 
 // Divide make the divide of two numbers
 func Divide(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Dividing ...")
+	log.FiberInfo("Dividing")
 
 	one, err := variable.GetValue(instructionData, "VarOneName", "ValueOneIsVar", "ValueOne")
 	if err != nil {
@@ -30,7 +30,7 @@ func Divide(instructionData reflect.Value, finished chan bool) int {
 
 // Multiply make the multiplication of two numbers
 func Multiply(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Multiplying ...")
+	log.FiberInfo("Multiplying")
 
 	one, err := variable.GetValue(instructionData, "VarOneName", "ValueOneIsVar", "ValueOne")
 	if err != nil {
@@ -51,7 +51,7 @@ func Multiply(instructionData reflect.Value, finished chan bool) int {
 
 // Pow make the pow of a number
 func Pow(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Pow ...")
+	log.FiberInfo("Pow")
 
 	one, err := variable.GetValue(instructionData, "VarOneName", "ValueOneIsVar", "ValueOne")
 	if err != nil {
@@ -72,7 +72,7 @@ func Pow(instructionData reflect.Value, finished chan bool) int {
 
 // Sqrt make the Sqrt of a number
 func Sqrt(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Sqrt ...")
+	log.FiberInfo("Sqrt")
 
 	value, err := variable.GetValue(instructionData, "VarName", "ValueIsVar", "Value")
 	if err != nil {
@@ -87,7 +87,7 @@ func Sqrt(instructionData reflect.Value, finished chan bool) int {
 
 // Substract make the substraction of two numbers
 func Substract(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Substracting ...")
+	log.FiberInfo("Substracting")
 
 	one, err := variable.GetValue(instructionData, "VarOneName", "ValueOneIsVar", "ValueOne")
 	if err != nil {
@@ -108,7 +108,7 @@ func Substract(instructionData reflect.Value, finished chan bool) int {
 
 // Sum make the sum of two numbers
 func Sum(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Additioning ...")
+	log.FiberInfo("Additioning")
 
 	one, err := variable.GetValue(instructionData, "VarOneName", "ValueOneIsVar", "ValueOne")
 	if err != nil {

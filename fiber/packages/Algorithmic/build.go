@@ -1,7 +1,6 @@
 package algorithmic
 
 import (
-	"fmt"
 	"gotomate-astilectron/fiber/template"
 )
 
@@ -13,6 +12,5 @@ func Build(function string) (interface{}, *template.Template) {
 	case "If":
 		return new(IfDatabinder), IfTemplate
 	}
-	fmt.Println("GOTOMATE ERROR: Unable to find the function for instruction building")
 	return nil, nil
 }

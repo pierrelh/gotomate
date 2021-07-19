@@ -5,6 +5,7 @@ package notification
 import (
 	"fmt"
 	"gotomate-astilectron/fiber/variable"
+	"gotomate-astilectron/log"
 	"reflect"
 
 	"github.com/lxn/walk"
@@ -12,7 +13,7 @@ import (
 
 // Create create a new notification with presets & push it
 func Create(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Creating notification ...")
+	log.FiberInfo("Creating a notification")
 
 	title, err := variable.GetValue(instructionData, "TitleVarName", "TitleIsVar", "Title")
 	if err != nil {

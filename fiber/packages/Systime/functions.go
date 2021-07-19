@@ -1,15 +1,15 @@
 package systime
 
 import (
-	"fmt"
 	"gotomate-astilectron/fiber/variable"
+	"gotomate-astilectron/log"
 	"reflect"
 	"time"
 )
 
 // GetCurrentSysClock return the current sys clock
 func GetCurrentSysClock(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Getting sys clock...")
+	log.FiberInfo("Getting system's clock")
 
 	h, m, s := time.Now().Clock()
 	variable.SetVariable(instructionData.FieldByName("HoursOutput").Interface().(string), h)
@@ -21,7 +21,7 @@ func GetCurrentSysClock(instructionData reflect.Value, finished chan bool) int {
 
 // GetCurrentSysTime return the current sys time
 func GetCurrentSysTime(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Getting sys time...")
+	log.FiberInfo("Getting system's time")
 
 	variable.SetVariable(instructionData.FieldByName("Output").Interface().(string), time.Now())
 	finished <- true

@@ -1,14 +1,14 @@
 package algorithmic
 
 import (
-	"fmt"
 	"gotomate-astilectron/fiber/variable"
+	"gotomate-astilectron/log"
 	"reflect"
 )
 
 // For Execute a for loop
 func For(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: For Statement ...")
+	log.FiberInfo("For Statement")
 
 	valueOne, err := variable.GetValue(instructionData, "ValueOneVarName")
 	if err != nil {
@@ -74,7 +74,7 @@ func For(instructionData reflect.Value, finished chan bool) int {
 
 // If Compare if a statement is true
 func If(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: If Statement ...")
+	log.FiberInfo("If Statement")
 
 	valueOne, err := variable.GetValue(instructionData, "ValueOneVarName", "ValueOneIsVar", "ValueOne")
 	if err != nil {

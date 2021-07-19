@@ -1,8 +1,8 @@
 package array
 
 import (
-	"fmt"
 	"gotomate-astilectron/fiber/variable"
+	"gotomate-astilectron/log"
 	"math/rand"
 	"reflect"
 	"time"
@@ -10,7 +10,7 @@ import (
 
 // GetArrayLength Get the current length of an array
 func GetArrayLength(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Get the lenth of an array ...")
+	log.FiberInfo("Getting an array length")
 
 	array, err := variable.GetValue(instructionData, "ArrayVarName")
 	if err != nil {
@@ -34,7 +34,7 @@ func GetArrayLength(instructionData reflect.Value, finished chan bool) int {
 
 // GetValue Get a value from an array by index
 func GetValue(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Getting a value from array ...")
+	log.FiberInfo("Getting a value from an array")
 
 	array, err := variable.GetValue(instructionData, "ArrayVarName")
 	if err != nil {
@@ -64,7 +64,7 @@ func GetValue(instructionData reflect.Value, finished chan bool) int {
 
 // PopAt Pop the wanted index of an array
 func PopAt(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Pop array at index ...")
+	log.FiberInfo("Poping value of array at index")
 
 	array, err := variable.GetValue(instructionData, "ArrayVarName")
 	if err != nil {
@@ -110,7 +110,7 @@ func PopAt(instructionData reflect.Value, finished chan bool) int {
 
 // PopLast Pop the last index of an array
 func PopLast(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Pop array at end ...")
+	log.FiberInfo("Poping value of array at end")
 
 	array, err := variable.GetValue(instructionData, "ArrayVarName")
 	if err != nil {
@@ -146,7 +146,7 @@ func PopLast(instructionData reflect.Value, finished chan bool) int {
 
 // PushAt Push a value at the wanted index of an array
 func PushAt(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Push value in array at index ...")
+	log.FiberInfo("Pushing value in array at index")
 
 	array, err := variable.GetValue(instructionData, "ArrayVarName")
 	if err != nil {
@@ -194,7 +194,7 @@ func PushAt(instructionData reflect.Value, finished chan bool) int {
 
 // PushLast Push a value at the end of an array
 func PushLast(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Push value in array at end ...")
+	log.FiberInfo("Pushing value in array at end")
 
 	array, err := variable.GetValue(instructionData, "ArrayVarName")
 	if err != nil {
@@ -228,7 +228,7 @@ func PushLast(instructionData reflect.Value, finished chan bool) int {
 
 // RemoveAt Remove a value by the index, of an array
 func RemoveAt(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Remove value from array at index ...")
+	log.FiberInfo("Removing value from array at index")
 
 	array, err := variable.GetValue(instructionData, "ArrayVarName")
 	if err != nil {
@@ -266,7 +266,7 @@ func RemoveAt(instructionData reflect.Value, finished chan bool) int {
 
 // RemoveLast Remove the last value of an array
 func RemoveLast(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Remove value from array at end ...")
+	log.FiberInfo("Removing value from array at end")
 
 	array, err := variable.GetValue(instructionData, "ArrayVarName")
 	if err != nil {
@@ -294,7 +294,7 @@ func RemoveLast(instructionData reflect.Value, finished chan bool) int {
 
 // Shuffle an array
 func Shuffle(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Shuffling array ...")
+	log.FiberInfo("Shuffling an array")
 
 	array, err := variable.GetValue(instructionData, "ArrayVarName")
 	if err != nil {
@@ -326,7 +326,7 @@ func Shuffle(instructionData reflect.Value, finished chan bool) int {
 
 // UpdateValue Update a value of an array by index
 func UpdateValue(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Updating value in array by index ...")
+	log.FiberInfo("Updating a value in an array by index")
 
 	array, err := variable.GetValue(instructionData, "ArrayVarName")
 	if err != nil {

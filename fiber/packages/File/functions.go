@@ -1,8 +1,8 @@
 package file
 
 import (
-	"fmt"
 	"gotomate-astilectron/fiber/variable"
+	"gotomate-astilectron/log"
 	"io/ioutil"
 	"os"
 	"reflect"
@@ -10,7 +10,7 @@ import (
 
 // Create a new file
 func Create(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Creating File ...")
+	log.FiberInfo("Creating a File")
 
 	path, err := variable.GetValue(instructionData, "PathVarName", "PathIsVar", "Path")
 	if err != nil {
@@ -26,7 +26,7 @@ func Create(instructionData reflect.Value, finished chan bool) int {
 
 // Delete an existing file
 func Delete(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Deleting File ...")
+	log.FiberInfo("Deleting a File")
 
 	path, err := variable.GetValue(instructionData, "PathVarName", "PathIsVar", "Path")
 	if err != nil {
@@ -41,7 +41,7 @@ func Delete(instructionData reflect.Value, finished chan bool) int {
 
 // Read a file
 func Read(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Reading File ...")
+	log.FiberInfo("Reading a File")
 
 	path, err := variable.GetValue(instructionData, "PathVarName", "PathIsVar", "Path")
 	if err != nil {
@@ -57,7 +57,7 @@ func Read(instructionData reflect.Value, finished chan bool) int {
 
 // Write an existing file
 func Write(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Reading File ...")
+	log.FiberInfo("Writing a File")
 
 	path, err := variable.GetValue(instructionData, "PathVarName", "PathIsVar", "Path")
 	if err != nil {

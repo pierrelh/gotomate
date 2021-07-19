@@ -1,7 +1,7 @@
 package files
 
 import (
-	"fmt"
+	"gotomate-astilectron/log"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -23,7 +23,7 @@ func GetHomeJson(path, filetype string) ([]*File, string) {
 		path, err = os.UserHomeDir()
 
 		if err != nil {
-			fmt.Println("GOTOMATE ERROR: Unable to find Home directory")
+			log.GotomateError("Unable to find Home directory")
 			return nil, ""
 		}
 	}
@@ -31,7 +31,7 @@ func GetHomeJson(path, filetype string) ([]*File, string) {
 	files, err := ioutil.ReadDir(path)
 
 	if err != nil {
-		fmt.Println("GOTOMATE ERROR: Unable to read directory", path)
+		log.GotomateError("Unable to read directory", path)
 		return nil, ""
 	}
 	for _, f := range files {
@@ -44,6 +44,5 @@ func GetHomeJson(path, filetype string) ([]*File, string) {
 			content = append(content, file)
 		}
 	}
-	fmt.Println(content)
 	return content, path
 }

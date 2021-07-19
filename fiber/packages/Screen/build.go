@@ -1,8 +1,6 @@
 package screen
 
 import (
-	"fmt"
-
 	"github.com/lxn/walk/declarative"
 )
 
@@ -20,6 +18,5 @@ func Build(function string) (interface{}, []declarative.Widget) {
 	case "ScreenShot":
 		return new(ScreenShotDatabinder), ScreenShotTemplate
 	}
-	fmt.Println("GOTOMATE ERROR: Unable to find the function for instruction building")
 	return nil, nil
 }

@@ -1,15 +1,15 @@
 package conversion
 
 import (
-	"fmt"
 	"gotomate-astilectron/fiber/variable"
+	"gotomate-astilectron/log"
 	"reflect"
 	"strconv"
 )
 
 // BoolToFloat Convert a bool to a float
 func BoolToFloat(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Converting Bool to Float ...")
+	log.FiberInfo("Converting Bool to Float")
 
 	input, err := variable.GetValue(instructionData, "InputVarName", "InputIsVar", "Input")
 	if err != nil {
@@ -31,7 +31,7 @@ func BoolToFloat(instructionData reflect.Value, finished chan bool) int {
 
 // BoolToInt Convert a bool to an int
 func BoolToInt(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Converting Bool to Int ...")
+	log.FiberInfo("Converting Bool to Int")
 
 	input, err := variable.GetValue(instructionData, "InputVarName", "InputIsVar", "Input")
 	if err != nil {
@@ -53,7 +53,7 @@ func BoolToInt(instructionData reflect.Value, finished chan bool) int {
 
 // BoolToString Convert a bool to a string
 func BoolToString(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Converting Bool to String ...")
+	log.FiberInfo("Converting Bool to String")
 
 	input, err := variable.GetValue(instructionData, "InputVarName", "InputIsVar", "Input")
 	if err != nil {
@@ -68,7 +68,7 @@ func BoolToString(instructionData reflect.Value, finished chan bool) int {
 
 // FloatToInt Convert a float to an int
 func FloatToInt(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Converting Float to Int ...")
+	log.FiberInfo("Converting Float to Int")
 
 	input, err := variable.GetValue(instructionData, "InputVarName", "InputIsVar", "Input")
 	if err != nil {
@@ -83,7 +83,7 @@ func FloatToInt(instructionData reflect.Value, finished chan bool) int {
 
 // FloatToString Convert a float to a string
 func FloatToString(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Converting Float to String ...")
+	log.FiberInfo("Converting Float to String")
 
 	input, err := variable.GetValue(instructionData, "InputVarName", "InputIsVar", "Input")
 	if err != nil {
@@ -98,7 +98,7 @@ func FloatToString(instructionData reflect.Value, finished chan bool) int {
 
 // IntToFloat Convert an int to a float
 func IntToFloat(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Converting Int to Float ...")
+	log.FiberInfo("Converting Int to Float")
 
 	input, err := variable.GetValue(instructionData, "InputVarName", "InputIsVar", "Input")
 	if err != nil {
@@ -115,7 +115,7 @@ func IntToFloat(instructionData reflect.Value, finished chan bool) int {
 
 // IntToString Convert an int to a string
 func IntToString(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Converting Int to String ...")
+	log.FiberInfo("Converting Int to String")
 
 	input, err := variable.GetValue(instructionData, "InputVarName", "InputIsVar", "Input")
 	if err != nil {
@@ -130,7 +130,7 @@ func IntToString(instructionData reflect.Value, finished chan bool) int {
 
 // StringToBool Convert a string to a bool
 func StringToBool(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Converting String to Bool ...")
+	log.FiberInfo("Converting String to Bool")
 
 	input, err := variable.GetValue(instructionData, "InputVarName", "InputIsVar", "Input")
 	if err != nil {
@@ -146,7 +146,7 @@ func StringToBool(instructionData reflect.Value, finished chan bool) int {
 
 // StringToFloat Convert a string to a float
 func StringToFloat(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Converting String to Float ...")
+	log.FiberInfo("Converting String to Float")
 
 	input, err := variable.GetValue(instructionData, "InputVarName", "InputIsVar", "Input")
 	if err != nil {
@@ -162,7 +162,7 @@ func StringToFloat(instructionData reflect.Value, finished chan bool) int {
 
 // StringToInt Convert a string to an int
 func StringToInt(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Converting String to Int ...")
+	log.FiberInfo("Converting String to Int")
 
 	input, err := variable.GetValue(instructionData, "InputVarName", "InputIsVar", "Input")
 	if err != nil {

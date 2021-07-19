@@ -1,8 +1,8 @@
 package process
 
 import (
-	"fmt"
 	"gotomate-astilectron/fiber/variable"
+	"gotomate-astilectron/log"
 	"os"
 	"os/exec"
 	"reflect"
@@ -12,7 +12,7 @@ import (
 
 // GetTitle get the title of a process
 func GetTitle(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Getting title of process ...")
+	log.FiberInfo("Getting the title of a process")
 
 	pid, err := variable.GetValue(instructionData, "PIDVarName", "PIDIsVar", "PID")
 	if err != nil {
@@ -27,7 +27,7 @@ func GetTitle(instructionData reflect.Value, finished chan bool) int {
 
 // GetPid get the pid of the active window
 func GetPid(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Getting process pid ...")
+	log.FiberInfo("Getting a process's pid")
 
 	variable.SetVariable(instructionData.FieldByName("Output").Interface().(string), robotgo.GetPID())
 	finished <- true
@@ -36,7 +36,7 @@ func GetPid(instructionData reflect.Value, finished chan bool) int {
 
 // KillProcess Kill a process by his pid
 func KillProcess(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Killing process ...")
+	log.FiberInfo("Killing a process")
 
 	pid, err := variable.GetValue(instructionData, "PIDVarName", "PIDIsVar", "PID")
 	if err != nil {
@@ -46,7 +46,7 @@ func KillProcess(instructionData reflect.Value, finished chan bool) int {
 
 	proc, err := os.FindProcess(pid.(int))
 	if err != nil {
-		fmt.Println("FIBER WARNING: Didn't find process with pid", pid)
+		log.FiberError("Unable to find the process with pid", pid)
 		finished <- true
 		return -1
 	}
@@ -57,7 +57,7 @@ func KillProcess(instructionData reflect.Value, finished chan bool) int {
 
 // MaxSize set the max size for a process
 func MaxSize(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Maximizing process size ...")
+	log.FiberInfo("Maximizing a process's size")
 
 	pid, err := variable.GetValue(instructionData, "PIDVarName", "PIDIsVar", "PID")
 	if err != nil {
@@ -72,7 +72,7 @@ func MaxSize(instructionData reflect.Value, finished chan bool) int {
 
 // Reduce a process
 func Reduce(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Reducing a process ...")
+	log.FiberInfo("Reducing a process")
 
 	pid, err := variable.GetValue(instructionData, "PIDVarName", "PIDIsVar", "PID")
 	if err != nil {
@@ -87,7 +87,7 @@ func Reduce(instructionData reflect.Value, finished chan bool) int {
 
 // StartProcess Create a process with a given path & return the process's pid
 func StartProcess(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Starting new process ...")
+	log.FiberInfo("Starting a new process")
 
 	path, err := variable.GetValue(instructionData, "PathVarName", "PathIsVar", "Path")
 	if err != nil {

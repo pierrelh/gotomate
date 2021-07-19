@@ -2,14 +2,14 @@ package dictionary
 
 import (
 	"encoding/json"
-	"fmt"
 	"gotomate-astilectron/fiber/variable"
+	"gotomate-astilectron/log"
 	"reflect"
 )
 
 // CreateDictionary Create a new Dictionary
 func CreateDictionary(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Creating a new Dictionary ...")
+	log.FiberInfo("Creating a new Dictionary")
 
 	variable.SetVariable(instructionData.FieldByName("Output").Interface().(string), make(map[string][]interface{}))
 	finished <- true
@@ -18,7 +18,7 @@ func CreateDictionary(instructionData reflect.Value, finished chan bool) int {
 
 // CreateEntry Create a new entry in a dictionary
 func CreateEntry(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Create an entry in dictionary ...")
+	log.FiberInfo("Create an entry in a Dictionary")
 
 	dict, err := variable.GetValue(instructionData, "DictVarName")
 	if err != nil {
@@ -47,7 +47,7 @@ func CreateEntry(instructionData reflect.Value, finished chan bool) int {
 
 // DictionaryToJson Convert a dictionary to Json
 func DictionaryToJson(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Create an entry in dictionary ...")
+	log.FiberInfo("Converting a Dictionary to Json")
 
 	dict, err := variable.GetValue(instructionData, "DictVarName")
 	if err != nil {
@@ -57,7 +57,7 @@ func DictionaryToJson(instructionData reflect.Value, finished chan bool) int {
 
 	json, err := json.Marshal(dict.(map[string][]interface{}))
 	if err != nil {
-		fmt.Println("FIBER ERROR: Cannot convert the dictionnary to json")
+		log.FiberError("Cannot convert the Dictionnary to a Json")
 		finished <- true
 		return -1
 	}
@@ -67,9 +67,9 @@ func DictionaryToJson(instructionData reflect.Value, finished chan bool) int {
 	return -1
 }
 
-// ArrayOfInt Define an array of int in a flow
+// RemoveEntry Remove an entry from a Dictionary
 func RemoveEntry(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Defining an array of int ...")
+	log.FiberInfo("Removing an entry from a Dictionay")
 
 	dict, err := variable.GetValue(instructionData, "DictVarName")
 	if err != nil {

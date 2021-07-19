@@ -1,8 +1,8 @@
 package api
 
 import (
-	"fmt"
 	"gotomate-astilectron/fiber/variable"
+	"gotomate-astilectron/log"
 	"io/ioutil"
 	"net/http"
 	"reflect"
@@ -10,7 +10,7 @@ import (
 
 // Get Send a Get Request
 func Get(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Getting path ...")
+	log.FiberInfo("Sending GET request")
 
 	path, err := variable.GetValue(instructionData, "PathVarName", "PathIsVar", "Path")
 	if err != nil {
@@ -20,7 +20,7 @@ func Get(instructionData reflect.Value, finished chan bool) int {
 
 	resp, err := http.Get(path.(string))
 	if err != nil {
-		fmt.Println("FIBER ERROR: Error while getting response from Get")
+		log.FiberError("Error while getting response from GET request")
 		finished <- true
 		return -1
 	}
@@ -29,7 +29,7 @@ func Get(instructionData reflect.Value, finished chan bool) int {
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		fmt.Println("FIBER ERROR: Error while reading response from Get")
+		log.FiberError("Error while reading response from GET request")
 		finished <- true
 		return -1
 	}
@@ -41,7 +41,7 @@ func Get(instructionData reflect.Value, finished chan bool) int {
 
 // Post Send a Post request
 func Post(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Post Statement ...")
+	log.FiberInfo("Sending POST request")
 
 	data, err := variable.GetValue(instructionData, "DataVarName")
 	if err != nil {
@@ -63,7 +63,7 @@ func Post(instructionData reflect.Value, finished chan bool) int {
 
 	resp, err := http.PostForm(path.(string), values)
 	if err != nil {
-		fmt.Println("FIBER ERROR: Error while posting data")
+		log.FiberError("Error while posting data to POST request")
 	}
 
 	variable.SetVariable(instructionData.FieldByName("Output").Interface().(string), resp)

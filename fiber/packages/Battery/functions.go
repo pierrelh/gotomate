@@ -3,7 +3,7 @@ package battery
 import (
 	"fmt"
 	"gotomate-astilectron/fiber/variable"
-	"os"
+	"gotomate-astilectron/log"
 	"reflect"
 	"time"
 
@@ -12,14 +12,15 @@ import (
 
 // GetBattery get the first system battery if exist
 func GetBattery(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Getting battery ...")
+	log.FiberInfo("Getting a battery")
+
 	batteries, err := battery.GetAll()
 	if _, isFatal := err.(battery.ErrFatal); !isFatal {
 		if len(batteries) != 0 {
 			errs, partialErrs := err.(battery.Errors)
 			for i, bat := range batteries {
 				if partialErrs && errs[i] != nil {
-					fmt.Fprintf(os.Stderr, "FIBER ERROR: Error getting info for BAT%d: %s\n", i, errs[i])
+					log.FiberError("Error getting info for BAT%d: %s\n", i, errs[i])
 					continue
 				}
 				variable.SetVariable(instructionData.FieldByName("Output").Interface().(string), bat)
@@ -34,7 +35,7 @@ func GetBattery(instructionData reflect.Value, finished chan bool) int {
 
 // GetBatteryChargeRate : Return a battery charge rate mW
 func GetBatteryChargeRate(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Getting battery charge rate ...")
+	log.FiberInfo("Getting a battery charge rate")
 
 	batName, err := variable.GetValue(instructionData, "BatteryName")
 	if err != nil {
@@ -50,7 +51,7 @@ func GetBatteryChargeRate(instructionData reflect.Value, finished chan bool) int
 
 // GetBatteryCurrentCapacity : Return a battery current capacity
 func GetBatteryCurrentCapacity(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Getting battery current capacity ...")
+	log.FiberInfo("Getting a battery current capacity")
 
 	batName, err := variable.GetValue(instructionData, "BatteryName")
 	if err != nil {
@@ -66,7 +67,7 @@ func GetBatteryCurrentCapacity(instructionData reflect.Value, finished chan bool
 
 // GetBatteryDesignCapacity : Return a battery design capacity
 func GetBatteryDesignCapacity(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Getting battery design capacity ...")
+	log.FiberInfo("Getting a battery design capacity")
 
 	batName, err := variable.GetValue(instructionData, "BatteryName")
 	if err != nil {
@@ -82,7 +83,7 @@ func GetBatteryDesignCapacity(instructionData reflect.Value, finished chan bool)
 
 // GetBatteryDesignVoltage : Return a battery design voltage
 func GetBatteryDesignVoltage(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Getting battery design voltage ...")
+	log.FiberInfo("Getting a battery design voltage")
 
 	batName, err := variable.GetValue(instructionData, "BatteryName")
 	if err != nil {
@@ -98,7 +99,7 @@ func GetBatteryDesignVoltage(instructionData reflect.Value, finished chan bool) 
 
 // GetBatteryLastFullCapacity : Return a battery last full capacity
 func GetBatteryLastFullCapacity(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Getting battery last full capacity ...")
+	log.FiberInfo("Getting a battery last full capacity")
 
 	batName, err := variable.GetValue(instructionData, "BatteryName")
 	if err != nil {
@@ -114,7 +115,7 @@ func GetBatteryLastFullCapacity(instructionData reflect.Value, finished chan boo
 
 // GetBatteryPercentage : Return the left percentage of a battery
 func GetBatteryPercentage(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Getting battery percentage ...")
+	log.FiberInfo("Getting a battery percentage")
 
 	batName, err := variable.GetValue(instructionData, "BatteryName")
 	if err != nil {
@@ -130,7 +131,7 @@ func GetBatteryPercentage(instructionData reflect.Value, finished chan bool) int
 
 // GetBatteryRemainingTime : Return the remaining time of battery or for battery charging
 func GetBatteryRemainingTime(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Getting battery remaining time ...")
+	log.FiberInfo("Getting a battery remaining time")
 	var timeNum float64
 
 	batName, err := variable.GetValue(instructionData, "BatteryName")
@@ -157,7 +158,7 @@ func GetBatteryRemainingTime(instructionData reflect.Value, finished chan bool) 
 
 // GetBatteryState : Return the battery state of a battery
 func GetBatteryState(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Getting battery state ...")
+	log.FiberInfo("Getting a battery state")
 
 	batName, err := variable.GetValue(instructionData, "BatteryName")
 	if err != nil {
@@ -173,7 +174,7 @@ func GetBatteryState(instructionData reflect.Value, finished chan bool) int {
 
 // GetBatteryVoltage : Return a battery voltage
 func GetBatteryVoltage(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Getting battery voltage ...")
+	log.FiberInfo("Getting a battery voltage")
 
 	batName, err := variable.GetValue(instructionData, "BatteryName")
 	if err != nil {

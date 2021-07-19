@@ -1,8 +1,8 @@
 package sound
 
 import (
-	"fmt"
 	"gotomate-astilectron/fiber/variable"
+	"gotomate-astilectron/log"
 	"reflect"
 
 	"github.com/itchyny/volume-go"
@@ -10,7 +10,7 @@ import (
 
 // GetMuted Get the status of mute
 func GetMuted(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Getting Mute status ...")
+	log.FiberInfo("Getting mute's status")
 
 	mute, _ := volume.GetMuted()
 	variable.SetVariable(instructionData.FieldByName("Output").Interface().(string), mute)
@@ -20,7 +20,7 @@ func GetMuted(instructionData reflect.Value, finished chan bool) int {
 
 // GetVolume Get the current level of the volume
 func GetVolume(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Get Volume ...")
+	log.FiberInfo("Getting volume's level")
 
 	volume, _ := volume.GetVolume()
 	variable.SetVariable(instructionData.FieldByName("Output").Interface().(string), volume)
@@ -30,7 +30,7 @@ func GetVolume(instructionData reflect.Value, finished chan bool) int {
 
 // Mute the system's sound
 func Mute(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Muting ...")
+	log.FiberInfo("Muting system's volume")
 	volume.Mute()
 	finished <- true
 	return -1
@@ -38,7 +38,7 @@ func Mute(instructionData reflect.Value, finished chan bool) int {
 
 // SetVolume Set the system's volume to the wanted value
 func SetVolume(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Setting Volume ...")
+	log.FiberInfo("Setting system's volume to wanted value")
 
 	volumeLevel, err := variable.GetValue(instructionData, "VolumeVarName", "VolumeIsVar", "Volume")
 	if err != nil {
@@ -53,7 +53,7 @@ func SetVolume(instructionData reflect.Value, finished chan bool) int {
 
 // UnMute UnMute the system's sound
 func UnMute(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: UnMuting ...")
+	log.FiberInfo("Unmuting system's volume")
 	volume.Unmute()
 	finished <- true
 	return -1

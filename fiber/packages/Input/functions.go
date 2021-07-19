@@ -1,23 +1,23 @@
 package input
 
 import (
-	"fmt"
 	"gotomate-astilectron/fiber/variable"
+	"gotomate-astilectron/log"
 	"reflect"
 )
 
 // Bool Wait for user to set a bool
 func Bool(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Waiting for user input ...")
+	log.FiberInfo("Waiting for user input of a Bool")
 
 	msg, err := variable.GetValue(instructionData, "MessageVarName", "MessageIsVar", "Message")
 	if err != nil {
 		finished <- true
 		return -1
 	}
-	fmt.Println(msg)
+	log.Plain(msg)
 	var input bool
-	fmt.Scanln(&input)
+	log.FiberScan(&input)
 	variable.SetVariable(instructionData.FieldByName("Output").Interface().(string), input)
 	finished <- true
 	return -1
@@ -25,16 +25,16 @@ func Bool(instructionData reflect.Value, finished chan bool) int {
 
 // Float Wait for user to set a Float
 func Float(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Waiting for user input ...")
+	log.FiberInfo("Waiting for user input of a Float")
 
 	msg, err := variable.GetValue(instructionData, "MessageVarName", "MessageIsVar", "Message")
 	if err != nil {
 		finished <- true
 		return -1
 	}
-	fmt.Println(msg)
+	log.Plain(msg)
 	var input float64
-	fmt.Scanln(&input)
+	log.FiberScan(&input)
 	variable.SetVariable(instructionData.FieldByName("Output").Interface().(string), input)
 	finished <- true
 	return -1
@@ -42,16 +42,16 @@ func Float(instructionData reflect.Value, finished chan bool) int {
 
 // Int Wait for user to set a int
 func Int(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Waiting for user input ...")
+	log.FiberInfo("Waiting for user input of an Int")
 
 	msg, err := variable.GetValue(instructionData, "MessageVarName", "MessageIsVar", "Message")
 	if err != nil {
 		finished <- true
 		return -1
 	}
-	fmt.Println(msg)
+	log.Plain(msg)
 	var input int
-	fmt.Scanln(&input)
+	log.FiberScan(&input)
 	variable.SetVariable(instructionData.FieldByName("Output").Interface().(string), input)
 	finished <- true
 	return -1
@@ -59,16 +59,16 @@ func Int(instructionData reflect.Value, finished chan bool) int {
 
 // String Wait for user to set a string
 func String(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Waiting for user input ...")
+	log.FiberInfo("Waiting for user input of a String")
 
 	msg, err := variable.GetValue(instructionData, "MessageVarName", "MessageIsVar", "Message")
 	if err != nil {
 		finished <- true
 		return -1
 	}
-	fmt.Println(msg)
+	log.Plain(msg)
 	var input string
-	fmt.Scanln(&input)
+	log.FiberScan(&input)
 	variable.SetVariable(instructionData.FieldByName("Output").Interface().(string), input)
 	finished <- true
 	return -1

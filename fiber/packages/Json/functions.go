@@ -2,8 +2,8 @@ package json
 
 import (
 	"encoding/json"
-	"fmt"
 	"gotomate-astilectron/fiber/variable"
+	"gotomate-astilectron/log"
 	"io/ioutil"
 	"os"
 	"reflect"
@@ -11,7 +11,7 @@ import (
 
 // CreateJson Create a new json value with a json file
 func CreateJson(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Getting a json value by path ...")
+	log.FiberInfo("Creating a Json from a File")
 
 	path, err := variable.GetValue(instructionData, "PathVarName", "PathIsVar", "Path")
 	if err != nil {
@@ -21,7 +21,7 @@ func CreateJson(instructionData reflect.Value, finished chan bool) int {
 
 	jsonFile, err := os.Open(path.(string))
 	if err != nil {
-		fmt.Println("FIBER ERROR: Cannot open json file's path")
+		log.FiberError("Cannot open Json file's path")
 		finished <- true
 		return -1
 	}
@@ -36,7 +36,7 @@ func CreateJson(instructionData reflect.Value, finished chan bool) int {
 
 // JsonToDictionary Convert a json to a dictionary
 func JsonToDictionary(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Converting json to dictionary ...")
+	log.FiberInfo("Converting a Json to a Dictionary")
 
 	input, err := variable.GetValue(instructionData, "JsonVarName")
 	if err != nil {
@@ -54,7 +54,7 @@ func JsonToDictionary(instructionData reflect.Value, finished chan bool) int {
 
 // SaveJson Save a json value in a file
 func SaveJson(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Saving json to path ...")
+	log.FiberInfo("Saving a Json to a path")
 
 	json, err := variable.GetValue(instructionData, "JsonVarName")
 	if err != nil {
@@ -70,7 +70,7 @@ func SaveJson(instructionData reflect.Value, finished chan bool) int {
 
 	err = ioutil.WriteFile(path.(string), json.([]byte), 0644)
 	if err != nil {
-		fmt.Println("FIBER ERROR: Unable to write the new json file")
+		log.FiberError("Unable to write the new json file")
 		finished <- true
 		return -1
 	}

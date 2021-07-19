@@ -2,9 +2,9 @@ package instructions
 
 import (
 	"encoding/json"
-	"fmt"
 	"gotomate-astilectron/fiber/packages"
 	"gotomate-astilectron/fiber/template"
+	"gotomate-astilectron/log"
 	"reflect"
 	"sort"
 
@@ -74,7 +74,7 @@ func (fi *FiberInstructions) DeleteInstruction(inst *Instruction) bool {
 			return true
 		}
 	}
-	fmt.Println("GOTOMATE ERROR: Unable to delete the fiber's instruction")
+	log.GotomateError("Unable to delete the fiber's instruction")
 	return false
 }
 
@@ -84,7 +84,7 @@ func (fi *FiberInstructions) FindInstructionById(id int) *Instruction {
 		return (*fi)[i].ID >= id
 	})
 	if idx == len(*fi) {
-		fmt.Println("FIBER ERROR: Unable to find button with id: ", id)
+		log.GotomateError("Unable to find button with id:", id)
 		return nil
 	} else {
 		return (*fi)[idx]

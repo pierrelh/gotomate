@@ -1,8 +1,8 @@
 package keyboard
 
 import (
-	"fmt"
 	"gotomate-astilectron/fiber/variable"
+	"gotomate-astilectron/log"
 	"reflect"
 
 	"github.com/go-vgo/robotgo"
@@ -10,7 +10,7 @@ import (
 
 // Tap Simulate a tap on the keyboard
 func Tap(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Keyboard tap ...")
+	log.FiberInfo("Taping on keyboard")
 
 	special := []string{}
 	if err := instructionData.FieldByName("Special1").Interface().(string); err != "" {
@@ -30,7 +30,7 @@ func Tap(instructionData reflect.Value, finished chan bool) int {
 
 // Type Simulate a type on the keyboard
 func Type(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Keyboard type ...")
+	log.FiberInfo("Typing on keyboard")
 
 	input, err := variable.GetValue(instructionData, "VarName", "InputIsVar", "Input")
 	if err != nil {

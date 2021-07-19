@@ -1,22 +1,22 @@
 package log
 
 import (
-	"fmt"
 	"gotomate-astilectron/fiber/variable"
+	"gotomate-astilectron/log"
 	"reflect"
 )
 
 // Print log a value
 func Print(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Logging ...")
+	log.FiberInfo("Logging")
 
-	log, err := variable.GetValue(instructionData, "VarName", "LogIsVar", "Log")
+	content, err := variable.GetValue(instructionData, "VarName", "LogIsVar", "Log")
 	if err != nil {
 		finished <- true
 		return -1
 	}
 
-	fmt.Println("LOG: ", log)
+	log.Plain("LOG:", content)
 	finished <- true
 	return -1
 }

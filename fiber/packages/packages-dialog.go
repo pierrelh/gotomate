@@ -4,25 +4,31 @@ import (
 
 	// DON'T REMOVE ME / New packages inserted here
 
-	"fmt"
 	algorithmic "gotomate-astilectron/fiber/packages/Algorithmic"
 	flow "gotomate-astilectron/fiber/packages/Flow"
 	sleep "gotomate-astilectron/fiber/packages/Sleep"
 	"gotomate-astilectron/fiber/template"
+	"gotomate-astilectron/log"
 )
 
 // PackageDecode Getting the right databinder & the right template needed
 func PackageDecode(packageName string, funcName string) (interface{}, *template.Template) {
+	var databinder interface{}
+	var template *template.Template
 	switch packageName {
 	case "Flow":
-		return flow.Build(funcName)
+		databinder, template = flow.Build(funcName)
 	// DON'T REMOVE ME / New Build inserted here
 	case "Algorithmic":
-		return algorithmic.Build(funcName)
+		databinder, template = algorithmic.Build(funcName)
 	case "Sleep":
-		return sleep.Build(funcName)
+		databinder, template = sleep.Build(funcName)
 	default:
-		fmt.Println("GOTOMATE ERROR: Unable to find the dialog's package", packageName, "for the function", funcName)
+		log.GotomateError("Unable to find the package's dialog", packageName, "for the function", funcName)
 		return nil, nil
 	}
+	if databinder == nil && template == nil && (packageName != "Flow" && packageName != "End") {
+		log.GotomateError("Unable to find the function for instruction's building")
+	}
+	return databinder, template
 }

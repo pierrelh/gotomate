@@ -1,8 +1,8 @@
 package sleep
 
 import (
-	"fmt"
 	"gotomate-astilectron/fiber/variable"
+	"gotomate-astilectron/log"
 	"reflect"
 	"time"
 )
@@ -15,8 +15,8 @@ func MilliSleep(instructionData reflect.Value, finished chan bool) int {
 		finished <- true
 		return -1
 	}
+	log.FiberInfo("Sleeping for: " + duration.(string) + "ms")
 
-	fmt.Println("FIBER INFO: Sleeping for: ", duration.(float64), "ms")
 	time.Sleep(time.Duration(duration.(float64)) * time.Millisecond)
 	finished <- true
 	return -1
@@ -30,7 +30,8 @@ func Sleep(instructionData reflect.Value, finished chan bool) int {
 		return -1
 	}
 
-	fmt.Println("FIBER INFO: Sleeping for: ", duration.(float64), "s")
+	log.FiberInfo("Sleeping for: " + duration.(string) + "s")
+
 	time.Sleep(time.Duration(duration.(float64)) * time.Second)
 	finished <- true
 	return -1

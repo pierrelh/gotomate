@@ -1,8 +1,8 @@
 package scraping
 
 import (
-	"fmt"
 	"gotomate-astilectron/fiber/variable"
+	"gotomate-astilectron/log"
 	"reflect"
 
 	"github.com/gocolly/colly"
@@ -10,7 +10,7 @@ import (
 
 // AddAllowedDomain Setting allowed Domains for scraper
 func AddAllowedDomain(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Starting new process ...")
+	log.FiberInfo("Adding allowed domain to the scraper")
 
 	scraper, err := variable.GetValue(instructionData, "ScraperVarName")
 	if err != nil {
@@ -32,7 +32,7 @@ func AddAllowedDomain(instructionData reflect.Value, finished chan bool) int {
 
 // AddDisallowedDomain Setting disallowed Domains for scraper
 func AddDisallowedDomain(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Starting new process ...")
+	log.FiberInfo("Adding disallowed domain to the scraper")
 
 	scraper, err := variable.GetValue(instructionData, "ScraperVarName")
 	if err != nil {
@@ -54,7 +54,7 @@ func AddDisallowedDomain(instructionData reflect.Value, finished chan bool) int 
 
 // IgnoreRobotsTxt Setting ignoreRobotsTxt Domains for scraper
 func IgnoreRobotsTxt(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Starting new process ...")
+	log.FiberInfo("Setting the ignore robots.txt")
 
 	scraper, err := variable.GetValue(instructionData, "ScraperVarName")
 	if err != nil {
@@ -76,16 +76,16 @@ func IgnoreRobotsTxt(instructionData reflect.Value, finished chan bool) int {
 
 // NewScraper Create a new scraper
 func NewScraper(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Starting new process ...")
+	log.FiberInfo("Creating a new scraper")
 
 	variable.SetVariable(instructionData.FieldByName("Output").Interface().(string), colly.NewCollector())
 	finished <- true
 	return -1
 }
 
-// OnFindScrapAttribute Scrap a target's attribute when the wanted element if found
+// OnFindScrapAttribute Scrap a target's attribute when the wanted element is found
 func OnFindScrapAttribute(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Starting new process ...")
+	log.FiberInfo("Setting the scraper's on find scraping attribute")
 
 	scraper, err := variable.GetValue(instructionData, "ScraperVarName")
 	if err != nil {
@@ -122,9 +122,9 @@ func OnFindScrapAttribute(instructionData reflect.Value, finished chan bool) int
 	return -1
 }
 
-// OnFindScrapChildAttribute Scrap a target's children attribute when the wanted element if found
+// OnFindScrapChildAttribute Scrap a target's children attribute when the wanted element is found
 func OnFindScrapChildAttribute(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Starting new process ...")
+	log.FiberInfo("Setting the scraper's on find scraping child's attribute")
 
 	scraper, err := variable.GetValue(instructionData, "ScraperVarName")
 	if err != nil {
@@ -167,9 +167,9 @@ func OnFindScrapChildAttribute(instructionData reflect.Value, finished chan bool
 	return -1
 }
 
-// OnFindScrapText Scrap a target's text when the wanted element if found
+// OnFindScrapText Scrap a target's text when the wanted element is found
 func OnFindScrapText(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Starting new process ...")
+	log.FiberInfo("Setting the scraper's on find scraping text")
 
 	scraper, err := variable.GetValue(instructionData, "ScraperVarName")
 	if err != nil {
@@ -199,9 +199,9 @@ func OnFindScrapText(instructionData reflect.Value, finished chan bool) int {
 	return -1
 }
 
-// OnFindScrapChildText Scrap a target's children text when the wanted element if found
+// OnFindScrapChildText Scrap a target's children text when the wanted element is found
 func OnFindScrapChildText(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Starting new process ...")
+	log.FiberInfo("Setting the scraper's on find scraping child's text")
 
 	scraper, err := variable.GetValue(instructionData, "ScraperVarName")
 	if err != nil {
@@ -237,9 +237,9 @@ func OnFindScrapChildText(instructionData reflect.Value, finished chan bool) int
 	return -1
 }
 
-// OnFindVisit Visit a target when the wanted element if found
+// OnFindVisit Visit a target when the wanted element is found
 func OnFindVisit(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Starting new process ...")
+	log.FiberInfo("Setting the scraper's on find visit")
 
 	scraper, err := variable.GetValue(instructionData, "ScraperVarName")
 	if err != nil {
@@ -263,9 +263,9 @@ func OnFindVisit(instructionData reflect.Value, finished chan bool) int {
 	return -1
 }
 
-// OnFindChildVisit Visit a target's children when the wanted element if found
+// OnFindChildVisit Visit a target's children when the wanted element is found
 func OnFindChildVisit(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Starting new process ...")
+	log.FiberInfo("Setting the scraper's on find child's visit")
 
 	scraper, err := variable.GetValue(instructionData, "ScraperVarName")
 	if err != nil {
@@ -295,9 +295,9 @@ func OnFindChildVisit(instructionData reflect.Value, finished chan bool) int {
 	return -1
 }
 
-// ScraperEndCondition Create a new scraper
+// ScraperEndCondition Setting the scraper's end condition
 func ScraperEndCondition(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Starting new process ...")
+	log.FiberInfo("Setting the scraper's end condition")
 
 	scraper, err := variable.GetValue(instructionData, "ScraperVarName")
 	if err != nil {
@@ -333,7 +333,7 @@ func ScraperEndCondition(instructionData reflect.Value, finished chan bool) int 
 
 // ScrapStart Visit a url to start a scraping
 func ScrapStart(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Starting new process ...")
+	log.FiberInfo("Starting the Scraper")
 
 	scraper, err := variable.GetValue(instructionData, "ScraperVarName")
 	if err != nil {

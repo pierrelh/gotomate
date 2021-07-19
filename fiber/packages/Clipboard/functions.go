@@ -1,8 +1,8 @@
 package clipboard
 
 import (
-	"fmt"
 	"gotomate-astilectron/fiber/variable"
+	"gotomate-astilectron/log"
 	"reflect"
 
 	"github.com/go-vgo/robotgo"
@@ -10,7 +10,8 @@ import (
 
 // Read read string from clipboard
 func Read(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Clipboard Reading ...")
+	log.FiberInfo("Reading clipboard")
+
 	content, _ := robotgo.ReadAll()
 	variable.SetVariable(instructionData.FieldByName("Output").Interface().(string), content)
 	finished <- true
@@ -19,7 +20,7 @@ func Read(instructionData reflect.Value, finished chan bool) int {
 
 // Write write string to clipboard
 func Write(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Clipboard Writing ...")
+	log.FiberInfo("Writing clipboard")
 
 	content, err := variable.GetValue(instructionData, "VarName", "IsVar", "Content")
 	if err != nil {

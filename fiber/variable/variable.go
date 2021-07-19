@@ -2,6 +2,7 @@ package variable
 
 import (
 	"fmt"
+	"gotomate-astilectron/log"
 	"math"
 	"reflect"
 	"strconv"
@@ -28,7 +29,7 @@ func SearchVariable(name string) *InstructionVariable {
 	if idx != -1 {
 		return FiberVariable[idx]
 	} else {
-		fmt.Println("FIBER ERROR: Unable to find the fiber's var: ", name)
+		log.FiberError("Unable to find the fiber's var: ", name)
 		return &InstructionVariable{
 			Value: nil,
 		}
@@ -122,7 +123,7 @@ func GetVariableType(value interface{}) string {
 	case uintptr:
 		return "uintptr"
 	default:
-		fmt.Println("FIBER WARNING: Unknown type")
+		log.FiberWarning("Unknown variable type")
 		return ""
 	}
 }
@@ -135,6 +136,7 @@ func GetValue(instructionData reflect.Value, varName string, args ...string) (in
 			if val := SearchVariable(variableName).Value; val != nil {
 				return val, nil
 			} else {
+				log.FiberError("Variable not found")
 				return false, fmt.Errorf("FIBER ERROR: Variable not found")
 			}
 		} else {
@@ -145,6 +147,7 @@ func GetValue(instructionData reflect.Value, varName string, args ...string) (in
 		if val := SearchVariable(variableName).Value; val != nil {
 			return val, nil
 		} else {
+			log.FiberError("Variable not found")
 			return false, fmt.Errorf("FIBER ERROR: Variable not found")
 		}
 	}

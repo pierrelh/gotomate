@@ -1,8 +1,8 @@
 package mouse
 
 import (
-	"fmt"
 	"gotomate-astilectron/fiber/variable"
+	"gotomate-astilectron/log"
 	"reflect"
 
 	"github.com/go-vgo/robotgo"
@@ -10,7 +10,7 @@ import (
 
 // Click Simulate a user click
 func Click(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Clicking mouse  ...")
+	log.FiberInfo("Clicking the mouse")
 
 	robotgo.Click(instructionData.FieldByName("MouseButtonName").Interface().(string))
 	finished <- true
@@ -19,7 +19,7 @@ func Click(instructionData reflect.Value, finished chan bool) int {
 
 // Drag Simulate a user drag
 func Drag(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Clicking mouse  ...")
+	log.FiberInfo("Draging the mouse")
 
 	x, err := variable.GetValue(instructionData, "XVarName", "XIsVar", "X")
 	if err != nil {
@@ -42,7 +42,7 @@ func Drag(instructionData reflect.Value, finished chan bool) int {
 
 // DragSmooth Simulate a user draggin smoothly
 func DragSmooth(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Clicking mouse  ...")
+	log.FiberInfo("Draging smoothly the mouse")
 
 	x, err := variable.GetValue(instructionData, "XVarName", "XIsVar", "X")
 	if err != nil {
@@ -65,7 +65,7 @@ func DragSmooth(instructionData reflect.Value, finished chan bool) int {
 
 // Move move the mouse
 func Move(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Moving mouse ...")
+	log.FiberInfo("Moving the mouse")
 
 	x, err := variable.GetValue(instructionData, "XVarName", "XIsVar", "X")
 	if err != nil {
@@ -86,7 +86,7 @@ func Move(instructionData reflect.Value, finished chan bool) int {
 
 // MoveSmooth move the mouse smoothly
 func MoveSmooth(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Moving mouse ...")
+	log.FiberInfo("Moving smoothly the mouse")
 
 	x, err := variable.GetValue(instructionData, "XVarName", "XIsVar", "X")
 	if err != nil {
@@ -107,7 +107,7 @@ func MoveSmooth(instructionData reflect.Value, finished chan bool) int {
 
 // Scroll scroll the mouse
 func Scroll(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Scrolling mouse ...")
+	log.FiberInfo("Scrolling the mouse")
 
 	x, err := variable.GetValue(instructionData, "XVarName", "XIsVar", "X")
 	if err != nil {
