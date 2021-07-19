@@ -2,7 +2,7 @@ package define
 
 import (
 	"fmt"
-	variable "gotomate/fiber/variable"
+	"gotomate-astilectron/fiber/variable"
 	"reflect"
 	"strconv"
 	"strings"

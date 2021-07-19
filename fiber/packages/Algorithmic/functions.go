@@ -2,7 +2,7 @@ package algorithmic
 
 import (
 	"fmt"
-	variable "gotomate-astilectron/fiber/variable"
+	"gotomate-astilectron/fiber/variable"
 	"reflect"
 )
 

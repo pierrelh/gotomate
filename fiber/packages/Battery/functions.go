@@ -2,7 +2,7 @@ package battery
 
 import (
 	"fmt"
-	"gotomate/fiber/variable"
+	"gotomate-astilectron/fiber/variable"
 	"os"
 	"reflect"
 	"time"

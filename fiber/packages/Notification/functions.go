@@ -4,7 +4,7 @@ package notification
 
 import (
 	"fmt"
-	"gotomate/fiber/variable"
+	"gotomate-astilectron/fiber/variable"
 	"reflect"
 
 	"github.com/lxn/walk"

@@ -2,7 +2,7 @@ package log
 
 import (
 	"fmt"
-	"gotomate/fiber/variable"
+	"gotomate-astilectron/fiber/variable"
 	"reflect"
 )
 

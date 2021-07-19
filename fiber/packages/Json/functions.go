@@ -3,7 +3,7 @@ package json
 import (
 	"encoding/json"
 	"fmt"
-	variable "gotomate/fiber/variable"
+	"gotomate-astilectron/fiber/variable"
 	"io/ioutil"
 	"os"
 	"reflect"

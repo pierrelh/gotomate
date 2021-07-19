@@ -2,7 +2,7 @@ package process
 
 import (
 	"fmt"
-	"gotomate/fiber/variable"
+	"gotomate-astilectron/fiber/variable"
 	"os"
 	"os/exec"
 	"reflect"

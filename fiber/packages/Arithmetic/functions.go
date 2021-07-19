@@ -2,7 +2,7 @@ package arithmetic
 
 import (
 	"fmt"
-	"gotomate/fiber/variable"
+	"gotomate-astilectron/fiber/variable"
 	"math"
 	"reflect"
 )

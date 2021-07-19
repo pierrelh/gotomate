@@ -2,7 +2,7 @@ package scraping
 
 import (
 	"fmt"
-	"gotomate/fiber/variable"
+	"gotomate-astilectron/fiber/variable"
 	"reflect"
 
 	"github.com/gocolly/colly"

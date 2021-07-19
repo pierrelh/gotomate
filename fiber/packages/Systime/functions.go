@@ -2,7 +2,7 @@ package systime
 
 import (
 	"fmt"
-	"gotomate/fiber/variable"
+	"gotomate-astilectron/fiber/variable"
 	"reflect"
 	"time"
 )

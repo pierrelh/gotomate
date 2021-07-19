@@ -2,7 +2,7 @@ package sound
 
 import (
 	"fmt"
-	"gotomate/fiber/variable"
+	"gotomate-astilectron/fiber/variable"
 	"reflect"
 
 	"github.com/itchyny/volume-go"

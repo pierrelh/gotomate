@@ -2,7 +2,7 @@ package clipboard
 
 import (
 	"fmt"
-	"gotomate/fiber/variable"
+	"gotomate-astilectron/fiber/variable"
 	"reflect"
 
 	"github.com/go-vgo/robotgo"

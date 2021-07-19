@@ -2,7 +2,7 @@ package file
 
 import (
 	"fmt"
-	"gotomate/fiber/variable"
+	"gotomate-astilectron/fiber/variable"
 	"io/ioutil"
 	"os"
 	"reflect"
