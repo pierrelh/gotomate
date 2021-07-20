@@ -1,11 +1,7 @@
 package log
 
-import (
-	"reflect"
-)
-
 // Processing process the functions from log's package
-func Processing(funcName string, instructionData reflect.Value, finished chan bool) int {
+func Processing(funcName string, instructionData interface{}, finished chan bool) int {
 	nextID := -1
 	switch funcName {
 	case "Print":

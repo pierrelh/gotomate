@@ -2,7 +2,6 @@ package packages
 
 import (
 	"archive/zip"
-	"fmt"
 	"go/ast"
 	"go/parser"
 	"go/token"
@@ -76,7 +75,7 @@ func ImportPackage(path string) error {
 			// Check for ZipSlip. More Info: http://bit.ly/2MsjAWE
 			if !strings.HasPrefix(fpath, filepath.Clean("./fiber/packages")+string(os.PathSeparator)) {
 				log.GotomateError("Illegal file path given")
-				return fmt.Errorf("%s: illegal file path", fpath)
+				return log.Error("%s: illegal file path", fpath)
 			}
 
 			if f.FileInfo().IsDir() {

@@ -5,6 +5,17 @@ import (
 	"os"
 )
 
+// Error create an error using Errorf
+func Error(format string, a ...interface{}) error {
+	return fmt.Errorf(format, a...)
+}
+
+// Sprint format data using Sprintf
+func Sprint(format string, a ...interface{}) string {
+	return fmt.Sprintf(format, a...)
+}
+
+// FiberScan Scaning for user input
 func FiberScan(target ...interface{}) {
 	fmt.Println("SCANING:")
 	fmt.Scanln(target)
@@ -39,6 +50,12 @@ func GotomateError(msg ...interface{}) {
 // GotomateFatalError log a fatal error on Gotomate process & exit the process
 func GotomateFatalError(msg ...interface{}) {
 	fmt.Println("GOTOMATE FATAL ERROR:", msg)
+	os.Exit(1)
+}
+
+// AstilectronFatalError log a fatal error on Astilectron process & exit the process
+func AstilectronFatalError(msg ...interface{}) {
+	fmt.Println("ASTILECTRON FATAL ERROR:", msg)
 	os.Exit(1)
 }
 

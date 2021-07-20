@@ -5,14 +5,13 @@ import (
 	"gotomate-astilectron/log"
 	"io/ioutil"
 	"net/http"
-	"reflect"
 )
 
 // Get Send a Get Request
-func Get(instructionData reflect.Value, finished chan bool) int {
+func Get(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Sending GET request")
 
-	path, err := variable.GetValue(instructionData, "PathVarName", "PathIsVar", "Path")
+	path, err := variable.Keys{VarName: "PathVarName", IsVarName: "PathIsVar", Name: "Path"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
@@ -34,16 +33,16 @@ func Get(instructionData reflect.Value, finished chan bool) int {
 		return -1
 	}
 
-	variable.SetVariable(instructionData.FieldByName("Output").Interface().(string), string(body))
+	variable.SetVariable(instructionData, "Output", string(body))
 	finished <- true
 	return -1
 }
 
 // Post Send a Post request
-func Post(instructionData reflect.Value, finished chan bool) int {
+func Post(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Sending POST request")
 
-	data, err := variable.GetValue(instructionData, "DataVarName")
+	data, err := variable.Keys{VarName: "DataVarName"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
@@ -55,7 +54,7 @@ func Post(instructionData reflect.Value, finished chan bool) int {
 		values[key] = variable.ToArrayOfString(element)
 	}
 
-	path, err := variable.GetValue(instructionData, "PathVarName", "PathIsVar", "Path")
+	path, err := variable.Keys{VarName: "PathVarName", IsVarName: "PathIsVar", Name: "Path"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
@@ -66,7 +65,7 @@ func Post(instructionData reflect.Value, finished chan bool) int {
 		log.FiberError("Error while posting data to POST request")
 	}
 
-	variable.SetVariable(instructionData.FieldByName("Output").Interface().(string), resp)
+	variable.SetVariable(instructionData, "Output", resp)
 	finished <- true
 	return -1
 }

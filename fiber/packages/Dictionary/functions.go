@@ -4,35 +4,34 @@ import (
 	"encoding/json"
 	"gotomate-astilectron/fiber/variable"
 	"gotomate-astilectron/log"
-	"reflect"
 )
 
 // CreateDictionary Create a new Dictionary
-func CreateDictionary(instructionData reflect.Value, finished chan bool) int {
+func CreateDictionary(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Creating a new Dictionary")
 
-	variable.SetVariable(instructionData.FieldByName("Output").Interface().(string), make(map[string][]interface{}))
+	variable.SetVariable(instructionData, "Output", make(map[string][]interface{}))
 	finished <- true
 	return -1
 }
 
 // CreateEntry Create a new entry in a dictionary
-func CreateEntry(instructionData reflect.Value, finished chan bool) int {
+func CreateEntry(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Create an entry in a Dictionary")
 
-	dict, err := variable.GetValue(instructionData, "DictVarName")
+	dict, err := variable.Keys{VarName: "DictVarName"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
 	}
 
-	key, err := variable.GetValue(instructionData, "KeyVarName", "KeyIsVar", "Key")
+	key, err := variable.Keys{VarName: "KeyVarName", IsVarName: "KeyIsVar", Name: "Key"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
 	}
 
-	value, err := variable.GetValue(instructionData, "ValueVarName", "ValueIsVar", "Value")
+	value, err := variable.Keys{VarName: "ValueVarName", IsVarName: "ValueIsVar", Name: "Value"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
@@ -40,16 +39,16 @@ func CreateEntry(instructionData reflect.Value, finished chan bool) int {
 
 	newMap := dict.(map[string][]interface{})
 	newMap[key.(string)] = append(newMap[key.(string)], value)
-	variable.SetVariable(instructionData.FieldByName("DictVarName").Interface().(string), newMap)
+	variable.SetVariable(instructionData, "DictVarName", newMap)
 	finished <- true
 	return -1
 }
 
 // DictionaryToJson Convert a dictionary to Json
-func DictionaryToJson(instructionData reflect.Value, finished chan bool) int {
+func DictionaryToJson(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Converting a Dictionary to Json")
 
-	dict, err := variable.GetValue(instructionData, "DictVarName")
+	dict, err := variable.Keys{VarName: "DictVarName"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
@@ -62,22 +61,22 @@ func DictionaryToJson(instructionData reflect.Value, finished chan bool) int {
 		return -1
 	}
 
-	variable.SetVariable(instructionData.FieldByName("Output").Interface().(string), json)
+	variable.SetVariable(instructionData, "Output", json)
 	finished <- true
 	return -1
 }
 
 // RemoveEntry Remove an entry from a Dictionary
-func RemoveEntry(instructionData reflect.Value, finished chan bool) int {
+func RemoveEntry(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Removing an entry from a Dictionay")
 
-	dict, err := variable.GetValue(instructionData, "DictVarName")
+	dict, err := variable.Keys{VarName: "DictVarName"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
 	}
 
-	key, err := variable.GetValue(instructionData, "KeyVarName", "KeyIsVar", "Key")
+	key, err := variable.Keys{VarName: "KeyVarName", IsVarName: "KeyIsVar", Name: "Key"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
@@ -90,7 +89,7 @@ func RemoveEntry(instructionData reflect.Value, finished chan bool) int {
 		delete(newMap, key.(string))
 	}
 
-	variable.SetVariable(instructionData.FieldByName("DictVarName").Interface().(string), newMap)
+	variable.SetVariable(instructionData, "DictVarName", newMap)
 	finished <- true
 	return -1
 }

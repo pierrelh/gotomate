@@ -134,7 +134,7 @@ func getEvents() {
 			// packages.ImportPackage(content["File"].(string))
 
 		default:
-			log.GotomateError("Unknown identifier received: " + s.Identifier)
+			log.GotomateError("Unknown identifier received: ", s.Identifier)
 			return nil
 
 		}

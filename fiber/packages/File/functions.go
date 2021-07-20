@@ -5,14 +5,13 @@ import (
 	"gotomate-astilectron/log"
 	"io/ioutil"
 	"os"
-	"reflect"
 )
 
 // Create a new file
-func Create(instructionData reflect.Value, finished chan bool) int {
+func Create(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Creating a File")
 
-	path, err := variable.GetValue(instructionData, "PathVarName", "PathIsVar", "Path")
+	path, err := variable.Keys{VarName: "PathVarName", IsVarName: "PathIsVar", Name: "Path"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
@@ -25,10 +24,10 @@ func Create(instructionData reflect.Value, finished chan bool) int {
 }
 
 // Delete an existing file
-func Delete(instructionData reflect.Value, finished chan bool) int {
+func Delete(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Deleting a File")
 
-	path, err := variable.GetValue(instructionData, "PathVarName", "PathIsVar", "Path")
+	path, err := variable.Keys{VarName: "PathVarName", IsVarName: "PathIsVar", Name: "Path"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
@@ -40,32 +39,32 @@ func Delete(instructionData reflect.Value, finished chan bool) int {
 }
 
 // Read a file
-func Read(instructionData reflect.Value, finished chan bool) int {
+func Read(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Reading a File")
 
-	path, err := variable.GetValue(instructionData, "PathVarName", "PathIsVar", "Path")
+	path, err := variable.Keys{VarName: "PathVarName", IsVarName: "PathIsVar", Name: "Path"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
 	}
 
 	content, _ := ioutil.ReadFile(path.(string))
-	variable.SetVariable(instructionData.FieldByName("Output").Interface().(string), string(content))
+	variable.SetVariable(instructionData, "Output", string(content))
 	finished <- true
 	return -1
 }
 
 // Write an existing file
-func Write(instructionData reflect.Value, finished chan bool) int {
+func Write(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Writing a File")
 
-	path, err := variable.GetValue(instructionData, "PathVarName", "PathIsVar", "Path")
+	path, err := variable.Keys{VarName: "PathVarName", IsVarName: "PathIsVar", Name: "Path"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
 	}
 
-	content, err := variable.GetValue(instructionData, "ContentVarName", "ContentIsVar", "Content")
+	content, err := variable.Keys{VarName: "ContentVarName", IsVarName: "ContentIsVar", Name: "Content"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1

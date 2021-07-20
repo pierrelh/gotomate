@@ -3,25 +3,23 @@
 package notification
 
 import (
-	"fmt"
 	"gotomate-astilectron/fiber/variable"
 	"gotomate-astilectron/log"
-	"reflect"
 
 	"github.com/lxn/walk"
 )
 
 // Create create a new notification with presets & push it
-func Create(instructionData reflect.Value, finished chan bool) int {
+func Create(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Creating a notification")
 
-	title, err := variable.GetValue(instructionData, "TitleVarName", "TitleIsVar", "Title")
+	title, err := variable.Keys{VarName: "TitleVarName", IsVarName: "TitleIsVar", Name: "Title"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
 	}
 
-	msg, err := variable.GetValue(instructionData, "MessageVarName", "MessageIsVar", "Message")
+	msg, err := variable.Keys{VarName: "MessageVarName", IsVarName: "MessageIsVar", Name: "Message"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
@@ -38,29 +36,29 @@ func Create(instructionData reflect.Value, finished chan bool) int {
 
 	mw, err := walk.NewMainWindow()
 	if err != nil {
-		fmt.Println("FIBER ERROR: ", err)
+		log.FiberError("FIBER ERROR: ", err)
 	}
 
 	icon, err := walk.Resources.Icon("/img/icon.ico")
 	if err != nil {
-		fmt.Println("FIBER ERROR: ", err)
+		log.FiberError("FIBER ERROR: ", err)
 	}
 
 	ni, err := walk.NewNotifyIcon(mw)
 	if err != nil {
-		fmt.Println("FIBER ERROR: ", err)
+		log.FiberError("FIBER ERROR: ", err)
 	}
 
 	if err := ni.SetIcon(icon); err != nil {
-		fmt.Println("FIBER ERROR: ", err)
+		log.FiberError("FIBER ERROR: ", err)
 	}
 
 	if err := ni.SetVisible(true); err != nil {
-		fmt.Println("FIBER ERROR: ", err)
+		log.FiberError("FIBER ERROR: ", err)
 	}
 
 	if err := ni.ShowInfo(notTitle, notMsg); err != nil {
-		fmt.Println("FIBER ERROR: ", err)
+		log.FiberError("FIBER ERROR: ", err)
 	}
 
 	finished <- true

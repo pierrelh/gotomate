@@ -13,6 +13,7 @@ import (
 	"gotomate-astilectron/fiber/packages"
 	algorithmic "gotomate-astilectron/fiber/packages/Algorithmic"
 	flow "gotomate-astilectron/fiber/packages/Flow"
+	input "gotomate-astilectron/fiber/packages/Input"
 	sleep "gotomate-astilectron/fiber/packages/Sleep"
 	"gotomate-astilectron/fiber/variable"
 	"gotomate-astilectron/log"
@@ -202,6 +203,8 @@ func (fiber *Fiber) Run() {
 				// DON'T REMOVE ME / New processing inserted here
 				case "Algorithmic":
 					nextID = algorithmic.Processing(funcName, instructionData, finished)
+				case "Input":
+					nextID = input.Processing(funcName, instructionData, finished)
 				case "Sleep":
 					nextID = sleep.Processing(funcName, instructionData, finished)
 				default:

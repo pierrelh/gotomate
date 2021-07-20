@@ -1,7 +1,6 @@
 package variable
 
 import (
-	"fmt"
 	"gotomate-astilectron/log"
 	"math"
 	"reflect"
@@ -18,7 +17,7 @@ type InstructionVariable struct {
 }
 
 // SearchVariable Search a key in fiber's keys / values array
-func SearchVariable(name string) *InstructionVariable {
+func SearchVariable(name string) (interface{}, error) {
 	idx := -1
 	for i := 0; i < len(FiberVariable); i++ {
 		if FiberVariable[i].Key == name {
@@ -27,17 +26,17 @@ func SearchVariable(name string) *InstructionVariable {
 		}
 	}
 	if idx != -1 {
-		return FiberVariable[idx]
+		return FiberVariable[idx].Value, nil
 	} else {
 		log.FiberError("Unable to find the fiber's var: ", name)
-		return &InstructionVariable{
-			Value: nil,
-		}
+		return nil, log.Error("FIBER ERROR: Variable not found")
 	}
 }
 
 // SetVariable create or update a key / value in fiber's variable
-func SetVariable(key string, value interface{}) {
+func SetVariable(object interface{}, objectkey string, value interface{}) {
+	key := object.(reflect.Value).FieldByName(objectkey).Interface().(string)
+
 	for i := 0; i < len(FiberVariable); i++ {
 		if FiberVariable[i].Key == key {
 			FiberVariable[i].Value = value
@@ -128,27 +127,31 @@ func GetVariableType(value interface{}) string {
 	}
 }
 
+// Keys set the databinder's fields to search trough
+type Keys struct {
+	Name      string // The name of the raw value
+	IsVarName string // The name of the value that bind if the value is a var
+	VarName   string // The name of the var value
+}
+
 // GetValue find a value in fiber's values data
-func GetValue(instructionData reflect.Value, varName string, args ...string) (interface{}, error) {
-	if len(args) == 2 {
-		if isAVar := instructionData.FieldByName(args[0]).Interface().(bool); isAVar {
-			variableName := instructionData.FieldByName(varName).Interface().(string)
-			if val := SearchVariable(variableName).Value; val != nil {
-				return val, nil
-			} else {
-				log.FiberError("Variable not found")
-				return false, fmt.Errorf("FIBER ERROR: Variable not found")
-			}
-		} else {
-			return instructionData.FieldByName(args[1]).Interface(), nil
-		}
+func (k Keys) GetValue(data interface{}) (interface{}, error) {
+	datas := data.(reflect.Value)
+
+	if k.Name == "" && k.VarName == "" {
+		return nil, log.Error("FIBER ERROR: The set of data is incorrect in GetValue")
 	} else {
-		variableName := instructionData.FieldByName(varName).Interface().(string)
-		if val := SearchVariable(variableName).Value; val != nil {
-			return val, nil
+		if k.Name != "" && k.IsVarName == "" && k.VarName == "" {
+			return datas.FieldByName(k.Name).Interface(), nil
+		} else if k.VarName != "" && k.IsVarName == "" && k.Name == "" {
+			return SearchVariable(k.VarName)
 		} else {
-			log.FiberError("Variable not found")
-			return false, fmt.Errorf("FIBER ERROR: Variable not found")
+			if isAVar := datas.FieldByName(k.IsVarName).Interface().(bool); isAVar {
+				variableName := datas.FieldByName(k.VarName).Interface().(string)
+				return SearchVariable(variableName)
+			} else {
+				return datas.FieldByName(k.Name).Interface(), nil
+			}
 		}
 	}
 }
@@ -196,7 +199,7 @@ func GetFloat(unk interface{}) float64 {
 
 // GetString Return the string value of an interface
 func GetString(unk interface{}) string {
-	str := fmt.Sprintf("%v", unk)
+	str := log.Sprint("%v", unk)
 	return str
 }
 

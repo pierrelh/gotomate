@@ -3,19 +3,17 @@ package sleep
 import (
 	"gotomate-astilectron/fiber/variable"
 	"gotomate-astilectron/log"
-	"reflect"
 	"time"
 )
 
 // MilliSleep sleep tm milli second
-func MilliSleep(instructionData reflect.Value, finished chan bool) int {
-
-	duration, err := variable.GetValue(instructionData, "DurationVarName", "DurationIsVar", "Duration")
+func MilliSleep(instructionData interface{}, finished chan bool) int {
+	duration, err := variable.Keys{VarName: "DurationVarName", IsVarName: "DurationIsVar", Name: "Duration"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
 	}
-	log.FiberInfo("Sleeping for: " + duration.(string) + "ms")
+	log.FiberInfo("Sleeping for: ", duration.(float64), "ms")
 
 	time.Sleep(time.Duration(duration.(float64)) * time.Millisecond)
 	finished <- true
@@ -23,14 +21,14 @@ func MilliSleep(instructionData reflect.Value, finished chan bool) int {
 }
 
 // Sleep time.Sleep tm second
-func Sleep(instructionData reflect.Value, finished chan bool) int {
-	duration, err := variable.GetValue(instructionData, "DurationVarName", "DurationIsVar", "Duration")
+func Sleep(instructionData interface{}, finished chan bool) int {
+	duration, err := variable.Keys{VarName: "DurationVarName", IsVarName: "DurationIsVar", Name: "Duration"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
 	}
 
-	log.FiberInfo("Sleeping for: " + duration.(string) + "s")
+	log.FiberInfo("Sleeping for: ", duration.(float64), "s")
 
 	time.Sleep(time.Duration(duration.(float64)) * time.Second)
 	finished <- true

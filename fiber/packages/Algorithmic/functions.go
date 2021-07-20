@@ -3,26 +3,30 @@ package algorithmic
 import (
 	"gotomate-astilectron/fiber/variable"
 	"gotomate-astilectron/log"
-	"reflect"
 )
 
 // For Execute a for loop
-func For(instructionData reflect.Value, finished chan bool) int {
+func For(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("For Statement")
 
-	valueOne, err := variable.GetValue(instructionData, "ValueOneVarName")
+	valueOne, err := variable.Keys{VarName: "ValueOneVarName"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
 	}
 
-	valueTwo, err := variable.GetValue(instructionData, "ValueTwoVarName", "ValueTwoIsVar", "ValueTwo")
+	valueTwo, err := variable.Keys{VarName: "ValueTwoVarName", Name: "ValueTwo", IsVarName: "ValueTwoIsVar"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
 	}
 
-	comparator := instructionData.FieldByName("Comparator").Interface().(string)
+	comparator, err := variable.Keys{Name: "Comparator"}.GetValue(instructionData)
+	if err != nil {
+		finished <- true
+		return -1
+	}
+
 	statement := false
 	switch comparator {
 	case "==":
@@ -52,17 +56,17 @@ func For(instructionData reflect.Value, finished chan bool) int {
 	}
 
 	if statement {
-		increment, err := variable.GetValue(instructionData, "IncrementVarName", "IncrementIsVar", "Increment")
+		increment, err := variable.Keys{VarName: "IncrementVarName", IsVarName: "IncrementIsVar", Name: "Increment"}.GetValue(instructionData)
 		if err != nil {
 			finished <- true
 			return -1
 		}
 
-		variable.SetVariable(instructionData.FieldByName("ValueOneVarName").Interface().(string), variable.GetFloat(valueOne)+float64(increment.(int)))
+		variable.SetVariable(instructionData, "ValueOneVarName", variable.GetFloat(valueOne)+float64(increment.(int)))
 		finished <- true
 		return -1
 	} else {
-		falseInstruction, err := variable.GetValue(instructionData, "FalseInstructionVarName", "FalseInstructionIsVar", "FalseInstruction")
+		falseInstruction, err := variable.Keys{VarName: "FalseInstructionVarName", IsVarName: "FalseInstructionIsVar", Name: "FalseInstruction"}.GetValue(instructionData)
 		if err != nil {
 			finished <- true
 			return -1
@@ -73,22 +77,27 @@ func For(instructionData reflect.Value, finished chan bool) int {
 }
 
 // If Compare if a statement is true
-func If(instructionData reflect.Value, finished chan bool) int {
+func If(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("If Statement")
 
-	valueOne, err := variable.GetValue(instructionData, "ValueOneVarName", "ValueOneIsVar", "ValueOne")
+	valueOne, err := variable.Keys{VarName: "ValueOneVarName", IsVarName: "ValueOneIsVar", Name: "ValueOne"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
 	}
 
-	valueTwo, err := variable.GetValue(instructionData, "ValueTwoVarName", "ValueTwoIsVar", "ValueTwo")
+	valueTwo, err := variable.Keys{VarName: "ValueTwoVarName", IsVarName: "ValueTwoIsVar", Name: "ValueTwo"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
 	}
 
-	comparator := instructionData.FieldByName("Comparator").Interface().(string)
+	comparator, err := variable.Keys{Name: "Comparator"}.GetValue(instructionData)
+	if err != nil {
+		finished <- true
+		return -1
+	}
+
 	statement := false
 	switch comparator {
 	case "==":
@@ -120,7 +129,7 @@ func If(instructionData reflect.Value, finished chan bool) int {
 	if statement {
 		return -1
 	} else {
-		falseInstruction, err := variable.GetValue(instructionData, "FalseInstructionVarName", "FalseInstructionIsVar", "FalseInstruction")
+		falseInstruction, err := variable.Keys{VarName: "FalseInstructionVarName", IsVarName: "FalseInstructionIsVar", Name: "FalseInstruction"}.GetValue(instructionData)
 		if err != nil {
 			finished <- true
 			return -1

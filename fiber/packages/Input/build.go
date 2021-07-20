@@ -1,11 +1,11 @@
 package input
 
 import (
-	"github.com/lxn/walk/declarative"
+	"gotomate-astilectron/fiber/template"
 )
 
 // Build Return the right databinder & the right template for a input instruction
-func Build(function string) (interface{}, []declarative.Widget) {
+func Build(function string) (interface{}, *template.Template) {
 	switch function {
 	case "Bool":
 		return new(InputDatabinder), InputTemplate

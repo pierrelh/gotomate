@@ -3,14 +3,13 @@ package log
 import (
 	"gotomate-astilectron/fiber/variable"
 	"gotomate-astilectron/log"
-	"reflect"
 )
 
 // Print log a value
-func Print(instructionData reflect.Value, finished chan bool) int {
+func Print(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Logging")
 
-	content, err := variable.GetValue(instructionData, "VarName", "LogIsVar", "Log")
+	content, err := variable.Keys{VarName: "VarName", IsVarName: "LogIsVar", Name: "Log"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1

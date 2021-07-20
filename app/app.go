@@ -1,10 +1,10 @@
 package app
 
 import (
-	"fmt"
 	"gotomate-astilectron/app/files"
 	"gotomate-astilectron/app/message"
 	"gotomate-astilectron/fiber"
+	golog "gotomate-astilectron/log"
 	"log"
 	"os"
 	"os/exec"
@@ -50,7 +50,7 @@ func (a *App) Build() *App {
 		},
 	)
 	if err != nil {
-		a.Log.Fatal(fmt.Errorf("main: new window failed: %w", err))
+		a.Log.Fatal(golog.Error("main: new window failed: %w", err))
 	}
 	// Handle signals
 	return a
@@ -59,7 +59,7 @@ func (a *App) Build() *App {
 // New init a new astilectron instance
 func (a *App) New() {
 	if a.Asti, err = astilectron.New(a.Log, a.Options); err != nil {
-		a.Log.Fatal(fmt.Errorf("main: creating astilectron failed: %w", err))
+		a.Log.Fatal(golog.Error("main: creating astilectron failed: %w", err))
 	}
 }
 
@@ -67,14 +67,14 @@ func (a *App) New() {
 func (a *App) Start() {
 	a.Asti.HandleSignals()
 	if err := a.Asti.Start(); err != nil {
-		a.Log.Fatal(fmt.Errorf("main: starting astilectron failed: %w", err))
+		a.Log.Fatal(golog.Error("main: starting astilectron failed: %w", err))
 	}
 }
 
 // Create create the astilectron window
 func (a *App) Create() {
 	if err := a.Window.Create(); err != nil {
-		a.Log.Fatal(fmt.Errorf("main: creating window failed: %w", err))
+		a.Log.Fatal(golog.Error("main: creating window failed: %w", err))
 	}
 }
 
