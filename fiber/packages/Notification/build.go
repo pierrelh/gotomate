@@ -1,14 +1,14 @@
 package notification
 
-import (
-	"github.com/lxn/walk/declarative"
-)
+import "gotomate-astilectron/fiber/template"
 
 // Build Return the right databinder & the right template for a notification instruction
-func Build(function string) (interface{}, []declarative.Widget) {
+func Build(function string) (interface{}, *template.Template) {
 	switch function {
 	case "Create":
 		return new(CreateDatabinder), CreateTemplate
+	case "Push":
+		return new(PushDatabinder), PushTemplate
 	}
 	return nil, nil
 }

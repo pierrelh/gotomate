@@ -144,11 +144,10 @@ func (k Keys) GetValue(data interface{}) (interface{}, error) {
 		if k.Name != "" && k.IsVarName == "" && k.VarName == "" {
 			return datas.FieldByName(k.Name).Interface(), nil
 		} else if k.VarName != "" && k.IsVarName == "" && k.Name == "" {
-			return SearchVariable(k.VarName)
+			return SearchVariable(datas.FieldByName(k.VarName).Interface().(string))
 		} else {
 			if isAVar := datas.FieldByName(k.IsVarName).Interface().(bool); isAVar {
-				variableName := datas.FieldByName(k.VarName).Interface().(string)
-				return SearchVariable(variableName)
+				return SearchVariable(datas.FieldByName(k.VarName).Interface().(string))
 			} else {
 				return datas.FieldByName(k.Name).Interface(), nil
 			}

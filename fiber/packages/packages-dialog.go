@@ -7,6 +7,7 @@ import (
 	algorithmic "gotomate-astilectron/fiber/packages/Algorithmic"
 	flow "gotomate-astilectron/fiber/packages/Flow"
 	input "gotomate-astilectron/fiber/packages/Input"
+	notification "gotomate-astilectron/fiber/packages/Notification"
 	sleep "gotomate-astilectron/fiber/packages/Sleep"
 	"gotomate-astilectron/fiber/template"
 	"gotomate-astilectron/log"
@@ -24,6 +25,8 @@ func PackageDecode(packageName string, funcName string) (interface{}, *template.
 		databinder, template = algorithmic.Build(funcName)
 	case "Input":
 		databinder, template = input.Build(funcName)
+	case "Notification":
+		databinder, template = notification.Build(funcName)
 	case "Sleep":
 		databinder, template = sleep.Build(funcName)
 	default:

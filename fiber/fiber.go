@@ -14,6 +14,7 @@ import (
 	algorithmic "gotomate-astilectron/fiber/packages/Algorithmic"
 	flow "gotomate-astilectron/fiber/packages/Flow"
 	input "gotomate-astilectron/fiber/packages/Input"
+	notification "gotomate-astilectron/fiber/packages/Notification"
 	sleep "gotomate-astilectron/fiber/packages/Sleep"
 	"gotomate-astilectron/fiber/variable"
 	"gotomate-astilectron/log"
@@ -205,6 +206,8 @@ func (fiber *Fiber) Run() {
 					nextID = algorithmic.Processing(funcName, instructionData, finished)
 				case "Input":
 					nextID = input.Processing(funcName, instructionData, finished)
+				case "Notification":
+					nextID = notification.Processing(funcName, instructionData, finished)
 				case "Sleep":
 					nextID = sleep.Processing(funcName, instructionData, finished)
 				default:

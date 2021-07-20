@@ -4,6 +4,7 @@ import (
 	"gotomate-astilectron/app/files"
 	"gotomate-astilectron/app/message"
 	"gotomate-astilectron/fiber"
+	"gotomate-astilectron/globals"
 	golog "gotomate-astilectron/log"
 	"log"
 	"os"
@@ -31,9 +32,9 @@ func (a *App) Build() *App {
 	a = &App{
 		Log: log.New(log.Writer(), log.Prefix(), log.Flags()),
 		Options: astilectron.Options{
-			AppName:            "Gotomate",
+			AppName:            globals.AppName,
 			BaseDirectoryPath:  "gotomate-astilectron",
-			AppIconDefaultPath: "gotomate.png",
+			AppIconDefaultPath: globals.AppIcon,
 		},
 		Window: new(astilectron.Window),
 	}
@@ -42,7 +43,7 @@ func (a *App) Build() *App {
 	a.Start()
 
 	a.Window, err = a.Asti.NewWindow(
-		"./app/template.html",
+		globals.AppTemplate,
 		&astilectron.WindowOptions{
 			Center: astikit.BoolPtr(true),
 			Height: astikit.IntPtr(700),

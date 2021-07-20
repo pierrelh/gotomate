@@ -9,6 +9,11 @@ func Processing(funcName string, instructionData interface{}, finished chan bool
 			nextID = Create(instructionData, finished)
 		}()
 		<-finished
+	case "Push":
+		go func() {
+			nextID = Push(instructionData, finished)
+		}()
+		<-finished
 	default:
 		return -2
 	}

@@ -1,15 +1,14 @@
-// Print a new notification in windows system
-
 package notification
 
 import (
 	"gotomate-astilectron/fiber/variable"
+	"gotomate-astilectron/globals"
 	"gotomate-astilectron/log"
 
-	"github.com/lxn/walk"
+	"gopkg.in/toast.v1"
 )
 
-// Create create a new notification with presets & push it
+// Create create a new notification with presets
 func Create(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Creating a notification")
 
@@ -25,44 +24,37 @@ func Create(instructionData interface{}, finished chan bool) int {
 		return -1
 	}
 
-	notTitle := "Default Title"
-	notMsg := "Default Message"
-	if title != "" {
-		notTitle = title.(string)
+	notification := &toast.Notification{
+		AppID:   globals.AppName,
+		Title:   title.(string),
+		Message: msg.(string),
+		Icon:    globals.AppIcon,
+		// Actions: []toast.Action{
+		// 	{"protocol", "I'm a button", ""},
+		// 	{"protocol", "Me too!", ""},
+		// },
 	}
-	if msg != "" {
-		notMsg = msg.(string)
-	}
+	variable.SetVariable(instructionData, "Output", notification)
 
-	mw, err := walk.NewMainWindow()
+	finished <- true
+	return -1
+}
+
+// Push an existing notification
+func Push(instructionData interface{}, finished chan bool) int {
+	log.FiberInfo("Pushing a notification")
+
+	notification, err := variable.Keys{VarName: "NotificationVarName"}.GetValue(instructionData)
 	if err != nil {
-		log.FiberError("FIBER ERROR: ", err)
+		finished <- true
+		return -1
 	}
 
-	icon, err := walk.Resources.Icon("/img/icon.ico")
+	err = notification.(*toast.Notification).Push()
 	if err != nil {
-		log.FiberError("FIBER ERROR: ", err)
-	}
-
-	ni, err := walk.NewNotifyIcon(mw)
-	if err != nil {
-		log.FiberError("FIBER ERROR: ", err)
-	}
-
-	if err := ni.SetIcon(icon); err != nil {
-		log.FiberError("FIBER ERROR: ", err)
-	}
-
-	if err := ni.SetVisible(true); err != nil {
-		log.FiberError("FIBER ERROR: ", err)
-	}
-
-	if err := ni.ShowInfo(notTitle, notMsg); err != nil {
-		log.FiberError("FIBER ERROR: ", err)
+		log.FiberError("Creating a notification")
 	}
 
 	finished <- true
-
-	mw.Run()
 	return -1
 }
