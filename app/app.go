@@ -34,7 +34,7 @@ func (a *App) Build() *App {
 		Options: astilectron.Options{
 			AppName:            globals.AppName,
 			BaseDirectoryPath:  "gotomate-astilectron",
-			AppIconDefaultPath: globals.AppIcon,
+			AppIconDefaultPath: globals.DirectoryPath + globals.AppIcon,
 		},
 		Window: new(astilectron.Window),
 	}
@@ -43,7 +43,7 @@ func (a *App) Build() *App {
 	a.Start()
 
 	a.Window, err = a.Asti.NewWindow(
-		globals.AppTemplate,
+		"./app/template.html",
 		&astilectron.WindowOptions{
 			Center: astikit.BoolPtr(true),
 			Height: astikit.IntPtr(700),

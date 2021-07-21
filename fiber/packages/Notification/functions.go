@@ -28,7 +28,7 @@ func Create(instructionData interface{}, finished chan bool) int {
 		AppID:   globals.AppName,
 		Title:   title.(string),
 		Message: msg.(string),
-		Icon:    globals.AppIcon,
+		Icon:    globals.DirectoryPath + globals.AppIcon,
 		// Actions: []toast.Action{
 		// 	{"protocol", "I'm a button", ""},
 		// 	{"protocol", "Me too!", ""},

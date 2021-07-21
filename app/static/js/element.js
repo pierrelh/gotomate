@@ -127,6 +127,7 @@ class VarToggler {
 			document.getElementById(assignTo).classList.toggle("variable-field");
 			if (this.checked) {
 				document.getElementById(assignTo).type = "text";
+				document.getElementById(assignTo).value = "";
 			} else {
 				document.getElementById(assignTo).type = originalType;
 			}

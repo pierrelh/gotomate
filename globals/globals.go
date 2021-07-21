@@ -4,10 +4,9 @@ import "os"
 
 const (
 	AppName string = "Gotomate"
+	AppIcon string = "/img/gotomate.png"
 )
 
 var (
 	DirectoryPath, _ = os.Getwd()
-	AppIcon          = DirectoryPath + "/img/gotomate.png"
-	AppTemplate      = DirectoryPath + "/app/template.html"
 )

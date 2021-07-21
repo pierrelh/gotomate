@@ -28,6 +28,12 @@ var running = 0
 var finished = make(chan bool)
 var stop = make(chan bool)
 
+const (
+	finishedFiber   int = -99
+	unknownFunction int = -2
+	continuFiber    int = -1
+)
+
 // LoadingFiber Initialize the loading fiber structure
 type LoadingFiber struct {
 	Name         string
@@ -216,18 +222,18 @@ func (fiber *Fiber) Run() {
 				}
 
 				// The error code for a finished fiber
-				if nextID == -99 {
+				if nextID == finishedFiber {
 					running = 0
 					return
 				}
 
 				// The error code for an unknown function
-				if nextID == -2 {
+				if nextID == unknownFunction {
 					log.FiberError("Function not found:", funcName)
-					nextID = -1
+					nextID = continuFiber
 				}
 
-				if nextID == -1 {
+				if nextID == continuFiber {
 					idx := sort.Search(len(fiber.Instructions), func(i int) bool {
 						return fiber.Instructions[i].ID >= instruction.NextID
 					})

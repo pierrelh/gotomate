@@ -23,6 +23,6 @@ require (
 	github.com/temoto/robotstxt v1.1.2 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	gopkg.in/Knetic/govaluate.v3 v3.0.0 // indirect
-	gopkg.in/toast.v1 v1.0.0-20180812000517-0a84660828b2 // indirect
+	gopkg.in/toast.v1 v1.0.0-20180812000517-0a84660828b2
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
 )
