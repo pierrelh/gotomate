@@ -1,15 +1,17 @@
 package flow
 
-import "fmt"
+import (
+	"gotomate-astilectron/log"
+)
 
 // Write write string to clipboard
 func End(finished chan bool) {
-	fmt.Println("| Fiber Finished |")
+	log.Plain("| Fiber Finished |")
 	finished <- true
 }
 
 // Read read string from clipboard
 func Start(finished chan bool) {
-	fmt.Println("| Fiber Start |")
+	log.Plain("| Fiber Start |")
 	finished <- true
 }

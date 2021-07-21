@@ -2,12 +2,13 @@ package instructions
 
 import (
 	"encoding/json"
-	"fmt"
 	"gotomate-astilectron/fiber/packages"
 	"gotomate-astilectron/fiber/template"
+	"gotomate-astilectron/log"
 	"reflect"
 	"sort"
-	"strconv"
+
+	"github.com/mitchellh/mapstructure"
 )
 
 // FiberInstructions Create the automate's list of instructions
@@ -23,7 +24,7 @@ type Instruction struct {
 	IconPath string
 	NextID   int
 	Datas    interface{}
-	Template template.Template
+	Template *template.InstructionTemplate
 }
 
 // FiberLoadingInstruction Create the automate's list of instructions
@@ -39,17 +40,11 @@ type LoadingInstruction struct {
 	IconPath string
 	NextID   int
 	Datas    json.RawMessage
-	Template json.RawMessage
 }
 
 // Hydrate the new Fiber's instructions
 func (fi *FiberInstructions) Hydrate() *Instruction {
 	databinder, fields := packages.PackageDecode("Flow", "Start")
-	// flds := make([]template.Field, len(fields))
-	// copy(flds, fields)
-	// temp := &template.Template{
-	// 	Fields: flds,
-	// }
 	newInstruction := &Instruction{
 		ID:       0,
 		Package:  "Flow",
@@ -79,7 +74,7 @@ func (fi *FiberInstructions) DeleteInstruction(inst *Instruction) bool {
 			return true
 		}
 	}
-	fmt.Println("GOTOMATE ERROR: Unable to delete the fiber's instruction")
+	log.GotomateError("Unable to delete the fiber's instruction")
 	return false
 }
 
@@ -89,7 +84,7 @@ func (fi *FiberInstructions) FindInstructionById(id int) *Instruction {
 		return (*fi)[i].ID >= id
 	})
 	if idx == len(*fi) {
-		fmt.Println("FIBER ERROR: Unable to find button with id: ", id)
+		log.GotomateError("Unable to find button with id:", id)
 		return nil
 	} else {
 		return (*fi)[idx]
@@ -101,11 +96,11 @@ func (inst *Instruction) Build(id int, content map[string]interface{}) *Instruct
 	databinder, fields := packages.PackageDecode(content["PackageName"].(string), content["FuncName"].(string))
 
 	if databinder != nil && fields != nil {
-		// flds := make([]template.Field, len(fields))
-		// copy(flds, fields)
 		inst.Template = fields
+		inst.Datas = databinder
 	} else {
 		inst.Template = nil
+		inst.Datas = nil
 	}
 	funcName, packName := content["FuncName"].(string), content["PackageName"].(string)
 	inst.ID = id
@@ -113,97 +108,20 @@ func (inst *Instruction) Build(id int, content map[string]interface{}) *Instruct
 	inst.FuncName = funcName
 	inst.IconPath = "../fiber/packages/" + packName + "/icon.png"
 	inst.NextID = id + 1
-	inst.Datas = databinder
 	return inst
 }
 
-// UpdatePosition update the position of an instruction in the datas
+// UpdatePosition Update the position of an instruction in the datas
 func (inst *Instruction) UpdatePosition(x, y int) {
 	inst.X = x
 	inst.Y = y
 }
 
-// TemplateDecode Decode the received template from JS
-func (inst *Instruction) TemplateDecode(fields []interface{}) {
-	var dest = []map[string]map[string]interface{}{}
-	for i := 0; i < len(fields); i++ {
-		b := []byte(`"key":{"key":"value"}`)
-		json.Unmarshal(b, &fields[i])
-		elements := fields[i].(map[string]interface{})
-		var m = map[string]map[string]interface{}{}
-		for element, content := range elements {
-			m[element] = content.(map[string]interface{})
-		}
-		dest = append(dest, m)
-	}
-	inst.Template = dest
+// UpdateNextID Update the NextID of an instruction in the datas
+func (inst *Instruction) UpdateNextID(nextID int) {
+	inst.NextID = nextID
 }
 
-// getAttr Get the databinder field to bind value
-func getAttr(obj interface{}, fieldName string) reflect.Value {
-	pointToStruct := reflect.ValueOf(obj)
-	curStruct := pointToStruct.Elem()
-	if curStruct.Kind() != reflect.Struct {
-		panic("GOTOMATE ERROR: Struct not found in template")
-	}
-	curField := curStruct.FieldByName(fieldName)
-	if !curField.IsValid() {
-		panic("GOTOMATE ERROR: Field not found in template databinder")
-	}
-	return curField
-}
-
-// SetDatabinder Fill the instruction databinder with the template's parameters
-func (inst *Instruction) SetDatabinder() {
-	databinder := inst.Datas
-	for i := 0; i < len(inst.Template); i++ {
-		if inst.Template[i]["Input"] != nil {
-			isVar := false
-			if inst.Template[i]["VariableToggler"] != nil {
-				isVar := inst.Template[i]["VariableToggler"]["Checked"].(bool)
-				if bind := inst.Template[i]["VariableToggler"]["Bind"].(string); bind != "" {
-					databinderInsert(getAttr(databinder, bind), isVar)
-				}
-			}
-
-			if bind := inst.Template[i]["Input"]["Bind"].(string); bind != "" && !isVar {
-				databinderInsert(getAttr(databinder, bind), inst.Template[i]["Input"]["Value"])
-			} else if bindVar := inst.Template[i]["Input"]["BindVariable"].(string); bindVar != "" && isVar {
-				databinderInsert(getAttr(databinder, bindVar), inst.Template[i]["Input"]["Value"])
-			}
-		}
-	}
-}
-
-// databinderInsert Insert in the reflect value of the databinder, the val by her type
-func databinderInsert(r reflect.Value, val interface{}) {
-	switch r.Kind() {
-	case reflect.Bool:
-		r.SetBool(val.(bool))
-	case reflect.Float32, reflect.Float64:
-		f, err := strconv.ParseFloat(val.(string), 64)
-		if err != nil {
-			fmt.Println("GOTOMATE WARNING: Unable to parse data", val, "to float")
-			return
-		}
-		r.SetFloat(f)
-	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-		i, err := strconv.ParseInt(val.(string), 10, 64)
-		if err != nil {
-			fmt.Println("GOTOMATE WARNING: Unable to parse data", val, "to int")
-			return
-		}
-		r.SetInt(i)
-	case reflect.String:
-		r.SetString(val.(string))
-	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
-		u, err := strconv.ParseUint(val.(string), 10, 64)
-		if err != nil {
-			fmt.Println("GOTOMATE WARNING: Unable to parse data", val, "to uint")
-			return
-		}
-		r.SetUint(u)
-	default:
-		fmt.Println("GOTOMATE WARNING: Unknown type on setting datas")
-	}
+func (inst *Instruction) UpdateDatabinder(databinder map[string]interface{}) {
+	mapstructure.Decode(databinder, &inst.Datas)
 }

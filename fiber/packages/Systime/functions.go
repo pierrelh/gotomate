@@ -1,29 +1,28 @@
 package systime
 
 import (
-	"fmt"
-	"gotomate/fiber/variable"
-	"reflect"
+	"gotomate-astilectron/fiber/variable"
+	"gotomate-astilectron/log"
 	"time"
 )
 
 // GetCurrentSysClock return the current sys clock
-func GetCurrentSysClock(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Getting sys clock...")
+func GetCurrentSysClock(instructionData interface{}, finished chan bool) int {
+	log.FiberInfo("Getting system's clock")
 
 	h, m, s := time.Now().Clock()
-	variable.SetVariable(instructionData.FieldByName("HoursOutput").Interface().(string), h)
-	variable.SetVariable(instructionData.FieldByName("MinutesOutput").Interface().(string), m)
-	variable.SetVariable(instructionData.FieldByName("SecondsOutput").Interface().(string), s)
+	variable.SetVariable(instructionData, "HoursOutput", h)
+	variable.SetVariable(instructionData, "MinutesOutput", m)
+	variable.SetVariable(instructionData, "SecondsOutput", s)
 	finished <- true
 	return -1
 }
 
 // GetCurrentSysTime return the current sys time
-func GetCurrentSysTime(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Getting sys time...")
+func GetCurrentSysTime(instructionData interface{}, finished chan bool) int {
+	log.FiberInfo("Getting system's time")
 
-	variable.SetVariable(instructionData.FieldByName("Output").Interface().(string), time.Now())
+	variable.SetVariable(instructionData, "Output", time.Now())
 	finished <- true
 	return -1
 }

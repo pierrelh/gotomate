@@ -1,69 +1,60 @@
-// Print a new notification in windows system
-
 package notification
 
 import (
-	"fmt"
-	"gotomate/fiber/variable"
-	"reflect"
+	"gotomate-astilectron/fiber/variable"
+	"gotomate-astilectron/globals"
+	"gotomate-astilectron/log"
 
-	"github.com/lxn/walk"
+	"gopkg.in/toast.v1"
 )
 
-// Create create a new notification with presets & push it
-func Create(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Creating notification ...")
+// Create create a new notification with presets
+func Create(instructionData interface{}, finished chan bool) int {
+	log.FiberInfo("Creating a notification")
 
-	title, err := variable.GetValue(instructionData, "TitleVarName", "TitleIsVar", "Title")
+	title, err := variable.Keys{VarName: "TitleVarName", IsVarName: "TitleIsVar", Name: "Title"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
 	}
 
-	msg, err := variable.GetValue(instructionData, "MessageVarName", "MessageIsVar", "Message")
+	msg, err := variable.Keys{VarName: "MessageVarName", IsVarName: "MessageIsVar", Name: "Message"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
 	}
 
-	notTitle := "Default Title"
-	notMsg := "Default Message"
-	if title != "" {
-		notTitle = title.(string)
+	notification := &toast.Notification{
+		AppID:   globals.AppName,
+		Title:   title.(string),
+		Message: msg.(string),
+		Icon:    globals.DirectoryPath + globals.AppIcon,
+		// Actions: []toast.Action{
+		// 	{"protocol", "I'm a button", ""},
+		// 	{"protocol", "Me too!", ""},
+		// },
 	}
-	if msg != "" {
-		notMsg = msg.(string)
-	}
+	variable.SetVariable(instructionData, "Output", notification)
 
-	mw, err := walk.NewMainWindow()
+	finished <- true
+	return -1
+}
+
+// Push an existing notification
+func Push(instructionData interface{}, finished chan bool) int {
+	log.FiberInfo("Pushing a notification")
+
+	notification, err := variable.Keys{VarName: "NotificationVarName"}.GetValue(instructionData)
 	if err != nil {
-		fmt.Println("FIBER ERROR: ", err)
+		finished <- true
+		return -1
 	}
 
-	icon, err := walk.Resources.Icon("/img/icon.ico")
+	err = notification.(*toast.Notification).Push()
 	if err != nil {
-		fmt.Println("FIBER ERROR: ", err)
-	}
-
-	ni, err := walk.NewNotifyIcon(mw)
-	if err != nil {
-		fmt.Println("FIBER ERROR: ", err)
-	}
-
-	if err := ni.SetIcon(icon); err != nil {
-		fmt.Println("FIBER ERROR: ", err)
-	}
-
-	if err := ni.SetVisible(true); err != nil {
-		fmt.Println("FIBER ERROR: ", err)
-	}
-
-	if err := ni.ShowInfo(notTitle, notMsg); err != nil {
-		fmt.Println("FIBER ERROR: ", err)
+		log.FiberError("Creating a notification")
 	}
 
 	finished <- true
-
-	mw.Run()
 	return -1
 }

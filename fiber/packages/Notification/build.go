@@ -1,17 +1,14 @@
 package notification
 
-import (
-	"fmt"
-
-	"github.com/lxn/walk/declarative"
-)
+import "gotomate-astilectron/fiber/template"
 
 // Build Return the right databinder & the right template for a notification instruction
-func Build(function string) (interface{}, []declarative.Widget) {
+func Build(function string) (interface{}, *template.InstructionTemplate) {
 	switch function {
 	case "Create":
 		return new(CreateDatabinder), CreateTemplate
+	case "Push":
+		return new(PushDatabinder), PushTemplate
 	}
-	fmt.Println("GOTOMATE ERROR: Unable to find the function for instruction building")
 	return nil, nil
 }

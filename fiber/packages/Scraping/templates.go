@@ -1,606 +1,434 @@
 package scraping
 
-import "github.com/lxn/walk/declarative"
+import (
+	"gotomate-astilectron/fiber/template"
+)
 
 // AddAllowedDomainTemplate Dialog's AddAllowedDomain Template
-var AddAllowedDomainTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Scraper",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ScraperVarName"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Text:    "Is a Var",
-				Checked: true,
-				Enabled: false,
-			},
+var AddAllowedDomainTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Scraper:",
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Path to allow",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("PathVarName"),
-				Visible:       declarative.Bind("PathIsAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.TextEdit{
-				Text:    declarative.Bind("Path"),
-				Visible: declarative.Bind("!PathIsAVar.Checked"),
-			},
-			declarative.CheckBox{
-				Name:    "PathIsAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("PathIsVar"),
-			},
+		Input: template.TextInput{
+			BindVariable: "ScraperVarName",
 		},
-	},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Path to allow:",
+		},
+		Input: template.UrlInput{
+			Bind:         "Path",
+			BindVariable: "PathVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "PathIsVar",
+		},
+	}.Build(),
 }
 
 // AddDisallowedDomainTemplate Dialog's AddDisallowedDomain Template
-var AddDisallowedDomainTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Scraper",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ScraperVarName"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Text:    "Is a Var",
-				Checked: true,
-				Enabled: false,
-			},
+var AddDisallowedDomainTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Scraper:",
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Path to disallow",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("PathVarName"),
-				Visible:       declarative.Bind("PathIsAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.TextEdit{
-				Text:    declarative.Bind("Path"),
-				Visible: declarative.Bind("!PathIsAVar.Checked"),
-			},
-			declarative.CheckBox{
-				Name:    "PathIsAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("PathIsVar"),
-			},
+		Input: template.TextInput{
+			BindVariable: "ScraperVarName",
 		},
-	},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Path to disallow:",
+		},
+		Input: template.UrlInput{
+			Bind:         "Path",
+			BindVariable: "PathVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "PathIsVar",
+		},
+	}.Build(),
 }
 
 // IgnoreRobotsTxtTemplate Dialog's IgnoreRobotsTxt Template
-var IgnoreRobotsTxtTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Scraper",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ScraperVarName"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Text:    "Is a Var",
-				Checked: true,
-				Enabled: false,
-			},
+var IgnoreRobotsTxtTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Scraper:",
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Ignore robots.txt ?",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:               declarative.Bind("IgnoreVarName"),
-				Visible:            declarative.Bind("IgnoreIsAVar.Checked"),
-				AlwaysConsumeSpace: true,
-				CompactHeight:      true,
-			},
-			declarative.CheckBox{
-				Text:    "True ?",
-				Visible: declarative.Bind("!IgnoreIsAVar.Checked"),
-				Checked: declarative.Bind("Ignore"),
-			},
-			declarative.CheckBox{
-				Name:    "IgnoreIsAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("IgnoreIsVar"),
-			},
+		Input: template.TextInput{
+			BindVariable: "ScraperVarName",
 		},
-	},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Ignore robots.txt ?:",
+		},
+		Input: template.CheckboxInput{
+			Bind:         "Ignore",
+			BindVariable: "IgnoreVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "IgnoreIsVar",
+		},
+	}.Build(),
 }
 
 // NewScraperTemplate Dialog's NewScraper Template
-var NewScraperTemplate = []declarative.Widget{
-	declarative.Label{
-		Text: "Output var:",
-	},
-	declarative.TextEdit{
-		Text:          declarative.Bind("Output"),
-		CompactHeight: true,
-	},
+var NewScraperTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Output:",
+		},
+		Input: template.TextInput{
+			Bind: "Output",
+		},
+	}.Build(),
 }
 
 // OnFindScrapAttributeTemplate Dialog's OnFindScrapAttribute Template
-var OnFindScrapAttributeTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Scraper",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ScraperVarName"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Text:    "Is a Var",
-				Checked: true,
-				Enabled: false,
-			},
+var OnFindScrapAttributeTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Scraper:",
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Element to scrap",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ElementVarName"),
-				Visible:       declarative.Bind("ElementIsAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.TextEdit{
-				Text:    declarative.Bind("Element"),
-				Visible: declarative.Bind("!ElementIsAVar.Checked"),
-			},
-			declarative.CheckBox{
-				Name:    "ElementIsAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("ElementIsVar"),
-			},
+		Input: template.TextInput{
+			BindVariable: "ScraperVarName",
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Attribute to scrap",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("AttributeVarName"),
-				Visible:       declarative.Bind("AttributeIsAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.TextEdit{
-				Text:    declarative.Bind("Attribute"),
-				Visible: declarative.Bind("!AttributeIsAVar.Checked"),
-			},
-			declarative.CheckBox{
-				Name:    "AttributeIsAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("AttributeIsVar"),
-			},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Array to store the data",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("TabVarName"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Text:    "Is a Var",
-				Checked: true,
-				Enabled: false,
-			},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Element to scrap:",
 		},
-	},
+		Input: template.TextInput{
+			Bind:         "Element",
+			BindVariable: "ElementVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "ElementIsVar",
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Attribute to scrap:",
+		},
+		Input: template.TextInput{
+			Bind:         "Attribute",
+			BindVariable: "AttributeVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "AttributeIsVar",
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Array to store the data:",
+		},
+		Input: template.TextInput{
+			BindVariable: "TabVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
+		},
+	}.Build(),
 }
 
 // OnFindScrapChildAttributeTemplate Dialog's OnFindScrapChildAttribute Template
-var OnFindScrapChildAttributeTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Scraper",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ScraperVarName"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Text:    "Is a Var",
-				Checked: true,
-				Enabled: false,
-			},
+var OnFindScrapChildAttributeTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Scraper:",
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Parent's child to scrap",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ElementVarName"),
-				Visible:       declarative.Bind("ElementIsAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.TextEdit{
-				Text:    declarative.Bind("Element"),
-				Visible: declarative.Bind("!ElementIsAVar.Checked"),
-			},
-			declarative.CheckBox{
-				Name:    "ElementIsAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("ElementIsVar"),
-			},
+		Input: template.TextInput{
+			BindVariable: "ScraperVarName",
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Child name to scrap",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ChildAttributeVarName"),
-				Visible:       declarative.Bind("ChildAttributeIsAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.TextEdit{
-				Text:    declarative.Bind("ChildAttribute"),
-				Visible: declarative.Bind("!ChildAttributeIsAVar.Checked"),
-			},
-			declarative.CheckBox{
-				Name:    "ChildAttributeIsAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("ChildAttributeIsVar"),
-			},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Attribute to scrap",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("AttributeVarName"),
-				Visible:       declarative.Bind("AttributeIsAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.TextEdit{
-				Text:    declarative.Bind("Attribute"),
-				Visible: declarative.Bind("!AttributeIsAVar.Checked"),
-			},
-			declarative.CheckBox{
-				Name:    "AttributeIsAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("AttributeIsVar"),
-			},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Parent's child to scrap:",
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Array to store the data",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("TabVarName"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Text:    "Is a Var",
-				Checked: true,
-				Enabled: false,
-			},
+		Input: template.TextInput{
+			Bind:         "Element",
+			BindVariable: "ElementVarName",
 		},
-	},
+		VariableToggler: template.VariableToggler{
+			Bind: "ElementIsVar",
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Child name to scrap:",
+		},
+		Input: template.TextInput{
+			Bind:         "ChildAttribute",
+			BindVariable: "ChildAttributeVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "ChildAttributeIsVar",
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Attribute to scrap:",
+		},
+		Input: template.TextInput{
+			Bind:         "Attribute",
+			BindVariable: "AttributeVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "AttributeIsVar",
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Array to store the data:",
+		},
+		Input: template.TextInput{
+			BindVariable: "TabVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
+		},
+	}.Build(),
 }
 
 // OnFindScrapTextTemplate Dialog's OnFindScrapText Template
-var OnFindScrapTextTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Scraper",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ScraperVarName"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Text:    "Is a Var",
-				Checked: true,
-				Enabled: false,
-			},
+var OnFindScrapTextTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Scraper:",
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Element to scrap",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ElementVarName"),
-				Visible:       declarative.Bind("ElementIsAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.TextEdit{
-				Text:    declarative.Bind("Element"),
-				Visible: declarative.Bind("!ElementIsAVar.Checked"),
-			},
-			declarative.CheckBox{
-				Name:    "ElementIsAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("ElementIsVar"),
-			},
+		Input: template.TextInput{
+			BindVariable: "ScraperVarName",
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Array to store the data",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("TabVarName"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Text:    "Is a Var",
-				Checked: true,
-				Enabled: false,
-			},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
 		},
-	},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Element to scrap:",
+		},
+		Input: template.TextInput{
+			Bind:         "Element",
+			BindVariable: "ElementVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "ElementIsVar",
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Array to store the data:",
+		},
+		Input: template.TextInput{
+			BindVariable: "TabVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
+		},
+	}.Build(),
 }
 
 // OnFindScrapChildTextTemplate Dialog's OnFindScrapChildText Template
-var OnFindScrapChildTextTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Scraper",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ScraperVarName"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Text:    "Is a Var",
-				Checked: true,
-				Enabled: false,
-			},
+var OnFindScrapChildTextTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Scraper:",
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Parent's child to scrap",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ElementVarName"),
-				Visible:       declarative.Bind("ElementIsAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.TextEdit{
-				Text:    declarative.Bind("Element"),
-				Visible: declarative.Bind("!ElementIsAVar.Checked"),
-			},
-			declarative.CheckBox{
-				Name:    "ElementIsAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("ElementIsVar"),
-			},
+		Input: template.TextInput{
+			BindVariable: "ScraperVarName",
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Child name to scrap",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ChildAttributeVarName"),
-				Visible:       declarative.Bind("ChildAttributeIsAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.TextEdit{
-				Text:    declarative.Bind("ChildAttribute"),
-				Visible: declarative.Bind("!ChildAttributeIsAVar.Checked"),
-			},
-			declarative.CheckBox{
-				Name:    "ChildAttributeIsAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("ChildAttributeIsVar"),
-			},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Array to store the data",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("TabVarName"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Text:    "Is a Var",
-				Checked: true,
-				Enabled: false,
-			},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Parent's child to scrap:",
 		},
-	},
+		Input: template.TextInput{
+			Bind:         "Element",
+			BindVariable: "ElementVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "ElementIsVar",
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Child name to scrap:",
+		},
+		Input: template.TextInput{
+			Bind:         "ChildAttribute",
+			BindVariable: "ChildAttributeVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "ChildAttributeIsVar",
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Array to store the data:",
+		},
+		Input: template.TextInput{
+			BindVariable: "TabVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
+		},
+	}.Build(),
 }
 
 // OnFindVisitTemplate Dialog's OnFindVisit Template
-var OnFindVisitTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Scraper",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ScraperVarName"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Text:    "Is a Var",
-				Checked: true,
-				Enabled: false,
-			},
+var OnFindVisitTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Scraper:",
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Element to visit",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ElementVarName"),
-				Visible:       declarative.Bind("ElementIsAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.TextEdit{
-				Text:    declarative.Bind("Element"),
-				Visible: declarative.Bind("!ElementIsAVar.Checked"),
-			},
-			declarative.CheckBox{
-				Name:    "ElementIsAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("ElementIsVar"),
-			},
+		Input: template.TextInput{
+			BindVariable: "ScraperVarName",
 		},
-	},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Element to visit:",
+		},
+		Input: template.TextInput{
+			Bind:         "Element",
+			BindVariable: "ElementVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "ElementIsVar",
+		},
+	}.Build(),
 }
 
 // OnFindChildVisitTemplate Dialog's OnFindChildVisit Template
-var OnFindChildVisitTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Scraper",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ScraperVarName"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Text:    "Is a Var",
-				Checked: true,
-				Enabled: false,
-			},
+var OnFindChildVisitTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Scraper:",
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Parent's child to visit",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ElementVarName"),
-				Visible:       declarative.Bind("ElementIsAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.TextEdit{
-				Text:    declarative.Bind("Element"),
-				Visible: declarative.Bind("!ElementIsAVar.Checked"),
-			},
-			declarative.CheckBox{
-				Name:    "ElementIsAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("ElementIsVar"),
-			},
+		Input: template.TextInput{
+			BindVariable: "ScraperVarName",
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Child name to visit",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ChildAttributeVarName"),
-				Visible:       declarative.Bind("ChildAttributeIsAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.TextEdit{
-				Text:    declarative.Bind("ChildAttribute"),
-				Visible: declarative.Bind("!ChildAttributeIsAVar.Checked"),
-			},
-			declarative.CheckBox{
-				Name:    "ChildAttributeIsAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("ChildAttributeIsVar"),
-			},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
 		},
-	},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Parent's child to scrap:",
+		},
+		Input: template.TextInput{
+			Bind:         "Element",
+			BindVariable: "ElementVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "ElementIsVar",
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Child name to scrap:",
+		},
+		Input: template.TextInput{
+			Bind:         "ChildAttribute",
+			BindVariable: "ChildAttributeVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "ChildAttributeIsVar",
+		},
+	}.Build(),
 }
 
 // ScraperEndConditionTemplate Dialog's ScraperEndCondition Template
-var ScraperEndConditionTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Scraper",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ScraperVarName"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Text:    "Is a Var",
-				Checked: true,
-				Enabled: false,
-			},
+var ScraperEndConditionTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Scraper:",
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Iterations numbers",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("EndVarName"),
-				Visible:       declarative.Bind("EndIsAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.NumberEdit{
-				Value:    declarative.Bind("End"),
-				Visible:  declarative.Bind("!EndIsAVar.Checked"),
-				Decimals: 0,
-			},
-			declarative.CheckBox{
-				Name:    "EndIsAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("EndIsVar"),
-			},
+		Input: template.TextInput{
+			BindVariable: "ScraperVarName",
 		},
-	},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Iterations numbers:",
+		},
+		Input: template.NumberInput{
+			Bind:         "End",
+			BindVariable: "EndVarName",
+			Decimals:     0,
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "EndIsVar",
+		},
+	}.Build(),
 }
 
 // ScrapStartTemplate Dialog's ScrapStart Template
-var ScrapStartTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Scraper",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ScraperVarName"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Text:    "Is a Var",
-				Checked: true,
-				Enabled: false,
-			},
+var ScrapStartTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Scraper:",
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Url to scrap",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("UrlVarName"),
-				Visible:       declarative.Bind("UrlIsAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.TextEdit{
-				Text:    declarative.Bind("Url"),
-				Visible: declarative.Bind("!UrlIsAVar.Checked"),
-			},
-			declarative.CheckBox{
-				Name:    "UrlIsAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("UrlIsVar"),
-			},
+		Input: template.TextInput{
+			BindVariable: "ScraperVarName",
 		},
-	},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Url to scrap:",
+		},
+		Input: template.UrlInput{
+			Bind:         "Url",
+			BindVariable: "UrlVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "UrlIsVar",
+		},
+	}.Build(),
 }

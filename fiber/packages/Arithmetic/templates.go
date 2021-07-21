@@ -1,330 +1,262 @@
 package arithmetic
 
-import "github.com/lxn/walk/declarative"
+import (
+	"gotomate-astilectron/fiber/template"
+)
 
 // DivideTemplate Dialog's Divide Template
-var DivideTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Value One",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("VarOneName"),
-				Visible:       declarative.Bind("IsOneAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.NumberEdit{
-				Value:    declarative.Bind("ValueOne"),
-				Visible:  declarative.Bind("!IsOneAVar.Checked"),
-				Decimals: 5,
-			},
-			declarative.CheckBox{
-				Name:    "IsOneAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("ValueOneIsVar"),
-			},
+var DivideTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Value One:",
 		},
-	},
-	declarative.Label{
-		Text:          "÷",
-		TextAlignment: declarative.AlignCenter,
-		Font:          declarative.Font{Family: "Roboto", PointSize: 12, Bold: true},
-	},
-	declarative.GroupBox{
-		Title:  "Value Two",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("VarTwoName"),
-				Visible:       declarative.Bind("IsTwoAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.NumberEdit{
-				Value:    declarative.Bind("ValueTwo"),
-				Visible:  declarative.Bind("!IsTwoAVar.Checked"),
-				Decimals: 5,
-			},
-			declarative.CheckBox{
-				Name:    "IsTwoAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("ValueTwoIsVar"),
-			},
+		Input: template.NumberInput{
+			Bind:         "ValueOne",
+			BindVariable: "VarOneName",
+			Decimals:     5,
 		},
-	},
-	declarative.Label{
-		Text: "Output:",
-	},
-	declarative.TextEdit{
-		Text:          declarative.Bind("Output"),
-		CompactHeight: true,
-	},
+		VariableToggler: template.VariableToggler{
+			Bind: "ValueOneIsVar",
+		},
+	}.Build(),
+	template.Field{
+		TextView: template.TextView{
+			Text:           "÷",
+			FontWeight:     template.FW800,
+			TextAlignement: template.TACenter,
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Value Two:",
+		},
+		Input: template.NumberInput{
+			Bind:         "ValueTwo",
+			BindVariable: "VarTwoName",
+			Decimals:     5,
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "ValueTwoIsVar",
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Output:",
+		},
+		Input: template.TextInput{
+			Bind: "Output",
+		},
+	}.Build(),
 }
 
 // MultiplyTemplate Dialog's Multiply Template
-var MultiplyTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Value One",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("VarOneName"),
-				Visible:       declarative.Bind("IsOneAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.NumberEdit{
-				Value:    declarative.Bind("ValueOne"),
-				Visible:  declarative.Bind("!IsOneAVar.Checked"),
-				Decimals: 5,
-			},
-			declarative.CheckBox{
-				Name:    "IsOneAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("ValueOneIsVar"),
-			},
+var MultiplyTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Value One:",
 		},
-	},
-	declarative.Label{
-		Text:          "X",
-		TextAlignment: declarative.AlignCenter,
-		Font:          declarative.Font{Family: "Roboto", PointSize: 12, Bold: true},
-	},
-	declarative.GroupBox{
-		Title:  "Value Two",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("VarTwoName"),
-				Visible:       declarative.Bind("IsTwoAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.NumberEdit{
-				Value:    declarative.Bind("ValueTwo"),
-				Visible:  declarative.Bind("!IsTwoAVar.Checked"),
-				Decimals: 5,
-			},
-			declarative.CheckBox{
-				Name:    "IsTwoAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("ValueTwoIsVar"),
-			},
+		Input: template.NumberInput{
+			Bind:         "ValueOne",
+			BindVariable: "VarOneName",
+			Decimals:     5,
 		},
-	},
-	declarative.Label{
-		Text: "Output:",
-	},
-	declarative.TextEdit{
-		Text:          declarative.Bind("Output"),
-		CompactHeight: true,
-	},
+		VariableToggler: template.VariableToggler{
+			Bind: "ValueOneIsVar",
+		},
+	}.Build(),
+	template.Field{
+		TextView: template.TextView{
+			Text:           "X",
+			FontWeight:     template.FW800,
+			TextAlignement: template.TACenter,
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Value Two:",
+		},
+		Input: template.NumberInput{
+			Bind:         "ValueTwo",
+			BindVariable: "VarTwoName",
+			Decimals:     5,
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "ValueTwoIsVar",
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Output:",
+		},
+		Input: template.TextInput{
+			Bind: "Output",
+		},
+	}.Build(),
 }
 
 // PowTemplate Dialog's Pow Template
-var PowTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Value One",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("VarOneName"),
-				Visible:       declarative.Bind("IsOneAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.NumberEdit{
-				Value:    declarative.Bind("ValueOne"),
-				Visible:  declarative.Bind("!IsOneAVar.Checked"),
-				Decimals: 5,
-			},
-			declarative.CheckBox{
-				Name:    "IsOneAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("ValueOneIsVar"),
-			},
+var PowTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Value One:",
 		},
-	},
-	declarative.Label{
-		Text:          "Pow",
-		TextAlignment: declarative.AlignCenter,
-		Font:          declarative.Font{Family: "Roboto", PointSize: 12, Bold: true},
-	},
-	declarative.GroupBox{
-		Title:  "Value Two",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("VarTwoName"),
-				Visible:       declarative.Bind("IsTwoAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.NumberEdit{
-				Value:    declarative.Bind("ValueTwo"),
-				Visible:  declarative.Bind("!IsTwoAVar.Checked"),
-				Decimals: 5,
-			},
-			declarative.CheckBox{
-				Name:    "IsTwoAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("ValueTwoIsVar"),
-			},
+		Input: template.NumberInput{
+			Bind:         "ValueOne",
+			BindVariable: "VarOneName",
+			Decimals:     5,
 		},
-	},
-	declarative.Label{
-		Text: "Output:",
-	},
-	declarative.TextEdit{
-		Text:          declarative.Bind("Output"),
-		CompactHeight: true,
-	},
+		VariableToggler: template.VariableToggler{
+			Bind: "ValueOneIsVar",
+		},
+	}.Build(),
+	template.Field{
+		TextView: template.TextView{
+			Text:           "Pow",
+			FontWeight:     template.FW800,
+			TextAlignement: template.TACenter,
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Value Two:",
+		},
+		Input: template.NumberInput{
+			Bind:         "ValueTwo",
+			BindVariable: "VarTwoName",
+			Decimals:     5,
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "ValueTwoIsVar",
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Output:",
+		},
+		Input: template.TextInput{
+			Bind: "Output",
+		},
+	}.Build(),
 }
 
 // SqrtTemplate Dialog's Sqrt Template
-var SqrtTemplate = []declarative.Widget{
-	declarative.Label{
-		Text:          "√",
-		TextAlignment: declarative.AlignCenter,
-		Font:          declarative.Font{Family: "Roboto", PointSize: 12, Bold: true},
-	},
-	declarative.GroupBox{
-		Title:  "Value",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("VarName"),
-				Visible:       declarative.Bind("IsAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.NumberEdit{
-				Value:    declarative.Bind("Value"),
-				Visible:  declarative.Bind("!IsAVar.Checked"),
-				Decimals: 5,
-			},
-			declarative.CheckBox{
-				Name:    "IsAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("ValueIsVar"),
-			},
+var SqrtTemplate = &template.InstructionTemplate{
+	template.Field{
+		TextView: template.TextView{
+			Text:           "√",
+			FontWeight:     template.FW800,
+			TextAlignement: template.TALeft,
 		},
-	},
-	declarative.Label{
-		Text: "Output:",
-	},
-	declarative.TextEdit{
-		Text:          declarative.Bind("Output"),
-		CompactHeight: true,
-	},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Value One:",
+		},
+		Input: template.NumberInput{
+			Bind:         "Value",
+			BindVariable: "VarName",
+			Decimals:     5,
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "ValueIsVar",
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Output:",
+		},
+		Input: template.TextInput{
+			Bind: "Output",
+		},
+	}.Build(),
 }
 
 // SubstractTemplate Dialog's Substract Template
-var SubstractTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Value One",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("VarOneName"),
-				Visible:       declarative.Bind("IsOneAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.NumberEdit{
-				Value:    declarative.Bind("ValueOne"),
-				Visible:  declarative.Bind("!IsOneAVar.Checked"),
-				Decimals: 5,
-			},
-			declarative.CheckBox{
-				Name:    "IsOneAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("ValueOneIsVar"),
-			},
+var SubstractTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Value One:",
 		},
-	},
-	declarative.Label{
-		Text:          "-",
-		TextAlignment: declarative.AlignCenter,
-		Font:          declarative.Font{Family: "Roboto", PointSize: 12, Bold: true},
-	},
-	declarative.GroupBox{
-		Title:  "Value Two",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("VarTwoName"),
-				Visible:       declarative.Bind("IsTwoAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.NumberEdit{
-				Value:    declarative.Bind("ValueTwo"),
-				Visible:  declarative.Bind("!IsTwoAVar.Checked"),
-				Decimals: 5,
-			},
-			declarative.CheckBox{
-				Name:    "IsTwoAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("ValueTwoIsVar"),
-			},
+		Input: template.NumberInput{
+			Bind:         "ValueOne",
+			BindVariable: "VarOneName",
+			Decimals:     5,
 		},
-	},
-	declarative.Label{
-		Text: "Output:",
-	},
-	declarative.TextEdit{
-		Text:          declarative.Bind("Output"),
-		CompactHeight: true,
-	},
+		VariableToggler: template.VariableToggler{
+			Bind: "ValueOneIsVar",
+		},
+	}.Build(),
+	template.Field{
+		TextView: template.TextView{
+			Text:           "-",
+			FontWeight:     template.FW800,
+			TextAlignement: template.TACenter,
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Value Two:",
+		},
+		Input: template.NumberInput{
+			Bind:         "ValueTwo",
+			BindVariable: "VarTwoName",
+			Decimals:     5,
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "ValueTwoIsVar",
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Output:",
+		},
+		Input: template.TextInput{
+			Bind: "Output",
+		},
+	}.Build(),
 }
 
 // SumTemplate Dialog's Sum Template
-var SumTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Value One",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("VarOneName"),
-				Visible:       declarative.Bind("IsOneAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.NumberEdit{
-				Value:    declarative.Bind("ValueOne"),
-				Visible:  declarative.Bind("!IsOneAVar.Checked"),
-				Decimals: 5,
-			},
-			declarative.CheckBox{
-				Name:    "IsOneAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("ValueOneIsVar"),
-			},
+var SumTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Value One:",
 		},
-	},
-	declarative.Label{
-		Text:          "+",
-		TextAlignment: declarative.AlignCenter,
-		Font:          declarative.Font{Family: "Roboto", PointSize: 12, Bold: true},
-	},
-	declarative.GroupBox{
-		Title:  "Value Two",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("VarTwoName"),
-				Visible:       declarative.Bind("IsTwoAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.NumberEdit{
-				Value:    declarative.Bind("ValueTwo"),
-				Visible:  declarative.Bind("!IsTwoAVar.Checked"),
-				Decimals: 5,
-			},
-			declarative.CheckBox{
-				Name:    "IsTwoAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("ValueTwoIsVar"),
-			},
+		Input: template.NumberInput{
+			Bind:         "ValueOne",
+			BindVariable: "VarOneName",
+			Decimals:     5,
 		},
-	},
-	declarative.Label{
-		Text: "Output:",
-	},
-	declarative.TextEdit{
-		Text:          declarative.Bind("Output"),
-		CompactHeight: true,
-	},
+		VariableToggler: template.VariableToggler{
+			Bind: "ValueOneIsVar",
+		},
+	}.Build(),
+	template.Field{
+		TextView: template.TextView{
+			Text:           "+",
+			FontWeight:     template.FW800,
+			TextAlignement: template.TACenter,
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Value Two:",
+		},
+		Input: template.NumberInput{
+			Bind:         "ValueTwo",
+			BindVariable: "VarTwoName",
+			Decimals:     5,
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "ValueTwoIsVar",
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Output:",
+		},
+		Input: template.TextInput{
+			Bind: "Output",
+		},
+	}.Build(),
 }

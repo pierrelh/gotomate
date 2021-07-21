@@ -1,13 +1,9 @@
 package sound
 
-import (
-	"fmt"
-
-	"github.com/lxn/walk/declarative"
-)
+import "gotomate-astilectron/fiber/template"
 
 // Build Return the right databinder & the right template for a flow instruction
-func Build(function string) (interface{}, []declarative.Widget) {
+func Build(function string) (interface{}, *template.InstructionTemplate) {
 	switch function {
 	case "GetMuted":
 		return new(GetMutedDatabinder), GetMutedTemplate
@@ -20,7 +16,6 @@ func Build(function string) (interface{}, []declarative.Widget) {
 	case "UnMute":
 		return new(UnMuteVolumeDatabinder), nil
 	default:
-		fmt.Println("GOTOMATE ERROR: Unable to find the function for instruction building")
 		return nil, nil
 	}
 }

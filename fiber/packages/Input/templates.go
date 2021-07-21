@@ -1,34 +1,29 @@
 package input
 
-import "github.com/lxn/walk/declarative"
+import (
+	"gotomate-astilectron/fiber/template"
+)
 
 // InputTemplate Dialog's Input Template
-var InputTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Message",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("MessageVarName"),
-				Visible:       declarative.Bind("IsMessageAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.TextEdit{
-				Text:    declarative.Bind("Message"),
-				Visible: declarative.Bind("!IsMessageAVar.Checked"),
-			},
-			declarative.CheckBox{
-				Name:    "IsMessageAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("MessageIsVar"),
-			},
+var InputTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Message:",
 		},
-	},
-	declarative.Label{
-		Text: "Output var:",
-	},
-	declarative.TextEdit{
-		Text:          declarative.Bind("Output"),
-		CompactHeight: true,
-	},
+		Input: template.TextInput{
+			Bind:         "Message",
+			BindVariable: "MessageVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "MessageIsVar",
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Output var:",
+		},
+		Input: template.TextInput{
+			Bind: "Output",
+		},
+	}.Build(),
 }

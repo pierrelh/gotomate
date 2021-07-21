@@ -1,38 +1,48 @@
 package keyboard
 
 import (
-	"fmt"
 	"gotomate-astilectron/fiber/variable"
-	"reflect"
+	"gotomate-astilectron/log"
 
 	"github.com/go-vgo/robotgo"
 )
 
 // Tap Simulate a tap on the keyboard
-func Tap(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Keyboard tap ...")
+func Tap(instructionData interface{}, finished chan bool) int {
+	log.FiberInfo("Taping on keyboard")
 
 	special := []string{}
-	if err := instructionData.FieldByName("Special1").Interface().(string); err != "" {
-		special = append(special, err)
+
+	spe1, _ := variable.Keys{Name: "Special1"}.GetValue(instructionData)
+	if spe1 != nil {
+		special = append(special, spe1.(string))
 	}
-	if err := instructionData.FieldByName("Special2").Interface().(string); err != "" {
-		special = append(special, err)
+
+	spe2, _ := variable.Keys{Name: "Special2"}.GetValue(instructionData)
+	if spe2 != nil {
+		special = append(special, spe2.(string))
 	}
+
+	input, err := variable.Keys{Name: "Input"}.GetValue(instructionData)
+	if err != nil {
+		finished <- true
+		return -1
+	}
+
 	if len(special) == 0 {
-		robotgo.KeyTap(instructionData.FieldByName("Input").Interface().(string))
+		robotgo.KeyTap(input.(string))
 	} else {
-		robotgo.KeyTap(instructionData.FieldByName("Input").Interface().(string), special)
+		robotgo.KeyTap(input.(string), special)
 	}
 	finished <- true
 	return -1
 }
 
 // Type Simulate a type on the keyboard
-func Type(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Keyboard type ...")
+func Type(instructionData interface{}, finished chan bool) int {
+	log.FiberInfo("Typing on keyboard")
 
-	input, err := variable.GetValue(instructionData, "VarName", "InputIsVar", "Input")
+	input, err := variable.Keys{VarName: "VarName", IsVarName: "InputIsVar", Name: "Input"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1

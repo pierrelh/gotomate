@@ -15,20 +15,6 @@ type DragDatabinder struct {
 	YIsVar   bool
 }
 
-// ButtonDatabinder Define the MouseButton parameters
-type ButtonDatabinder struct {
-	ID   string
-	Name string
-}
-
-// Buttons Define the possibles values of MouseButton
-func Buttons() []*ButtonDatabinder {
-	return []*ButtonDatabinder{
-		{"left", "Left"},
-		{"right", "Right"},
-	}
-}
-
 // MoveDatabinder Define the MouseMove parameters
 type MoveDatabinder struct {
 	X        int

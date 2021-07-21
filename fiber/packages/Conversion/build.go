@@ -1,13 +1,9 @@
 package conversion
 
-import (
-	"fmt"
-
-	"github.com/lxn/walk/declarative"
-)
+import "gotomate-astilectron/fiber/template"
 
 // Build Return the right databinder & the right template for a clipboard instruction
-func Build(function string) (interface{}, []declarative.Widget) {
+func Build(function string) (interface{}, *template.InstructionTemplate) {
 	switch function {
 	case "BoolToFloat":
 		return new(BoolConversionDatabinder), BoolConversionTemplate
@@ -30,6 +26,5 @@ func Build(function string) (interface{}, []declarative.Widget) {
 	case "StringToInt":
 		return new(StringConversionDatabinder), StringConversionTemplate
 	}
-	fmt.Println("GOTOMATE ERROR: Unable to find the function for instruction building")
 	return nil, nil
 }

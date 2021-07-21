@@ -1,82 +1,82 @@
 package screen
 
 import (
-	"fmt"
-	"gotomate/fiber/variable"
-	"reflect"
+	"gotomate-astilectron/fiber/variable"
+	"gotomate-astilectron/log"
 
 	"github.com/go-vgo/robotgo"
 )
 
 // GetMouseColor Get a pixel color by mouse position
-func GetMouseColor(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Getting mouse pixel color ...")
+func GetMouseColor(instructionData interface{}, finished chan bool) int {
+	log.FiberInfo("Getting the mouse pixel color")
 
-	variable.SetVariable(instructionData.FieldByName("Output").Interface().(string), robotgo.GetMouseColor())
+	variable.SetVariable(instructionData, "Output", robotgo.GetMouseColor())
 	finished <- true
 	return -1
 }
 
 // GetPixelColor Get a pixel color by a position
-func GetPixelColor(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Getting pixel color ...")
+func GetPixelColor(instructionData interface{}, finished chan bool) int {
+	log.FiberInfo("Getting a pixel color")
 
-	x, err := variable.GetValue(instructionData, "XVarName", "XIsVar", "X")
+	x, err := variable.Keys{VarName: "XVarName", IsVarName: "XIsVar", Name: "X"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
 	}
 
-	y, err := variable.GetValue(instructionData, "YVarName", "YIsVar", "Y")
+	y, err := variable.Keys{VarName: "YVarName", IsVarName: "YIsVar", Name: "Y"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
 	}
 
-	variable.SetVariable(instructionData.FieldByName("Output").Interface().(string), robotgo.GetPixelColor(x.(int), y.(int)))
+	variable.SetVariable(instructionData, "Output", robotgo.GetPixelColor(x.(int), y.(int)))
 	finished <- true
 	return -1
 }
 
 // GetScreenSize Get the screen size
-func GetScreenSize(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Getting screen size ...")
+func GetScreenSize(instructionData interface{}, finished chan bool) int {
+	log.FiberInfo("Getting the screen size")
 
 	w, h := robotgo.GetScreenSize()
-	variable.SetVariable(instructionData.FieldByName("HeightOutput").Interface().(string), h)
-	variable.SetVariable(instructionData.FieldByName("WidthOutput").Interface().(string), w)
+	variable.SetVariable(instructionData, "HeightOutput", h)
+	variable.SetVariable(instructionData, "WidthOutput", w)
 	finished <- true
 	return -1
 }
 
-func PartScreenShot(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Saving screen shot ...")
+// PartScreenShot Take a screenshot from a part of the screen
+func PartScreenShot(instructionData interface{}, finished chan bool) int {
+	log.FiberInfo("Taking a screen shot from a part of the screen")
 
-	path, err := variable.GetValue(instructionData, "PathVarName", "PathIsVar", "Path")
+	path, err := variable.Keys{VarName: "PathVarName", IsVarName: "PathIsVar", Name: "Path"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
 	}
 
-	x, err := variable.GetValue(instructionData, "XVarName", "XIsVar", "X")
+	x, err := variable.Keys{VarName: "XVarName", IsVarName: "XIsVar", Name: "X"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
 	}
 
-	y, err := variable.GetValue(instructionData, "YVarName", "YIsVar", "Y")
+	y, err := variable.Keys{VarName: "YVarName", IsVarName: "YIsVar", Name: "Y"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
 	}
 
-	w, err := variable.GetValue(instructionData, "WVarName", "WIsVar", "W")
+	w, err := variable.Keys{VarName: "WVarName", IsVarName: "WIsVar", Name: "W"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
 	}
 
-	h, err := variable.GetValue(instructionData, "HVarName", "HIsVar", "H")
+	h, err := variable.Keys{VarName: "HVarName", IsVarName: "HIsVar", Name: "H"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
@@ -87,11 +87,11 @@ func PartScreenShot(instructionData reflect.Value, finished chan bool) int {
 	return -1
 }
 
-// SaveCapture Save a screen shot
-func ScreenShot(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Saving screen shot ...")
+// ScreenShot Save a screen shot
+func ScreenShot(instructionData interface{}, finished chan bool) int {
+	log.FiberInfo("Taking a screen shot")
 
-	path, err := variable.GetValue(instructionData, "PathVarName", "PathIsVar", "Path")
+	path, err := variable.Keys{VarName: "PathVarName", IsVarName: "PathIsVar", Name: "Path"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1

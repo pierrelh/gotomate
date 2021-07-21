@@ -1,13 +1,9 @@
 package json
 
-import (
-	"fmt"
-
-	"github.com/lxn/walk/declarative"
-)
+import "gotomate-astilectron/fiber/template"
 
 // Build Return the right databinder & the right template for a flow instruction
-func Build(function string) (interface{}, []declarative.Widget) {
+func Build(function string) (interface{}, *template.InstructionTemplate) {
 	switch function {
 	case "CreateJson":
 		return new(CreateJsonDatabinder), CreateJsonTemplate
@@ -16,6 +12,5 @@ func Build(function string) (interface{}, []declarative.Widget) {
 	case "SaveJson":
 		return new(SaveJsonDatabinder), SaveJsonTemplate
 	}
-	fmt.Println("GOTOMATE ERROR: Unable to find the function for instruction building")
 	return nil, nil
 }

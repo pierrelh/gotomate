@@ -8,4 +8,10 @@ type CreateDatabinder struct {
 	Message        string
 	MessageVarName string
 	MessageIsVar   bool
+	Output         string
+}
+
+// PushDatabinder Define the NotificationPush parameters
+type PushDatabinder struct {
+	NotificationVarName string
 }

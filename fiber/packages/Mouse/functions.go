@@ -1,33 +1,38 @@
 package mouse
 
 import (
-	"fmt"
-	"gotomate/fiber/variable"
-	"reflect"
+	"gotomate-astilectron/fiber/variable"
+	"gotomate-astilectron/log"
 
 	"github.com/go-vgo/robotgo"
 )
 
 // Click Simulate a user click
-func Click(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Clicking mouse  ...")
+func Click(instructionData interface{}, finished chan bool) int {
+	log.FiberInfo("Clicking the mouse")
 
-	robotgo.Click(instructionData.FieldByName("MouseButtonName").Interface().(string))
-	finished <- true
-	return -1
-}
-
-// Drag Simulate a user drag
-func Drag(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Clicking mouse  ...")
-
-	x, err := variable.GetValue(instructionData, "XVarName", "XIsVar", "X")
+	btnName, err := variable.Keys{Name: "MouseButtonName"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
 	}
 
-	y, err := variable.GetValue(instructionData, "YVarName", "YIsVar", "Y")
+	robotgo.Click(btnName.(string))
+	finished <- true
+	return -1
+}
+
+// Drag Simulate a user drag
+func Drag(instructionData interface{}, finished chan bool) int {
+	log.FiberInfo("Draging the mouse")
+
+	x, err := variable.Keys{VarName: "XVarName", IsVarName: "XIsVar", Name: "X"}.GetValue(instructionData)
+	if err != nil {
+		finished <- true
+		return -1
+	}
+
+	y, err := variable.Keys{VarName: "YVarName", IsVarName: "YIsVar", Name: "Y"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
@@ -41,16 +46,16 @@ func Drag(instructionData reflect.Value, finished chan bool) int {
 }
 
 // DragSmooth Simulate a user draggin smoothly
-func DragSmooth(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Clicking mouse  ...")
+func DragSmooth(instructionData interface{}, finished chan bool) int {
+	log.FiberInfo("Draging smoothly the mouse")
 
-	x, err := variable.GetValue(instructionData, "XVarName", "XIsVar", "X")
+	x, err := variable.Keys{VarName: "XVarName", IsVarName: "XIsVar", Name: "X"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
 	}
 
-	y, err := variable.GetValue(instructionData, "YVarName", "YIsVar", "Y")
+	y, err := variable.Keys{VarName: "YVarName", IsVarName: "YIsVar", Name: "Y"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
@@ -64,16 +69,16 @@ func DragSmooth(instructionData reflect.Value, finished chan bool) int {
 }
 
 // Move move the mouse
-func Move(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Moving mouse ...")
+func Move(instructionData interface{}, finished chan bool) int {
+	log.FiberInfo("Moving the mouse")
 
-	x, err := variable.GetValue(instructionData, "XVarName", "XIsVar", "X")
+	x, err := variable.Keys{VarName: "XVarName", IsVarName: "XIsVar", Name: "X"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
 	}
 
-	y, err := variable.GetValue(instructionData, "YVarName", "YIsVar", "Y")
+	y, err := variable.Keys{VarName: "YVarName", IsVarName: "YIsVar", Name: "Y"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
@@ -85,16 +90,16 @@ func Move(instructionData reflect.Value, finished chan bool) int {
 }
 
 // MoveSmooth move the mouse smoothly
-func MoveSmooth(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Moving mouse ...")
+func MoveSmooth(instructionData interface{}, finished chan bool) int {
+	log.FiberInfo("Moving smoothly the mouse")
 
-	x, err := variable.GetValue(instructionData, "XVarName", "XIsVar", "X")
+	x, err := variable.Keys{VarName: "XVarName", IsVarName: "XIsVar", Name: "X"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
 	}
 
-	y, err := variable.GetValue(instructionData, "YVarName", "YIsVar", "Y")
+	y, err := variable.Keys{VarName: "YVarName", IsVarName: "YIsVar", Name: "Y"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
@@ -106,16 +111,16 @@ func MoveSmooth(instructionData reflect.Value, finished chan bool) int {
 }
 
 // Scroll scroll the mouse
-func Scroll(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Scrolling mouse ...")
+func Scroll(instructionData interface{}, finished chan bool) int {
+	log.FiberInfo("Scrolling the mouse")
 
-	x, err := variable.GetValue(instructionData, "XVarName", "XIsVar", "X")
+	x, err := variable.Keys{VarName: "XVarName", IsVarName: "XIsVar", Name: "X"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
 	}
 
-	y, err := variable.GetValue(instructionData, "YVarName", "YIsVar", "Y")
+	y, err := variable.Keys{VarName: "YVarName", IsVarName: "YIsVar", Name: "Y"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1

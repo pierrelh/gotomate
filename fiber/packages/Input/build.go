@@ -1,13 +1,11 @@
 package input
 
 import (
-	"fmt"
-
-	"github.com/lxn/walk/declarative"
+	"gotomate-astilectron/fiber/template"
 )
 
 // Build Return the right databinder & the right template for a input instruction
-func Build(function string) (interface{}, []declarative.Widget) {
+func Build(function string) (interface{}, *template.InstructionTemplate) {
 	switch function {
 	case "Bool":
 		return new(InputDatabinder), InputTemplate
@@ -18,6 +16,5 @@ func Build(function string) (interface{}, []declarative.Widget) {
 	case "String":
 		return new(InputDatabinder), InputTemplate
 	}
-	fmt.Println("GOTOMATE ERROR: Unable to find the function for instruction building")
 	return nil, nil
 }

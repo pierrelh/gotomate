@@ -1,11 +1,13 @@
 package main
 
 import (
-	"fmt"
 	"gotomate-astilectron/app"
+	"gotomate-astilectron/app/files"
 	"gotomate-astilectron/app/message"
 	"gotomate-astilectron/fiber"
 	"gotomate-astilectron/fiber/packages"
+	"gotomate-astilectron/log"
+	"os"
 
 	"github.com/asticode/go-astilectron"
 )
@@ -19,7 +21,7 @@ func main() {
 	a.Create()
 
 	// Open dev tools
-	a.Window.OpenDevTools()
+	// a.Window.OpenDevTools()
 
 	// Create the menu
 	a.CreateMenu()
@@ -40,7 +42,7 @@ func main() {
 	a.Asti.Wait()
 
 	// Close dev tools
-	a.Window.CloseDevTools()
+	// a.Window.CloseDevTools()
 }
 
 // getEvents Receive the message sended by the gui & process them
@@ -72,14 +74,17 @@ func getEvents() {
 
 		case "GetInstructionTemplate":
 			if instruction := newFiber.Instructions.FindInstructionById(int(content["ID"].(float64))); instruction != nil {
-				return message.New("true", &instruction.Template)
+				data := map[string]interface{}{
+					"Template":   &instruction.Template,
+					"Databinder": instruction.Datas,
+				}
+				return message.New("true", data)
 			}
 			return nil
 
 		case "SetDatabinderDatas":
-			inst := newFiber.Instructions.FindInstructionById(int(content["ID"].(float64)))
-			inst.TemplateDecode(content["Template"].([]interface{}))
-			inst.SetDatabinder()
+			instruction := newFiber.Instructions.FindInstructionById(int(content["ID"].(float64)))
+			instruction.UpdateDatabinder(content["Databinder"].(map[string]interface{}))
 
 		case "CreateNewFiber":
 			a.Window.SendMessage(
@@ -100,8 +105,41 @@ func getEvents() {
 		case "StopFiber":
 			go fiber.NewFiber.Stop()
 
+		case "UpdateInstructionNextID":
+			if instruction := newFiber.Instructions.FindInstructionById(int(content["ID"].(float64))); instruction != nil {
+				instruction.UpdateNextID(int(content["NextID"].(float64)))
+			}
+
+		case "GoTroughFolder":
+			extension := content["Extension"].(string)
+			action := content["Action"].(string)
+			content, path := files.GetHomeJson(content["Path"].(string), extension)
+			data := map[string]interface{}{
+				"Path":      path,
+				"Files":     content,
+				"Extension": extension,
+			}
+			a.Window.SendMessage(
+				message.New(action, data),
+			)
+
+		case "ImportFiber":
+			a.Window.SendMessage(
+				message.New("NewFiber", fiber.NewFiber.Import(content["File"].(string))),
+			)
+
+		case "ExportFiber":
+			fiber.NewFiber.Export(content["File"].(string))
+
+		case "ImportPackage":
+			err := packages.ImportPackage(content["File"].(string))
+			if err != nil {
+				log.GotomateError(err)
+			}
+			os.Exit(1)
+
 		default:
-			a.Log.Fatal(fmt.Println("GOTOMATE ERROR: Unknown identifier received: ", s.Identifier))
+			log.GotomateError("Unknown identifier received: ", s.Identifier)
 			return nil
 
 		}

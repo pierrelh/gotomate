@@ -1,18 +1,17 @@
 package define
 
 import (
-	"fmt"
-	variable "gotomate/fiber/variable"
-	"reflect"
+	"gotomate-astilectron/fiber/variable"
+	"gotomate-astilectron/log"
 	"strconv"
 	"strings"
 )
 
 // ArrayOfBool Define an array of bool in a flow
-func ArrayOfBool(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Defining an array of bool ...")
+func ArrayOfBool(instructionData interface{}, finished chan bool) int {
+	log.FiberInfo("Defining an array of Bools")
 
-	value, err := variable.GetValue(instructionData, "VarName", "IsVar", "Value")
+	value, err := variable.Keys{VarName: "VarName", IsVarName: "IsVar", Name: "Value"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
@@ -25,16 +24,16 @@ func ArrayOfBool(instructionData reflect.Value, finished chan bool) int {
 		boolArray = append(boolArray, boolvalue)
 	}
 
-	variable.SetVariable(instructionData.FieldByName("Name").Interface().(string), boolArray)
+	variable.SetVariable(instructionData, "Name", boolArray)
 	finished <- true
 	return -1
 }
 
 // ArrayOfFloat Define an array of float in a flow
-func ArrayOfFloat(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Defining an array of float ...")
+func ArrayOfFloat(instructionData interface{}, finished chan bool) int {
+	log.FiberInfo("Defining an array of Floats")
 
-	value, err := variable.GetValue(instructionData, "VarName", "IsVar", "Value")
+	value, err := variable.Keys{VarName: "VarName", IsVarName: "IsVar", Name: "Value"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
@@ -47,16 +46,16 @@ func ArrayOfFloat(instructionData reflect.Value, finished chan bool) int {
 		floatArray = append(floatArray, floatvalue)
 	}
 
-	variable.SetVariable(instructionData.FieldByName("Name").Interface().(string), floatArray)
+	variable.SetVariable(instructionData, "Name", floatArray)
 	finished <- true
 	return -1
 }
 
 // ArrayOfInt Define an array of int in a flow
-func ArrayOfInt(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Defining an array of int ...")
+func ArrayOfInt(instructionData interface{}, finished chan bool) int {
+	log.FiberInfo("Defining an array of Ints")
 
-	value, err := variable.GetValue(instructionData, "VarName", "IsVar", "Value")
+	value, err := variable.Keys{VarName: "VarName", IsVarName: "IsVar", Name: "Value"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
@@ -69,82 +68,82 @@ func ArrayOfInt(instructionData reflect.Value, finished chan bool) int {
 		intArray = append(intArray, intValue)
 	}
 
-	variable.SetVariable(instructionData.FieldByName("Name").Interface().(string), intArray)
+	variable.SetVariable(instructionData, "Name", intArray)
 	finished <- true
 	return -1
 }
 
 // ArrayOfString Define an array of string in a flow
-func ArrayOfString(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Defining an array of string ...")
+func ArrayOfString(instructionData interface{}, finished chan bool) int {
+	log.FiberInfo("Defining an array of Strings")
 
-	value, err := variable.GetValue(instructionData, "VarName", "IsVar", "Value")
+	value, err := variable.Keys{VarName: "VarName", IsVarName: "IsVar", Name: "Value"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
 	}
 
-	variable.SetVariable(instructionData.FieldByName("Name").Interface().(string), strings.Split(value.(string), ","))
+	variable.SetVariable(instructionData, "Name", strings.Split(value.(string), ","))
 	finished <- true
 	return -1
 }
 
 // Bool Define a bool value in a flow
-func Bool(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Defining a bool value ...")
+func Bool(instructionData interface{}, finished chan bool) int {
+	log.FiberInfo("Defining a Bool value")
 
-	value, err := variable.GetValue(instructionData, "VarName", "IsVar", "Value")
+	value, err := variable.Keys{VarName: "VarName", IsVarName: "IsVar", Name: "Value"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
 	}
 
-	variable.SetVariable(instructionData.FieldByName("Name").Interface().(string), value.(bool))
+	variable.SetVariable(instructionData, "Name", value.(bool))
 	finished <- true
 	return -1
 }
 
 // Float Define a float value in a flow
-func Float(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Defining a float value ...")
+func Float(instructionData interface{}, finished chan bool) int {
+	log.FiberInfo("Defining a Float value")
 
-	value, err := variable.GetValue(instructionData, "VarName", "IsVar", "Value")
+	value, err := variable.Keys{VarName: "VarName", IsVarName: "IsVar", Name: "Value"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
 	}
 
-	variable.SetVariable(instructionData.FieldByName("Name").Interface().(string), value.(float64))
+	variable.SetVariable(instructionData, "Name", value.(float64))
 	finished <- true
 	return -1
 }
 
 // Int Define an int value in a flow
-func Int(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Defining an int value ...")
+func Int(instructionData interface{}, finished chan bool) int {
+	log.FiberInfo("Defining an Int value")
 
-	value, err := variable.GetValue(instructionData, "VarName", "IsVar", "Value")
+	value, err := variable.Keys{VarName: "VarName", IsVarName: "IsVar", Name: "Value"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
 	}
 
-	variable.SetVariable(instructionData.FieldByName("Name").Interface().(string), value.(int))
+	variable.SetVariable(instructionData, "Name", value.(int))
 	finished <- true
 	return -1
 }
 
 // String Define a string value in a flow
-func String(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Defining a string value ...")
+func String(instructionData interface{}, finished chan bool) int {
+	log.FiberInfo("Defining a String value")
 
-	value, err := variable.GetValue(instructionData, "VarName", "IsVar", "Value")
+	value, err := variable.Keys{VarName: "VarName", IsVarName: "IsVar", Name: "Value"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
 	}
 
-	variable.SetVariable(instructionData.FieldByName("Name").Interface().(string), value.(string))
+	variable.SetVariable(instructionData, "Name", value.(string))
 	finished <- true
 	return -1
 }

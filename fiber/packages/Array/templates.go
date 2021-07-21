@@ -1,371 +1,298 @@
 package array
 
-import "github.com/lxn/walk/declarative"
+import (
+	"gotomate-astilectron/fiber/template"
+)
 
 // GetArrayLengthTemplate Dialog's GetArrayLength Template
-var GetArrayLengthTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Array",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ArrayVarName"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Text:    "Is a Var",
-				Checked: true,
-				Enabled: false,
-			},
+var GetArrayLengthTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Array:",
 		},
-	},
-	declarative.Label{
-		Text: "Output:",
-	},
-	declarative.TextEdit{
-		Text:          declarative.Bind("Output"),
-		CompactHeight: true,
-	},
+		Input: template.TextInput{
+			BindVariable: "ArrayVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Output:",
+		},
+		Input: template.TextInput{
+			Bind: "Output",
+		},
+	}.Build(),
 }
 
 // GetValueTemplate Dialog's GetValue Template
-var GetValueTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Array",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ArrayVarName"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Text:    "Is a Var",
-				Checked: true,
-				Enabled: false,
-			},
+var GetValueTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Array:",
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Index to get",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("IndexVarName"),
-				Visible:       declarative.Bind("IsIndexAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.NumberEdit{
-				Value:    declarative.Bind("Index"),
-				Visible:  declarative.Bind("!IsIndexAVar.Checked"),
-				Decimals: 0,
-			},
-			declarative.CheckBox{
-				Name:    "IsIndexAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("IndexIsVar"),
-			},
+		Input: template.TextInput{
+			BindVariable: "ArrayVarName",
 		},
-	},
-	declarative.Label{
-		Text: "Output:",
-	},
-	declarative.TextEdit{
-		Text:          declarative.Bind("Output"),
-		CompactHeight: true,
-	},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Index to get:",
+		},
+		Input: template.NumberInput{
+			Bind:         "Index",
+			BindVariable: "IndexVarName",
+			Decimals:     0,
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "IndexIsVar",
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Output:",
+		},
+		Input: template.TextInput{
+			Bind: "Output",
+		},
+	}.Build(),
 }
 
 // PopAtTemplate Dialog's PopAt Template
-var PopAtTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Array",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ArrayVarName"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Text:    "Is a Var",
-				Checked: true,
-				Enabled: false,
-			},
+var PopAtTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Array:",
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Index to pop",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("IndexVarName"),
-				Visible:       declarative.Bind("IsIndexAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.NumberEdit{
-				Value:    declarative.Bind("Index"),
-				Visible:  declarative.Bind("!IsIndexAVar.Checked"),
-				Decimals: 0,
-			},
-			declarative.CheckBox{
-				Name:    "IsIndexAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("IndexIsVar"),
-			},
+		Input: template.TextInput{
+			BindVariable: "ArrayVarName",
 		},
-	},
-	declarative.Label{
-		Text: "Output:",
-	},
-	declarative.TextEdit{
-		Text:          declarative.Bind("Output"),
-		CompactHeight: true,
-	},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Index to pop:",
+		},
+		Input: template.NumberInput{
+			Bind:         "Index",
+			BindVariable: "IndexVarName",
+			Decimals:     0,
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "IndexIsVar",
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Output:",
+		},
+		Input: template.TextInput{
+			Bind: "Output",
+		},
+	}.Build(),
 }
 
 // PopLastTemplate Dialog's PopLast Template
-var PopLastTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Array",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ArrayVarName"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Text:    "Is a Var",
-				Checked: true,
-				Enabled: false,
-			},
+var PopLastTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Array:",
 		},
-	},
-	declarative.Label{
-		Text: "Output:",
-	},
-	declarative.TextEdit{
-		Text:          declarative.Bind("Output"),
-		CompactHeight: true,
-	},
+		Input: template.TextInput{
+			BindVariable: "ArrayVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Output:",
+		},
+		Input: template.TextInput{
+			Bind: "Output",
+		},
+	}.Build(),
 }
 
 // PushAtTemplate Dialog's PushAt Template
-var PushAtTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Array",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ArrayVarName"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Text:    "Is a Var",
-				Checked: true,
-				Enabled: false,
-			},
+var PushAtTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Array:",
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Index to push at",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("IndexVarName"),
-				Visible:       declarative.Bind("IsIndexAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.NumberEdit{
-				Value:    declarative.Bind("Index"),
-				Visible:  declarative.Bind("!IsIndexAVar.Checked"),
-				Decimals: 0,
-			},
-			declarative.CheckBox{
-				Name:    "IsIndexAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("IndexIsVar"),
-			},
+		Input: template.TextInput{
+			BindVariable: "ArrayVarName",
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Value to push",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ValueVarName"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Text:    "Is a Var",
-				Checked: true,
-				Enabled: false,
-			},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
 		},
-	},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Index to push at:",
+		},
+		Input: template.NumberInput{
+			Bind:         "Index",
+			BindVariable: "IndexVarName",
+			Decimals:     0,
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "IndexIsVar",
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Value to push:",
+		},
+		Input: template.TextInput{
+			BindVariable: "ValueVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
+		},
+	}.Build(),
 }
 
 // PushLastTemplate Dialog's PushLast Template
-var PushLastTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Array",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ArrayVarName"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Text:    "Is a Var",
-				Checked: true,
-				Enabled: false,
-			},
+var PushLastTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Array:",
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Value to push",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ValueVarName"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Text:    "Is a Var",
-				Checked: true,
-				Enabled: false,
-			},
+		Input: template.TextInput{
+			BindVariable: "ArrayVarName",
 		},
-	},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Value to push:",
+		},
+		Input: template.TextInput{
+			BindVariable: "ValueVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
+		},
+	}.Build(),
 }
 
 // RemoveAtTemplate Dialog's RemoveAt Template
-var RemoveAtTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Array",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ArrayVarName"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Text:    "Is a Var",
-				Checked: true,
-				Enabled: false,
-			},
+var RemoveAtTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Array:",
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Index to remove",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("IndexVarName"),
-				Visible:       declarative.Bind("IsIndexAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.NumberEdit{
-				Value:    declarative.Bind("Index"),
-				Visible:  declarative.Bind("!IsIndexAVar.Checked"),
-				Decimals: 0,
-			},
-			declarative.CheckBox{
-				Name:    "IsIndexAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("IndexIsVar"),
-			},
+		Input: template.TextInput{
+			BindVariable: "ArrayVarName",
 		},
-	},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Index to remove:",
+		},
+		Input: template.NumberInput{
+			Bind:         "Index",
+			BindVariable: "IndexVarName",
+			Decimals:     0,
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "IndexIsVar",
+		},
+	}.Build(),
 }
 
 // RemoveLastTemplate Dialog's RemoveLast Template
-var RemoveLastTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Array",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ArrayVarName"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Text:    "Is a Var",
-				Checked: true,
-				Enabled: false,
-			},
+var RemoveLastTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Array:",
 		},
-	},
+		Input: template.TextInput{
+			BindVariable: "ArrayVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
+		},
+	}.Build(),
 }
 
 // ShuffleTemplate Dialog's Shuffle Template
-var ShuffleTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Array",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ArrayVarName"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Text:    "Is a Var",
-				Checked: true,
-				Enabled: false,
-			},
+var ShuffleTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Array:",
 		},
-	},
+		Input: template.TextInput{
+			BindVariable: "ArrayVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
+		},
+	}.Build(),
 }
 
 // UpdateValueTemplate Dialog's UpdateValue Template
-var UpdateValueTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Array",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ArrayVarName"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Text:    "Is a Var",
-				Checked: true,
-				Enabled: false,
-			},
+var UpdateValueTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Array:",
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Index to update",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("IndexVarName"),
-				Visible:       declarative.Bind("IsIndexAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.NumberEdit{
-				Value:    declarative.Bind("Index"),
-				Visible:  declarative.Bind("!IsIndexAVar.Checked"),
-				Decimals: 0,
-			},
-			declarative.CheckBox{
-				Name:    "IsIndexAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("IndexIsVar"),
-			},
+		Input: template.TextInput{
+			BindVariable: "ArrayVarName",
 		},
-	},
-	declarative.GroupBox{
-		Title:  "New value",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ValueVarName"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Text:    "Is a Var",
-				Checked: true,
-				Enabled: false,
-			},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
 		},
-	},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Index to update:",
+		},
+		Input: template.NumberInput{
+			Bind:         "Index",
+			BindVariable: "IndexVarName",
+			Decimals:     0,
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "IndexIsVar",
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "New value:",
+		},
+		Input: template.TextInput{
+			BindVariable: "ValueVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
+		},
+	}.Build(),
 }

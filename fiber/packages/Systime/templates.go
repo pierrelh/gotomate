@@ -1,39 +1,45 @@
 package systime
 
-import "github.com/lxn/walk/declarative"
+import (
+	"gotomate-astilectron/fiber/template"
+)
 
 //SysTimeTemplate Dialog's SysTime Template
-var SysTimeTemplate = []declarative.Widget{
-	declarative.Label{
-		Text: "Output:",
-	},
-	declarative.TextEdit{
-		Text:          declarative.Bind("Output"),
-		CompactHeight: true,
-	},
+var SysTimeTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Output:",
+		},
+		Input: template.TextInput{
+			Bind: "Output",
+		},
+	}.Build(),
 }
 
 //SysClockTemplate Dialog's SysClock Template
-var SysClockTemplate = []declarative.Widget{
-	declarative.Label{
-		Text: "Hours Output:",
-	},
-	declarative.TextEdit{
-		Text:          declarative.Bind("HoursOutput"),
-		CompactHeight: true,
-	},
-	declarative.Label{
-		Text: "Minutes Output:",
-	},
-	declarative.TextEdit{
-		Text:          declarative.Bind("MinutesOutput"),
-		CompactHeight: true,
-	},
-	declarative.Label{
-		Text: "SecondsOutput:",
-	},
-	declarative.TextEdit{
-		Text:          declarative.Bind("SecondsOutput"),
-		CompactHeight: true,
-	},
+var SysClockTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Hours Output:",
+		},
+		Input: template.TextInput{
+			Bind: "HoursOutput",
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Minutes Output:",
+		},
+		Input: template.TextInput{
+			Bind: "MinutesOutput",
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Seconds Output:",
+		},
+		Input: template.TextInput{
+			Bind: "SecondsOutput",
+		},
+	}.Build(),
 }

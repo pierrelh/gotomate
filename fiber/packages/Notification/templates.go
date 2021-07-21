@@ -1,48 +1,57 @@
 package notification
 
-import "github.com/lxn/walk/declarative"
+import (
+	"gotomate-astilectron/fiber/template"
+)
 
 // CreateTemplate Dialog's NotificationCreate Template
-var CreateTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Title",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("TitleVarName"),
-				Visible:       declarative.Bind("TitleIsAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.TextEdit{
-				Text:          declarative.Bind("Title"),
-				Visible:       declarative.Bind("!TitleIsAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Name:    "TitleIsAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("TitleIsVar"),
-			},
+var CreateTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Title:",
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Message",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("MessageVarName"),
-				Visible:       declarative.Bind("MessageIsAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.TextEdit{
-				Text:    declarative.Bind("Message"),
-				Visible: declarative.Bind("!MessageIsAVar.Checked"),
-			},
-			declarative.CheckBox{
-				Name:    "MessageIsAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("MessageIsVar"),
-			},
+		Input: template.TextInput{
+			Bind:         "Title",
+			BindVariable: "TitleVarName",
 		},
-	},
+		VariableToggler: template.VariableToggler{
+			Bind: "TitleIsVar",
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Message:",
+		},
+		Input: template.TextInput{
+			Bind:         "Message",
+			BindVariable: "MessageVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "MessageIsVar",
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Output:",
+		},
+		Input: template.TextInput{
+			Bind: "Output",
+		},
+	}.Build(),
+}
+
+// PushTemplate Dialog's NotificationCreate Template
+var PushTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Notification:",
+		},
+		Input: template.TextInput{
+			BindVariable: "NotificationVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
+		},
+	}.Build(),
 }

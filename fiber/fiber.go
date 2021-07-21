@@ -3,7 +3,6 @@ package fiber
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -12,11 +11,32 @@ import (
 
 	"gotomate-astilectron/fiber/instructions"
 	"gotomate-astilectron/fiber/packages"
-	algorithmic "gotomate-astilectron/fiber/packages/Algorithmic"
-	flow "gotomate-astilectron/fiber/packages/Flow"
-	sleep "gotomate-astilectron/fiber/packages/Sleep"
-	"gotomate-astilectron/fiber/template"
+	algorithmicpack "gotomate-astilectron/fiber/packages/Algorithmic"
+	apipack "gotomate-astilectron/fiber/packages/Api"
+	arithmeticpack "gotomate-astilectron/fiber/packages/Arithmetic"
+	arraypack "gotomate-astilectron/fiber/packages/Array"
+	batterypack "gotomate-astilectron/fiber/packages/Battery"
+	chronometerpack "gotomate-astilectron/fiber/packages/Chronometer"
+	clipboardpack "gotomate-astilectron/fiber/packages/Clipboard"
+	conversionpack "gotomate-astilectron/fiber/packages/Conversion"
+	definepack "gotomate-astilectron/fiber/packages/Define"
+	dictionarypack "gotomate-astilectron/fiber/packages/Dictionary"
+	filepack "gotomate-astilectron/fiber/packages/File"
+	flowpack "gotomate-astilectron/fiber/packages/Flow"
+	inputpack "gotomate-astilectron/fiber/packages/Input"
+	jsonpack "gotomate-astilectron/fiber/packages/Json"
+	keyboardpack "gotomate-astilectron/fiber/packages/Keyboard"
+	logpack "gotomate-astilectron/fiber/packages/Log"
+	mousepack "gotomate-astilectron/fiber/packages/Mouse"
+	notificationpack "gotomate-astilectron/fiber/packages/Notification"
+	processpack "gotomate-astilectron/fiber/packages/Process"
+	scrapingpack "gotomate-astilectron/fiber/packages/Scraping"
+	screenpack "gotomate-astilectron/fiber/packages/Screen"
+	sleeppack "gotomate-astilectron/fiber/packages/Sleep"
+	soundpack "gotomate-astilectron/fiber/packages/Sound"
+	systimepack "gotomate-astilectron/fiber/packages/Systime"
 	"gotomate-astilectron/fiber/variable"
+	"gotomate-astilectron/log"
 	"reflect"
 	"sort"
 )
@@ -26,6 +46,12 @@ var NewFiber = new(Fiber)
 var running = 0
 var finished = make(chan bool)
 var stop = make(chan bool)
+
+const (
+	finishedFiber   int = -99
+	unknownFunction int = -2
+	continuFiber    int = -1
+)
 
 // LoadingFiber Initialize the loading fiber structure
 type LoadingFiber struct {
@@ -66,11 +92,22 @@ func (fiber *Fiber) CreateInstruction(content map[string]interface{}) *instructi
 
 // Save Save the current fiber
 func (fiber *Fiber) Save(filePath ...string) {
+
+	// Getting the path where to save the fiber
 	path := "saves/"
 	if len(filePath) > 0 {
-		path = filePath[0]
+		path = filePath[0] + "/"
 	}
-	fullPath := path + fiber.Name + ".json"
+
+	toSave := fiber
+
+	// Removing the templates from the save
+	for i := 0; i < len(toSave.Instructions); i++ {
+		toSave.Instructions[i].Template = nil
+	}
+
+	// Saving the fiber
+	fullPath := path + toSave.Name + ".json"
 	file, _ := json.Marshal(fiber)
 	ioutil.WriteFile(fullPath, file, 0644)
 }
@@ -101,20 +138,20 @@ func (fiber *Fiber) Open(path string) *Fiber {
 	jsonFile, err := os.Open(path)
 
 	if err != nil {
-		fmt.Println("GOTOMATE ERROR: Unable to open the saved fiber")
 		return nil
 	}
 	byteValue, _ := ioutil.ReadAll(jsonFile)
 	var loadingFiber LoadingFiber
 	err = json.Unmarshal(byteValue, &loadingFiber)
 	if err != nil {
-		fmt.Println("GOTOMATE ERROR: Unable to extract the saved fiber")
+		log.GotomateError("Unable to extract the saved fiber")
 	}
 
 	fiber.Clean()
 	fiber.Name = loadingFiber.Name
 
 	for _, instruction := range loadingFiber.Instructions {
+		databinder, fields := packages.PackageDecode(instruction.Package, instruction.FuncName)
 
 		newInstruction := &instructions.Instruction{
 			ID:       instruction.ID,
@@ -124,19 +161,12 @@ func (fiber *Fiber) Open(path string) *Fiber {
 			Y:        instruction.Y,
 			IconPath: instruction.IconPath,
 			NextID:   instruction.NextID,
+			Template: fields,
 		}
-		databinder, fields := packages.PackageDecode(instruction.Package, instruction.FuncName)
-		var temp = make([]template.Field, len(fields))
-		if databinder != nil && fields != nil {
-
+		if databinder != nil {
 			if err := json.Unmarshal(instruction.Datas, databinder); err != nil {
-				fmt.Println("GOTOMATE ERROR: Unable to convert the saved instruction")
+				log.GotomateError("Unable to convert the saved instruction")
 			}
-
-			if err := json.Unmarshal(instruction.Template, &temp); err != nil {
-				fmt.Println("GOTOMATE ERROR: Unable to convert the saved template")
-			}
-			// newInstruction.Template = &temp
 			newInstruction.Datas = databinder
 		}
 
@@ -151,8 +181,8 @@ func (fiber *Fiber) Export(filePath string) {
 }
 
 // Import Import a new fiber from a specified path
-func (fiber *Fiber) Import(filePath string) {
-	fiber.Open(filePath)
+func (fiber *Fiber) Import(filePath string) *Fiber {
+	return fiber.Open(filePath)
 }
 
 // Clean Delete all the instructions of the current fiber
@@ -164,12 +194,12 @@ func (fiber *Fiber) Clean() {
 // Stop Stop the current fiber
 func (fiber *Fiber) Stop() {
 	if running == 1 {
-		fmt.Println("| Fiber Stopped |")
 		finished <- true
 		running = 0
 		stop <- true
+		log.Plain("| Fiber Stopped |")
 	} else {
-		fmt.Println("FIBER WARNING: No running fiber")
+		log.FiberWarning("No running fiber")
 	}
 }
 
@@ -177,7 +207,7 @@ func (fiber *Fiber) Stop() {
 func (fiber *Fiber) Run() {
 	running++
 	if running > 1 {
-		fmt.Println("FIBER WARNING: A fiber is already running")
+		log.FiberWarning("A fiber is already running")
 	} else {
 		instruction := fiber.Instructions[0]
 		variable.FiberVariable = nil
@@ -195,28 +225,77 @@ func (fiber *Fiber) Run() {
 				}
 				switch instruction.Package {
 				case "Flow":
-					ended := flow.Processing(funcName, instructionData, finished)
-					if ended {
-						running = 0
-						return
-					}
+					nextID = flowpack.Processing(funcName, instructionData, finished)
 				// DON'T REMOVE ME / New processing inserted here
 				case "Algorithmic":
-					nextID = algorithmic.Processing(funcName, instructionData, finished)
+					nextID = algorithmicpack.Processing(funcName, instructionData, finished)
+				case "Api":
+					nextID = apipack.Processing(funcName, instructionData, finished)
+				case "Arithmetic":
+					nextID = arithmeticpack.Processing(funcName, instructionData, finished)
+				case "Array":
+					nextID = arraypack.Processing(funcName, instructionData, finished)
+				case "Battery":
+					nextID = batterypack.Processing(funcName, instructionData, finished)
+				case "Chronometer":
+					nextID = chronometerpack.Processing(funcName, instructionData, finished)
+				case "Clipboard":
+					nextID = clipboardpack.Processing(funcName, instructionData, finished)
+				case "Conversion":
+					nextID = conversionpack.Processing(funcName, instructionData, finished)
+				case "Define":
+					nextID = definepack.Processing(funcName, instructionData, finished)
+				case "Dictionary":
+					nextID = dictionarypack.Processing(funcName, instructionData, finished)
+				case "File":
+					nextID = filepack.Processing(funcName, instructionData, finished)
+				case "Input":
+					nextID = inputpack.Processing(funcName, instructionData, finished)
+				case "Json":
+					nextID = jsonpack.Processing(funcName, instructionData, finished)
+				case "Keyboard":
+					nextID = keyboardpack.Processing(funcName, instructionData, finished)
+				case "Log":
+					nextID = logpack.Processing(funcName, instructionData, finished)
+				case "Mouse":
+					nextID = mousepack.Processing(funcName, instructionData, finished)
+				case "Notification":
+					nextID = notificationpack.Processing(funcName, instructionData, finished)
+				case "Process":
+					nextID = processpack.Processing(funcName, instructionData, finished)
+				case "Scraping":
+					nextID = scrapingpack.Processing(funcName, instructionData, finished)
+				case "Screen":
+					nextID = screenpack.Processing(funcName, instructionData, finished)
 				case "Sleep":
-					nextID = sleep.Processing(funcName, instructionData, finished)
+					nextID = sleeppack.Processing(funcName, instructionData, finished)
+				case "Sound":
+					nextID = soundpack.Processing(funcName, instructionData, finished)
+				case "Systime":
+					nextID = systimepack.Processing(funcName, instructionData, finished)
 				default:
-					fmt.Println("FIBER WARNING: This package is not integrated yet: " + instruction.Package)
+					log.FiberError("Package not found:", instruction.Package)
 					continue
 				}
 
-				if nextID == -1 {
+				// The error code for a finished fiber
+				if nextID == finishedFiber {
+					running = 0
+					return
+				}
+
+				// The error code for an unknown function
+				if nextID == unknownFunction {
+					log.FiberError("Function not found:", funcName)
+					nextID = continuFiber
+				}
+
+				if nextID == continuFiber {
 					idx := sort.Search(len(fiber.Instructions), func(i int) bool {
 						return fiber.Instructions[i].ID >= instruction.NextID
 					})
 					if idx == len(fiber.Instructions) {
-						fmt.Println("FIBER FATAL ERROR: The instruction with the id", instruction.NextID, "has no been founded")
-						fmt.Println("| Fiber Finished at Fatal Error |")
+						log.FiberFatalError("The instruction with the id", instruction.NextID, "has no been found")
 						running = 0
 						return
 					} else {

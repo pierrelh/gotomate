@@ -2,18 +2,17 @@ package json
 
 import (
 	"encoding/json"
-	"fmt"
-	variable "gotomate/fiber/variable"
+	"gotomate-astilectron/fiber/variable"
+	"gotomate-astilectron/log"
 	"io/ioutil"
 	"os"
-	"reflect"
 )
 
 // CreateJson Create a new json value with a json file
-func CreateJson(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Getting a json value by path ...")
+func CreateJson(instructionData interface{}, finished chan bool) int {
+	log.FiberInfo("Creating a Json from a File")
 
-	path, err := variable.GetValue(instructionData, "PathVarName", "PathIsVar", "Path")
+	path, err := variable.Keys{VarName: "PathVarName", IsVarName: "PathIsVar", Name: "Path"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
@@ -21,7 +20,7 @@ func CreateJson(instructionData reflect.Value, finished chan bool) int {
 
 	jsonFile, err := os.Open(path.(string))
 	if err != nil {
-		fmt.Println("FIBER ERROR: Cannot open json file's path")
+		log.FiberError("Cannot open Json file's path")
 		finished <- true
 		return -1
 	}
@@ -29,16 +28,16 @@ func CreateJson(instructionData reflect.Value, finished chan bool) int {
 	defer jsonFile.Close()
 	byteValue, _ := ioutil.ReadAll(jsonFile)
 
-	variable.SetVariable(instructionData.FieldByName("Output").Interface().(string), byteValue)
+	variable.SetVariable(instructionData, "Output", byteValue)
 	finished <- true
 	return -1
 }
 
 // JsonToDictionary Convert a json to a dictionary
-func JsonToDictionary(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Converting json to dictionary ...")
+func JsonToDictionary(instructionData interface{}, finished chan bool) int {
+	log.FiberInfo("Converting a Json to a Dictionary")
 
-	input, err := variable.GetValue(instructionData, "JsonVarName")
+	input, err := variable.Keys{VarName: "JsonVarName"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
@@ -47,22 +46,22 @@ func JsonToDictionary(instructionData reflect.Value, finished chan bool) int {
 	m := make(map[string][]interface{})
 	json.Unmarshal(input.([]byte), &m)
 
-	variable.SetVariable(instructionData.FieldByName("Output").Interface().(string), m)
+	variable.SetVariable(instructionData, "Output", m)
 	finished <- true
 	return -1
 }
 
 // SaveJson Save a json value in a file
-func SaveJson(instructionData reflect.Value, finished chan bool) int {
-	fmt.Println("FIBER INFO: Saving json to path ...")
+func SaveJson(instructionData interface{}, finished chan bool) int {
+	log.FiberInfo("Saving a Json to a path")
 
-	json, err := variable.GetValue(instructionData, "JsonVarName")
+	json, err := variable.Keys{VarName: "JsonVarName"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
 	}
 
-	path, err := variable.GetValue(instructionData, "PathVarName", "PathIsVar", "Path")
+	path, err := variable.Keys{VarName: "PathVarName", IsVarName: "PathIsVar", Name: "Path"}.GetValue(instructionData)
 	if err != nil {
 		finished <- true
 		return -1
@@ -70,7 +69,7 @@ func SaveJson(instructionData reflect.Value, finished chan bool) int {
 
 	err = ioutil.WriteFile(path.(string), json.([]byte), 0644)
 	if err != nil {
-		fmt.Println("FIBER ERROR: Unable to write the new json file")
+		log.FiberError("Unable to write the new json file")
 		finished <- true
 		return -1
 	}
