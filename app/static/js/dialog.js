@@ -20,10 +20,10 @@ class Dialog {
 
 	// Hiding the Dialog
 	Hide() {
-		this.Reset();
 		if (this.View.classList.contains("dialog-show")) {
 			this.View.classList.remove("dialog-show");
 		}
+		this.Reset();
 	}
 
 	// Setting the datas in the Dialog

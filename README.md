@@ -1,6 +1,6 @@
 # Gotomate-astilectron
 
-Gotomate-astilectron is a fork of Gotomate, using astilectron instead of walk. It allow a better looking GUI, easier to install, easier to customize & easier to configure
+Gotomate-astilectron is a fork of Gotomate-Walk, using astilectron instead of walk. It allow a better looking GUI, easier to install, easier to customize & easier to configure
 
 ## Avancement
 
@@ -40,10 +40,10 @@ Download the fiber example at this link:
 
 https://production-gotomate.herokuapp.com/resources/GetBatStateExemple.json
 
-& import it in a gotomate's process then run it to get an exemple of a gotomate running fiber.
+& import it in a Gotomate's process then run it to get an exemple of a Gotomate running fiber.
 
-## Create your Packages (To be updated)
+## Create your Packages
 
-You can create your own gotomate's packages using this repo:
+You can create your own Gotomate's packages using this repo:
 
-https://github.com/pierrelh/gotomate-package-template
+https://github.com/pierrelh/gotomate-astilectron-package-template
