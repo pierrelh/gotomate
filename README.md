@@ -4,7 +4,7 @@ Gotomate-astilectron is a fork of Gotomate, using astilectron instead of walk. I
 
 ## Avancement
 
-Actually rebuilding Gotomate adapted with astilectron.
+Gotomate's rebuilding is now finished !
 
 ## Requirements
 

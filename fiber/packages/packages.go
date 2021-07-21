@@ -58,73 +58,67 @@ func ImportPackage(path string) error {
 
 	r, err := zip.OpenReader(path)
 	if err != nil {
-		log.GotomateError("Unable to open the zip reader")
-		return err
+		return log.Error("Package Import: Unable to open the zip reader")
 	}
 	defer r.Close()
 
-	validation, dirs := ScanArchive(r.File)
+	dirs, err := ScanArchive(r.File)
+	if err != nil {
+		return err
+	}
 
-	if validation {
+	for _, f := range r.File {
 
-		for _, f := range r.File {
+		// Store filename/path for returning and using later on
+		fpath := filepath.Join("./fiber/packages", f.Name)
 
-			// Store filename/path for returning and using later on
-			fpath := filepath.Join("./fiber/packages", f.Name)
+		// Check for ZipSlip. More Info: http://bit.ly/2MsjAWE
+		if !strings.HasPrefix(fpath, filepath.Clean("./fiber/packages")+string(os.PathSeparator)) {
+			return log.Error("%s: illegal file path", fpath)
+		}
 
-			// Check for ZipSlip. More Info: http://bit.ly/2MsjAWE
-			if !strings.HasPrefix(fpath, filepath.Clean("./fiber/packages")+string(os.PathSeparator)) {
-				log.GotomateError("Illegal file path given")
-				return log.Error("%s: illegal file path", fpath)
-			}
+		if f.FileInfo().IsDir() {
+			// Make Folder
+			os.MkdirAll(fpath, os.ModePerm)
+			continue
+		}
 
-			if f.FileInfo().IsDir() {
-				// Make Folder
-				os.MkdirAll(fpath, os.ModePerm)
-				continue
-			}
+		// Make File
+		if err = os.MkdirAll(filepath.Dir(fpath), os.ModePerm); err != nil {
+			return log.Error("Package Import: Unable to create the new directory")
+		}
 
-			// Make File
-			if err = os.MkdirAll(filepath.Dir(fpath), os.ModePerm); err != nil {
-				log.GotomateError("Unable to create the new directory")
-				return err
-			}
+		outFile, err := os.OpenFile(fpath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, f.Mode())
+		if err != nil {
+			return log.Error("Package Import: Unable to open the new file")
+		}
 
-			outFile, err := os.OpenFile(fpath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, f.Mode())
-			if err != nil {
-				log.GotomateError("Unable to open the new file")
-				return err
-			}
+		rc, err := f.Open()
+		if err != nil {
+			return log.Error("Package Import: Unable to open the read closer")
+		}
 
-			rc, err := f.Open()
-			if err != nil {
-				log.GotomateError("Unable to open the read closer")
-				return err
-			}
+		_, err = io.Copy(outFile, rc)
 
-			_, err = io.Copy(outFile, rc)
+		// Close the file without defer to close before next iteration of loop
+		outFile.Close()
+		rc.Close()
 
-			// Close the file without defer to close before next iteration of loop
-			outFile.Close()
-			rc.Close()
-
-			if err != nil {
-				log.GotomateError("Unable to copy the new files")
-				return err
-			}
+		if err != nil {
+			return log.Error("Package Import: Unable to copy the new files")
 		}
 	}
 
 	for i := 0; i < len(dirs); i++ {
 		dirs[i] = strings.TrimSuffix(dirs[i], "/")
 		packageName := strings.ToLower(dirs[i])
-		packageImport := "// DON'T REMOVE ME / New packages inserted here\n" + packageName + " \"gotomate/fiber/packages/" + dirs[i] + "\""
-		processing := "// DON'T REMOVE ME / New processing inserted here\n" + "case \"" + dirs[i] + "\":\n nextID = " + packageName + ".Processing(funcName, instructionData, finished)"
+		packageImport := "// DON'T REMOVE ME / New packages inserted here\n" + packageName + "pack \"gotomate-astilectron/fiber/packages/" + dirs[i] + "\""
+		processing := "// DON'T REMOVE ME / New processing inserted here\n" + "case \"" + dirs[i] + "\":\n nextID = " + packageName + "pack.Processing(funcName, instructionData, finished)"
 
 		// Write in fiber.go (import the package & insert the Processing function)
 		content, err := ioutil.ReadFile("./fiber/fiber.go")
 		if err != nil {
-			log.GotomateError("Unable to read the file fiber.go")
+			log.GotomateError("Package Import: Unable to read the file fiber.go")
 			return err
 		}
 		SContent := string(content)
@@ -134,16 +128,16 @@ func ImportPackage(path string) error {
 
 		err = ioutil.WriteFile("./fiber/fiber.go", content, 0644)
 		if err != nil {
-			log.GotomateError("Unable to write the file fiber.go")
+			log.GotomateError("Package Import: Unable to write the file fiber.go")
 			return err
 		}
 
 		// Write in packages-dialog.go (import the package & insert the Build function)
-		build := "// DON'T REMOVE ME / New Build inserted here\n" + "case \"" + dirs[i] + "\":\n databinder, template = " + packageName + ".Build(funcName)"
+		build := "// DON'T REMOVE ME / New Build inserted here\n" + "case \"" + dirs[i] + "\":\n databinder, template = " + packageName + "pack.Build(funcName)"
 
 		content, err = ioutil.ReadFile("./fiber/packages/packages-dialog.go")
 		if err != nil {
-			log.GotomateError("Unable to read the file packages-dialog.go")
+			log.GotomateError("Package Import: Unable to read the file packages-dialog.go")
 			return err
 		}
 		SContent = string(content)
@@ -153,7 +147,7 @@ func ImportPackage(path string) error {
 
 		err = ioutil.WriteFile("./fiber/packages/packages-dialog.go", content, 0644)
 		if err != nil {
-			log.GotomateError("Unable to write the file packages-dialog.go")
+			log.GotomateError("Package Import: Unable to write the file packages-dialog.go")
 			return err
 		}
 	}
@@ -161,7 +155,7 @@ func ImportPackage(path string) error {
 }
 
 // ScanArchive the archive to check if the format is correct
-func ScanArchive(archive []*zip.File) (bool, []string) {
+func ScanArchive(archive []*zip.File) ([]string, error) {
 	var dir []string
 	var filenames = [6]string{"build.go", "databinders.go", "functions.go", "icon.png", "processing.go", "templates.go"}
 
@@ -175,20 +169,17 @@ func ScanArchive(archive []*zip.File) (bool, []string) {
 						if matched, _ := regexp.Match(filenames[i]+".*", []byte(f.Name)); matched {
 							break
 						} else if i == len(filenames)-1 {
-							log.GotomateError("Unknow file found in the archive", f.Name)
-							return false, dir
+							return dir, log.Error("Package Scan: Unknow file found in the archive", f.Name)
 						}
 					}
 				} else if i == len(dir)-1 {
-					log.GotomateError("No files allowed at the archive root", f.Name)
-					return false, dir
+					return dir, log.Error("Package Scan: No files allowed at the archive root", f.Name)
 				}
 
 			}
 		} else {
-			log.GotomateError("No files allowed at the archive root", f.Name)
-			return false, dir
+			return dir, log.Error("Package Scan: No files allowed at the archive root", f.Name)
 		}
 	}
-	return true, dir
+	return dir, nil
 }

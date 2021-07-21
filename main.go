@@ -7,6 +7,7 @@ import (
 	"gotomate-astilectron/fiber"
 	"gotomate-astilectron/fiber/packages"
 	"gotomate-astilectron/log"
+	"os"
 
 	"github.com/asticode/go-astilectron"
 )
@@ -20,7 +21,7 @@ func main() {
 	a.Create()
 
 	// Open dev tools
-	a.Window.OpenDevTools()
+	// a.Window.OpenDevTools()
 
 	// Create the menu
 	a.CreateMenu()
@@ -41,7 +42,7 @@ func main() {
 	a.Asti.Wait()
 
 	// Close dev tools
-	a.Window.CloseDevTools()
+	// a.Window.CloseDevTools()
 }
 
 // getEvents Receive the message sended by the gui & process them
@@ -131,7 +132,11 @@ func getEvents() {
 			fiber.NewFiber.Export(content["File"].(string))
 
 		case "ImportPackage":
-			// packages.ImportPackage(content["File"].(string))
+			err := packages.ImportPackage(content["File"].(string))
+			if err != nil {
+				log.GotomateError(err)
+			}
+			os.Exit(1)
 
 		default:
 			log.GotomateError("Unknown identifier received: ", s.Identifier)
