@@ -1,80 +1,65 @@
 package api
 
-import "github.com/lxn/walk/declarative"
+import (
+	"gotomate-astilectron/fiber/template"
+)
 
 // GetTemplate Dialog's Get Template
-var GetTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Path",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("PathVarName"),
-				Visible:       declarative.Bind("PathIsAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.TextEdit{
-				Text:    declarative.Bind("Path"),
-				Visible: declarative.Bind("!PathIsAVar.Checked"),
-			},
-			declarative.CheckBox{
-				Name:    "PathIsAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("PathIsVar"),
-			},
+var GetTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Path:",
 		},
-	},
-	declarative.Label{
-		Text: "Output var:",
-	},
-	declarative.TextEdit{
-		Text:          declarative.Bind("Output"),
-		CompactHeight: true,
-	},
+		Input: template.UrlInput{
+			Bind:         "Path",
+			BindVariable: "PathVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "PathIsVar",
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Output:",
+		},
+		Input: template.TextInput{
+			Bind: "Output",
+		},
+	}.Build(),
 }
 
 // PostTemplate Dialog's Post Template
-var PostTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Dictionary to Post",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("DataVarName"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Text:    "Is a Var",
-				Checked: true,
-				Enabled: false,
-			},
+var PostTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Dictionary to Post:",
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Path",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("PathVarName"),
-				Visible:       declarative.Bind("PathIsAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.TextEdit{
-				Text:    declarative.Bind("Path"),
-				Visible: declarative.Bind("!PathIsAVar.Checked"),
-			},
-			declarative.CheckBox{
-				Name:    "PathIsAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("PathIsVar"),
-			},
+		Input: template.TextInput{
+			BindVariable: "DataVarName",
 		},
-	},
-	declarative.Label{
-		Text: "Output var:",
-	},
-	declarative.TextEdit{
-		Text:          declarative.Bind("Output"),
-		CompactHeight: true,
-	},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Path:",
+		},
+		Input: template.UrlInput{
+			Bind:         "Path",
+			BindVariable: "PathVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "PathIsVar",
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Output:",
+		},
+		Input: template.TextInput{
+			Bind: "Output",
+		},
+	}.Build(),
 }

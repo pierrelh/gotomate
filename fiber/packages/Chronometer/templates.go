@@ -1,40 +1,41 @@
 package chronometer
 
-import "github.com/lxn/walk/declarative"
+import (
+	"gotomate-astilectron/fiber/template"
+)
 
 // EndTemplate Dialog's End Template
-var EndTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Chronometer value",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ChronoVarName"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Text:    "Is a Var",
-				Checked: true,
-				Enabled: false,
-			},
+var EndTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Chronometer:",
 		},
-	},
-	declarative.Label{
-		Text: "Output:",
-	},
-	declarative.TextEdit{
-		Text:          declarative.Bind("Output"),
-		CompactHeight: true,
-	},
+		Input: template.TextInput{
+			BindVariable: "ChronoVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Output:",
+		},
+		Input: template.TextInput{
+			BindVariable: "Output",
+		},
+	}.Build(),
 }
 
 // StartTemplate Dialog's Start Template
-var StartTemplate = []declarative.Widget{
-	declarative.Label{
-		Text: "Output:",
-	},
-	declarative.TextEdit{
-		Text:          declarative.Bind("Output"),
-		CompactHeight: true,
-	},
+var StartTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Output:",
+		},
+		Input: template.TextInput{
+			BindVariable: "Output",
+		},
+	}.Build(),
 }

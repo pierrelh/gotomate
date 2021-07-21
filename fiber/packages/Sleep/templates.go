@@ -5,7 +5,7 @@ import (
 )
 
 // SleepTemplate Dialog's Sleep Template
-var SleepTemplate = &template.Template{
+var SleepTemplate = &template.InstructionTemplate{
 	template.Field{
 		Label: template.Label{
 			Text: "Sleep For:",
@@ -22,7 +22,7 @@ var SleepTemplate = &template.Template{
 }
 
 // MilliSleepTemplate Dialog's MilliSleep Template
-var MilliSleepTemplate = &template.Template{
+var MilliSleepTemplate = &template.InstructionTemplate{
 	template.Field{
 		Label: template.Label{
 			Text: "Sleep For:",

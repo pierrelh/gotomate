@@ -11,11 +11,30 @@ import (
 
 	"gotomate-astilectron/fiber/instructions"
 	"gotomate-astilectron/fiber/packages"
-	algorithmic "gotomate-astilectron/fiber/packages/Algorithmic"
-	flow "gotomate-astilectron/fiber/packages/Flow"
-	input "gotomate-astilectron/fiber/packages/Input"
-	notification "gotomate-astilectron/fiber/packages/Notification"
-	sleep "gotomate-astilectron/fiber/packages/Sleep"
+	algorithmicpack "gotomate-astilectron/fiber/packages/Algorithmic"
+	apipack "gotomate-astilectron/fiber/packages/Api"
+	arithmeticpack "gotomate-astilectron/fiber/packages/Arithmetic"
+	arraypack "gotomate-astilectron/fiber/packages/Array"
+	batterypack "gotomate-astilectron/fiber/packages/Battery"
+	chronometerpack "gotomate-astilectron/fiber/packages/Chronometer"
+	clipboardpack "gotomate-astilectron/fiber/packages/Clipboard"
+	conversionpack "gotomate-astilectron/fiber/packages/Conversion"
+	definepack "gotomate-astilectron/fiber/packages/Define"
+	dictionarypack "gotomate-astilectron/fiber/packages/Dictionary"
+	filepack "gotomate-astilectron/fiber/packages/File"
+	flowpack "gotomate-astilectron/fiber/packages/Flow"
+	inputpack "gotomate-astilectron/fiber/packages/Input"
+	jsonpack "gotomate-astilectron/fiber/packages/Json"
+	keyboardpack "gotomate-astilectron/fiber/packages/Keyboard"
+	logpack "gotomate-astilectron/fiber/packages/Log"
+	mousepack "gotomate-astilectron/fiber/packages/Mouse"
+	notificationpack "gotomate-astilectron/fiber/packages/Notification"
+	processpack "gotomate-astilectron/fiber/packages/Process"
+	scrapingpack "gotomate-astilectron/fiber/packages/Scraping"
+	screenpack "gotomate-astilectron/fiber/packages/Screen"
+	sleeppack "gotomate-astilectron/fiber/packages/Sleep"
+	soundpack "gotomate-astilectron/fiber/packages/Sound"
+	systimepack "gotomate-astilectron/fiber/packages/Systime"
 	"gotomate-astilectron/fiber/variable"
 	"gotomate-astilectron/log"
 	"reflect"
@@ -206,16 +225,54 @@ func (fiber *Fiber) Run() {
 				}
 				switch instruction.Package {
 				case "Flow":
-					nextID = flow.Processing(funcName, instructionData, finished)
+					nextID = flowpack.Processing(funcName, instructionData, finished)
 				// DON'T REMOVE ME / New processing inserted here
 				case "Algorithmic":
-					nextID = algorithmic.Processing(funcName, instructionData, finished)
+					nextID = algorithmicpack.Processing(funcName, instructionData, finished)
+				case "Api":
+					nextID = apipack.Processing(funcName, instructionData, finished)
+				case "Arithmetic":
+					nextID = arithmeticpack.Processing(funcName, instructionData, finished)
+				case "Array":
+					nextID = arraypack.Processing(funcName, instructionData, finished)
+				case "Battery":
+					nextID = batterypack.Processing(funcName, instructionData, finished)
+				case "Chronometer":
+					nextID = chronometerpack.Processing(funcName, instructionData, finished)
+				case "Clipboard":
+					nextID = clipboardpack.Processing(funcName, instructionData, finished)
+				case "Conversion":
+					nextID = conversionpack.Processing(funcName, instructionData, finished)
+				case "Define":
+					nextID = definepack.Processing(funcName, instructionData, finished)
+				case "Dictionary":
+					nextID = dictionarypack.Processing(funcName, instructionData, finished)
+				case "File":
+					nextID = filepack.Processing(funcName, instructionData, finished)
 				case "Input":
-					nextID = input.Processing(funcName, instructionData, finished)
+					nextID = inputpack.Processing(funcName, instructionData, finished)
+				case "Json":
+					nextID = jsonpack.Processing(funcName, instructionData, finished)
+				case "Keyboard":
+					nextID = keyboardpack.Processing(funcName, instructionData, finished)
+				case "Log":
+					nextID = logpack.Processing(funcName, instructionData, finished)
+				case "Mouse":
+					nextID = mousepack.Processing(funcName, instructionData, finished)
 				case "Notification":
-					nextID = notification.Processing(funcName, instructionData, finished)
+					nextID = notificationpack.Processing(funcName, instructionData, finished)
+				case "Process":
+					nextID = processpack.Processing(funcName, instructionData, finished)
+				case "Scraping":
+					nextID = scrapingpack.Processing(funcName, instructionData, finished)
+				case "Screen":
+					nextID = screenpack.Processing(funcName, instructionData, finished)
 				case "Sleep":
-					nextID = sleep.Processing(funcName, instructionData, finished)
+					nextID = sleeppack.Processing(funcName, instructionData, finished)
+				case "Sound":
+					nextID = soundpack.Processing(funcName, instructionData, finished)
+				case "Systime":
+					nextID = systimepack.Processing(funcName, instructionData, finished)
 				default:
 					log.FiberError("Package not found:", instruction.Package)
 					continue

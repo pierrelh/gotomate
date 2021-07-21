@@ -1,40 +1,41 @@
 package battery
 
-import "github.com/lxn/walk/declarative"
+import (
+	"gotomate-astilectron/fiber/template"
+)
 
 // UserBatteryTemplate Dialog's UserBattery Template
-var UserBatteryTemplate = []declarative.Widget{
-	declarative.Label{
-		Text: "Output var:",
-	},
-	declarative.TextEdit{
-		Text:          declarative.Bind("Output"),
-		CompactHeight: true,
-	},
+var UserBatteryTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Output:",
+		},
+		Input: template.TextInput{
+			BindVariable: "Output",
+		},
+	}.Build(),
 }
 
 // ParametersTemplate Dialog's BatteryParameters Template
-var ParametersTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Battery Name",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("BatteryName"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Text:    "Is a Var",
-				Checked: true,
-				Enabled: false,
-			},
+var ParametersTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Battery Name:",
 		},
-	},
-	declarative.Label{
-		Text: "Output var:",
-	},
-	declarative.TextEdit{
-		Text:          declarative.Bind("Output"),
-		CompactHeight: true,
-	},
+		Input: template.TextInput{
+			BindVariable: "BatteryName",
+		},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Output:",
+		},
+		Input: template.TextInput{
+			BindVariable: "Output",
+		},
+	}.Build(),
 }

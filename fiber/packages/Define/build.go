@@ -1,11 +1,9 @@
 package define
 
-import (
-	"github.com/lxn/walk/declarative"
-)
+import "gotomate-astilectron/fiber/template"
 
 // Build Return the right databinder & the right template for a flow instruction
-func Build(function string) (interface{}, []declarative.Widget) {
+func Build(function string) (interface{}, *template.InstructionTemplate) {
 	switch function {
 	case "ArrayOfBool":
 		return new(ArrayDatabinder), ArrayTemplate

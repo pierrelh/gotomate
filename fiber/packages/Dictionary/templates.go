@@ -1,142 +1,109 @@
 package dictionary
 
 import (
-	"github.com/lxn/walk/declarative"
+	"gotomate-astilectron/fiber/template"
 )
 
 // CreateDictionaryTemplate Dialog's Define an CreateDictionary Template
-var CreateDictionaryTemplate = []declarative.Widget{
-	declarative.Label{
-		Text: "Output var:",
-	},
-	declarative.TextEdit{
-		Text:          declarative.Bind("Output"),
-		CompactHeight: true,
-	},
+var CreateDictionaryTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Output:",
+		},
+		Input: template.TextInput{
+			Bind: "Output",
+		},
+	}.Build(),
 }
 
 // CreateEntryTemplate Dialog's Define CreateEntry Template
-var CreateEntryTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Dictionary",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("DictVarName"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Text:    "Is a Var",
-				Checked: true,
-				Enabled: false,
-			},
+var CreateEntryTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Dictionary:",
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Key",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("KeyVarName"),
-				Visible:       declarative.Bind("KeyIsAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.TextEdit{
-				Text:          declarative.Bind("Key"),
-				Visible:       declarative.Bind("!KeyIsAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Name:    "KeyIsAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("KeyIsVar"),
-			},
+		Input: template.TextInput{
+			BindVariable: "DictVarName",
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Value",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("ValueVarName"),
-				Visible:       declarative.Bind("ValueIsAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.TextEdit{
-				Text:    declarative.Bind("Value"),
-				Visible: declarative.Bind("!ValueIsAVar.Checked"),
-			},
-			declarative.CheckBox{
-				Name:    "ValueIsAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("ValueIsVar"),
-			},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
 		},
-	},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Key:",
+		},
+		Input: template.TextInput{
+			Bind:         "Key",
+			BindVariable: "KeyVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "KeyIsVar",
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Value:",
+		},
+		Input: template.TextInput{
+			Bind:         "Value",
+			BindVariable: "ValueVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "ValueIsVar",
+		},
+	}.Build(),
 }
 
 // DictionaryToJsonTemplate Dialog's Define DictionaryToJson Template
-var DictionaryToJsonTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Dictionary",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("DictVarName"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Text:    "Is a Var",
-				Checked: true,
-				Enabled: false,
-			},
+var DictionaryToJsonTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Dictionary:",
 		},
-	},
-	declarative.Label{
-		Text: "Output var:",
-	},
-	declarative.TextEdit{
-		Text:          declarative.Bind("Output"),
-		CompactHeight: true,
-	},
+		Input: template.TextInput{
+			BindVariable: "DictVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Output:",
+		},
+		Input: template.TextInput{
+			Bind: "Output",
+		},
+	}.Build(),
 }
 
 // RemoveEntryTemplate Dialog's Define RemoveEntry Template
-var RemoveEntryTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Dictionary",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("DictVarName"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Text:    "Is a Var",
-				Checked: true,
-				Enabled: false,
-			},
+var RemoveEntryTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Dictionary:",
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Key",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("KeyVarName"),
-				Visible:       declarative.Bind("KeyIsAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.TextEdit{
-				Text:          declarative.Bind("Key"),
-				Visible:       declarative.Bind("!KeyIsAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.CheckBox{
-				Name:    "KeyIsAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("KeyIsVar"),
-			},
+		Input: template.TextInput{
+			BindVariable: "DictVarName",
 		},
-	},
+		VariableToggler: template.VariableToggler{
+			Checked:  true,
+			Disabled: true,
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Key:",
+		},
+		Input: template.TextInput{
+			Bind:         "Key",
+			BindVariable: "KeyVarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "KeyIsVar",
+		},
+	}.Build(),
 }

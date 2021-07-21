@@ -12,7 +12,7 @@ const (
 	TypeTextView ElementType = "p"
 )
 
-type Template []map[string]map[string]interface{}
+type InstructionTemplate []map[string]map[string]interface{}
 
 // Field Define a field of a Template
 type Field struct {

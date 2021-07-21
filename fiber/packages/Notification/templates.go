@@ -5,7 +5,7 @@ import (
 )
 
 // CreateTemplate Dialog's NotificationCreate Template
-var CreateTemplate = &template.Template{
+var CreateTemplate = &template.InstructionTemplate{
 	template.Field{
 		Label: template.Label{
 			Text: "Title:",
@@ -41,7 +41,7 @@ var CreateTemplate = &template.Template{
 }
 
 // PushTemplate Dialog's NotificationCreate Template
-var PushTemplate = &template.Template{
+var PushTemplate = &template.InstructionTemplate{
 	template.Field{
 		Label: template.Label{
 			Text: "Notification:",

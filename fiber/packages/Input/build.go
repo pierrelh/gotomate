@@ -5,7 +5,7 @@ import (
 )
 
 // Build Return the right databinder & the right template for a input instruction
-func Build(function string) (interface{}, *template.Template) {
+func Build(function string) (interface{}, *template.InstructionTemplate) {
 	switch function {
 	case "Bool":
 		return new(InputDatabinder), InputTemplate

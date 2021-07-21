@@ -1,27 +1,21 @@
 package log
 
-import "github.com/lxn/walk/declarative"
+import (
+	"gotomate-astilectron/fiber/template"
+)
 
 // PrintTemplate Dialog's LogPrint Template
-var PrintTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Log",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("VarName"),
-				Visible:       declarative.Bind("IsAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.TextEdit{
-				Text:    declarative.Bind("Log"),
-				Visible: declarative.Bind("!IsAVar.Checked"),
-			},
-			declarative.CheckBox{
-				Name:    "IsAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("LogIsVar"),
-			},
+var PrintTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Log:",
 		},
-	},
+		Input: template.TextInput{
+			Bind:         "Log",
+			BindVariable: "VarName",
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "LogIsVar",
+		},
+	}.Build(),
 }

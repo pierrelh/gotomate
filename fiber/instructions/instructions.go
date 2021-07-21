@@ -24,7 +24,7 @@ type Instruction struct {
 	IconPath string
 	NextID   int
 	Datas    interface{}
-	Template *template.Template
+	Template *template.InstructionTemplate
 }
 
 // FiberLoadingInstruction Create the automate's list of instructions

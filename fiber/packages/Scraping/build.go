@@ -1,11 +1,9 @@
 package scraping
 
-import (
-	"github.com/lxn/walk/declarative"
-)
+import "gotomate-astilectron/fiber/template"
 
 // Build Return the right databinder & the right template for a screen instruction
-func Build(function string) (interface{}, []declarative.Widget) {
+func Build(function string) (interface{}, *template.InstructionTemplate) {
 	switch function {
 	case "AddAllowedDomain":
 		return new(AddAllowedDomainDatabinder), AddAllowedDomainTemplate

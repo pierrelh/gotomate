@@ -39,16 +39,16 @@ type TextView struct {
 func newTextView(f interface{}) map[string]interface{} {
 	var textView = map[string]interface{}{}
 	tvreflect := reflect.ValueOf(f)
-	if val := tvreflect.FieldByName("FontWeight").Interface().(string); val != "" {
+	if val := tvreflect.FieldByName("FontWeight").Interface().(FontWeight); val != "" {
 		textView["FontWeight"] = val
 	}
 	if val := tvreflect.FieldByName("Text").Interface().(string); val != "" {
 		textView["Text"] = val
 	}
-	if val := tvreflect.FieldByName("TextDecoration").Interface().(string); val != "" {
+	if val := tvreflect.FieldByName("TextDecoration").Interface().(TextDecoration); val != "" {
 		textView["TextDecoration"] = val
 	}
-	if val := tvreflect.FieldByName("TextAlignement").Interface().(string); val != "" {
+	if val := tvreflect.FieldByName("TextAlignement").Interface().(TextAlignement); val != "" {
 		textView["TextAlignement"] = val
 	}
 	textView["ElementType"] = TypeTextView

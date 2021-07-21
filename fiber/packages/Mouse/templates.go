@@ -1,158 +1,122 @@
 package mouse
 
-import "github.com/lxn/walk/declarative"
+import (
+	"gotomate-astilectron/fiber/template"
+)
+
+// Buttons Define the possibles values of MouseButton
+func Buttons() []template.Option {
+	return []template.Option{
+		{Name: "left", Value: "Left"},
+		{Name: "right", Value: "Right"},
+	}
+}
 
 // ClickTemplate Dialog's MouseClic Template
-var ClickTemplate = []declarative.Widget{
-	declarative.Label{
-		Text: "Click:",
-	},
-	declarative.ComboBox{
-		Value:         declarative.Bind("MouseButtonName", declarative.SelRequired{}),
-		BindingMember: "ID",
-		DisplayMember: "Name",
-		Model:         Buttons(),
-	},
+var ClickTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Click:",
+		},
+		Input: template.Select{
+			Bind:    "MouseButtonName",
+			Options: Buttons(),
+		},
+	}.Build(),
 }
 
 // DragTemplate Dialog's Drag Template
-var DragTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Horizontal",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("XVarName"),
-				Visible:       declarative.Bind("XIsAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.NumberEdit{
-				Visible:  declarative.Bind("!XIsAVar.Checked"),
-				Value:    declarative.Bind("X"),
-				Decimals: 0,
-				Suffix:   " px",
-			},
-			declarative.CheckBox{
-				Name:    "XIsAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("XIsVar"),
-			},
+var DragTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Horizontal:",
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Vertical",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("YVarName"),
-				Visible:       declarative.Bind("YIsAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.NumberEdit{
-				Value:    declarative.Bind("Y"),
-				Visible:  declarative.Bind("!YIsAVar.Checked"),
-				Decimals: 0,
-				Suffix:   " px",
-			},
-			declarative.CheckBox{
-				Name:    "YIsAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("YIsVar"),
-			},
+		Input: template.NumberInput{
+			Bind:         "X",
+			BindVariable: "XVarName",
+			Decimals:     0,
+			Suffix:       "px",
 		},
-	},
+		VariableToggler: template.VariableToggler{
+			Bind: "XIsVar",
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Vertical:",
+		},
+		Input: template.NumberInput{
+			Bind:         "Y",
+			BindVariable: "YVarName",
+			Decimals:     0,
+			Suffix:       "px",
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "YIsVar",
+		},
+	}.Build(),
 }
 
 // MoveTemplate Dialog's MouseMove Template
-var MoveTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Horizontal",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("XVarName"),
-				Visible:       declarative.Bind("XIsAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.NumberEdit{
-				Value:    declarative.Bind("X"),
-				Visible:  declarative.Bind("!XIsAVar.Checked"),
-				Suffix:   " px",
-				Decimals: 0,
-			},
-			declarative.CheckBox{
-				Name:    "XIsAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("XIsVar"),
-			},
+var MoveTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Horizontal:",
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Vertical",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("YVarName"),
-				Visible:       declarative.Bind("YIsAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.NumberEdit{
-				Value:    declarative.Bind("Y"),
-				Visible:  declarative.Bind("!YIsAVar.Checked"),
-				Suffix:   " px",
-				Decimals: 0,
-			},
-			declarative.CheckBox{
-				Name:    "YIsAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("YIsVar"),
-			},
+		Input: template.NumberInput{
+			Bind:         "X",
+			BindVariable: "XVarName",
+			Decimals:     0,
+			Suffix:       "px",
 		},
-	},
+		VariableToggler: template.VariableToggler{
+			Bind: "XIsVar",
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Vertical:",
+		},
+		Input: template.NumberInput{
+			Bind:         "Y",
+			BindVariable: "YVarName",
+			Decimals:     0,
+			Suffix:       "px",
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "YIsVar",
+		},
+	}.Build(),
 }
 
 // ScrollTemplate Dialog's MouseScroll Template
-var ScrollTemplate = []declarative.Widget{
-	declarative.GroupBox{
-		Title:  "Horizontal",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("XVarName"),
-				Visible:       declarative.Bind("XIsAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.NumberEdit{
-				Visible:  declarative.Bind("!XIsAVar.Checked"),
-				Value:    declarative.Bind("X"),
-				Decimals: 0,
-			},
-			declarative.CheckBox{
-				Name:    "XIsAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("XIsVar"),
-			},
+var ScrollTemplate = &template.InstructionTemplate{
+	template.Field{
+		Label: template.Label{
+			Text: "Horizontal:",
 		},
-	},
-	declarative.GroupBox{
-		Title:  "Vertical",
-		Layout: declarative.HBox{},
-		Children: []declarative.Widget{
-			declarative.TextEdit{
-				Text:          declarative.Bind("YVarName"),
-				Visible:       declarative.Bind("YIsAVar.Checked"),
-				CompactHeight: true,
-			},
-			declarative.NumberEdit{
-				Value:    declarative.Bind("Y"),
-				Visible:  declarative.Bind("!YIsAVar.Checked"),
-				Decimals: 0,
-			},
-			declarative.CheckBox{
-				Name:    "YIsAVar",
-				Text:    "Is a Var",
-				Checked: declarative.Bind("YIsVar"),
-			},
+		Input: template.NumberInput{
+			Bind:         "X",
+			BindVariable: "XVarName",
+			Decimals:     0,
+			Suffix:       "px",
 		},
-	},
+		VariableToggler: template.VariableToggler{
+			Bind: "XIsVar",
+		},
+	}.Build(),
+	template.Field{
+		Label: template.Label{
+			Text: "Vertical:",
+		},
+		Input: template.NumberInput{
+			Bind:         "Y",
+			BindVariable: "YVarName",
+			Decimals:     0,
+			Suffix:       "px",
+		},
+		VariableToggler: template.VariableToggler{
+			Bind: "YIsVar",
+		},
+	}.Build(),
 }

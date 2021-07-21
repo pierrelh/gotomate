@@ -3,7 +3,7 @@ package notification
 import "gotomate-astilectron/fiber/template"
 
 // Build Return the right databinder & the right template for a notification instruction
-func Build(function string) (interface{}, *template.Template) {
+func Build(function string) (interface{}, *template.InstructionTemplate) {
 	switch function {
 	case "Create":
 		return new(CreateDatabinder), CreateTemplate

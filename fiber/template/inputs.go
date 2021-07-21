@@ -280,9 +280,12 @@ type NumberInput struct {
 	Bind         string // The name of the databinder entree to bind the raw value of the Input
 	BindVariable string // The name of the databinder entree to binder the variable name of the Input
 	Value        int    // The value of the Input
+	Decimals     int    // The number of decimals allowed
 	Disabled     bool   // Set if the input is disabled or not
 	Prefix       string // Set a Prefix for the input
 	Suffix       string // Set a Suffix for the input
+	MaxValue     int    // Set a max value for the input
+	MinValue     int    // Set a min value for the input
 }
 
 func newNumberInput(f interface{}) map[string]interface{} {
@@ -302,6 +305,15 @@ func newNumberInput(f interface{}) map[string]interface{} {
 	}
 	if val := reflected.FieldByName("Disabled").Interface().(bool); val {
 		input["Disabled"] = val
+	}
+	if val := reflected.FieldByName("Decimals").Interface().(int); val != 0 {
+		input["Decimals"] = val
+	}
+	if val := reflected.FieldByName("MaxValue").Interface().(int); val != 0 {
+		input["MaxValue"] = val
+	}
+	if val := reflected.FieldByName("MinValue").Interface().(int); val != 0 {
+		input["MinValue"] = val
 	}
 
 	input["Value"] = reflected.FieldByName("Value").Interface().(int)
@@ -410,6 +422,8 @@ type TextInput struct {
 	Disabled     bool   // Set if the input is disabled or not
 	Prefix       string // Set a Prefix for the input
 	Suffix       string // Set a Suffix for the input
+	MaxLength    int    // Set the max length of the input
+	MinLength    int    // Set the min length of the input
 }
 
 func newTextInput(f interface{}) map[string]interface{} {
@@ -429,6 +443,12 @@ func newTextInput(f interface{}) map[string]interface{} {
 	}
 	if val := reflected.FieldByName("Suffix").Interface().(string); val != "" {
 		input["Suffix"] = val
+	}
+	if val := reflected.FieldByName("MaxLength").Interface().(int); val != 0 {
+		input["MaxLength"] = val
+	}
+	if val := reflected.FieldByName("MinLength").Interface().(int); val != 0 {
+		input["MinLength"] = val
 	}
 
 	input["Value"] = reflected.FieldByName("Value").Interface().(string)

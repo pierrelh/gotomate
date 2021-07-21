@@ -5,7 +5,7 @@ import (
 )
 
 // InputTemplate Dialog's Input Template
-var InputTemplate = &template.Template{
+var InputTemplate = &template.InstructionTemplate{
 	template.Field{
 		Label: template.Label{
 			Text: "Message:",
