@@ -1,8 +1,8 @@
 package process
 
 import (
-	"gotomate-astilectron/fiber/variable"
-	"gotomate-astilectron/log"
+	"gotomate/fiber/variable"
+	"gotomate/log"
 	"os"
 	"os/exec"
 

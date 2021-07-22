@@ -1,7 +1,7 @@
 package flow
 
 import (
-	"gotomate-astilectron/log"
+	"gotomate/log"
 )
 
 // Write write string to clipboard

@@ -1,7 +1,7 @@
 package input
 
 import (
-	"gotomate-astilectron/fiber/template"
+	"gotomate/fiber/template"
 )
 
 // Build Return the right databinder & the right template for a input instruction

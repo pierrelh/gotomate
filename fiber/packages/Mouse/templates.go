@@ -1,7 +1,7 @@
 package mouse
 
 import (
-	"gotomate-astilectron/fiber/template"
+	"gotomate/fiber/template"
 )
 
 // Buttons Define the possibles values of MouseButton

@@ -1,8 +1,8 @@
 package algorithmic
 
 import (
-	"gotomate-astilectron/fiber/variable"
-	"gotomate-astilectron/log"
+	"gotomate/fiber/variable"
+	"gotomate/log"
 )
 
 // For Execute a for loop

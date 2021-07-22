@@ -1,7 +1,7 @@
 package log
 
 import (
-	"gotomate-astilectron/fiber/template"
+	"gotomate/fiber/template"
 )
 
 // PrintTemplate Dialog's LogPrint Template

@@ -2,8 +2,8 @@ package input
 
 import (
 	"fmt"
-	"gotomate-astilectron/fiber/variable"
-	"gotomate-astilectron/log"
+	"gotomate/fiber/variable"
+	"gotomate/log"
 )
 
 // Bool Wait for user to set a bool

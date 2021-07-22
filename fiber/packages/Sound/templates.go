@@ -1,7 +1,7 @@
 package sound
 
 import (
-	"gotomate-astilectron/fiber/template"
+	"gotomate/fiber/template"
 )
 
 // GetMutedTemplate Dialog's GetMuted Template

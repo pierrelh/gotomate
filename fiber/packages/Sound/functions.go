@@ -1,8 +1,8 @@
 package sound
 
 import (
-	"gotomate-astilectron/fiber/variable"
-	"gotomate-astilectron/log"
+	"gotomate/fiber/variable"
+	"gotomate/log"
 
 	"github.com/itchyny/volume-go"
 )

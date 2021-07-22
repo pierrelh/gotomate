@@ -2,9 +2,9 @@ package instructions
 
 import (
 	"encoding/json"
-	"gotomate-astilectron/fiber/packages"
-	"gotomate-astilectron/fiber/template"
-	"gotomate-astilectron/log"
+	"gotomate/fiber/packages"
+	"gotomate/fiber/template"
+	"gotomate/log"
 	"reflect"
 	"sort"
 

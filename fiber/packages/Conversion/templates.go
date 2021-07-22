@@ -1,7 +1,7 @@
 package conversion
 
 import (
-	"gotomate-astilectron/fiber/template"
+	"gotomate/fiber/template"
 )
 
 // BoolConversionTemplate Dialog's BoolConversion Template

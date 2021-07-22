@@ -1,8 +1,8 @@
 package battery
 
 import (
-	"gotomate-astilectron/fiber/variable"
-	"gotomate-astilectron/log"
+	"gotomate/fiber/variable"
+	"gotomate/log"
 	"time"
 
 	"github.com/distatus/battery"

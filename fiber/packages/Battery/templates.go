@@ -1,7 +1,7 @@
 package battery
 
 import (
-	"gotomate-astilectron/fiber/template"
+	"gotomate/fiber/template"
 )
 
 // UserBatteryTemplate Dialog's UserBattery Template

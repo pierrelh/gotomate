@@ -1,7 +1,7 @@
 package files
 
 import (
-	"gotomate-astilectron/log"
+	"gotomate/log"
 	"io/ioutil"
 	"os"
 	"path/filepath"

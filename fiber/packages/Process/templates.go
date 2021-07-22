@@ -1,7 +1,7 @@
 package process
 
 import (
-	"gotomate-astilectron/fiber/template"
+	"gotomate/fiber/template"
 )
 
 // GetPidTemplate Dialog's GetPid Template

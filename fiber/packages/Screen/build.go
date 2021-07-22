@@ -1,6 +1,6 @@
 package screen
 
-import "gotomate-astilectron/fiber/template"
+import "gotomate/fiber/template"
 
 // Build Return the right databinder & the right template for a screen instruction
 func Build(function string) (interface{}, *template.InstructionTemplate) {

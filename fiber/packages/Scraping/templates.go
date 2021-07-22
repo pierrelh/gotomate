@@ -1,7 +1,7 @@
 package scraping
 
 import (
-	"gotomate-astilectron/fiber/template"
+	"gotomate/fiber/template"
 )
 
 // AddAllowedDomainTemplate Dialog's AddAllowedDomain Template

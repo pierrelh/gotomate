@@ -1,7 +1,7 @@
 package screen
 
 import (
-	"gotomate-astilectron/fiber/template"
+	"gotomate/fiber/template"
 )
 
 // PixelColorTemplate Dialog's PixelColor Template

@@ -1,7 +1,7 @@
 package arithmetic
 
 import (
-	"gotomate-astilectron/fiber/template"
+	"gotomate/fiber/template"
 )
 
 // DivideTemplate Dialog's Divide Template

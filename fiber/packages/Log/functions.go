@@ -1,8 +1,8 @@
 package log
 
 import (
-	"gotomate-astilectron/fiber/variable"
-	"gotomate-astilectron/log"
+	"gotomate/fiber/variable"
+	"gotomate/log"
 )
 
 // Print log a value

@@ -1,6 +1,6 @@
 package battery
 
-import "gotomate-astilectron/fiber/template"
+import "gotomate/fiber/template"
 
 // Build Return the right databinder & the right template for a battery instruction
 func Build(function string) (interface{}, *template.InstructionTemplate) {

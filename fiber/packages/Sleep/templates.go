@@ -1,7 +1,7 @@
 package sleep
 
 import (
-	"gotomate-astilectron/fiber/template"
+	"gotomate/fiber/template"
 )
 
 // SleepTemplate Dialog's Sleep Template
