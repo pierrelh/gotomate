@@ -1,6 +1,6 @@
-# Gotomate-astilectron
+# Gotomate
 
-Gotomate-astilectron is a fork of Gotomate-Walk, using astilectron instead of walk. It allow a better looking GUI, easier to install, easier to customize & easier to configure
+Gotomate is a fork of Gotomate-Walk, using astilectron instead of walk. It allow a better looking GUI, easier to install, easier to customize & easier to configure
 
 ## Avancement
 
@@ -13,7 +13,7 @@ Golang
 ## Installation
 
 ```
-go get github.com/pierrelh/gotomate-astilectron
+go get github.com/pierrelh/gotomate
 ```
 
 ## Build
@@ -25,7 +25,7 @@ go build
 
 ## Update
 ```
-go get -u github.com/pierrelh/gotomate-astilectron
+go get -u github.com/pierrelh/gotomate
 ```
 
 ## Documentation (To be updated)
