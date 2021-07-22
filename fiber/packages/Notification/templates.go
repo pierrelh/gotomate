@@ -1,7 +1,7 @@
 package notification
 
 import (
-	"gotomate-astilectron/fiber/template"
+	"gotomate/fiber/template"
 )
 
 // CreateTemplate Dialog's NotificationCreate Template

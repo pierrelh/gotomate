@@ -1,7 +1,7 @@
 package algorithmic
 
 import (
-	"gotomate-astilectron/fiber/template"
+	"gotomate/fiber/template"
 )
 
 // Comparators Define the possibles values of algorithmic comparators

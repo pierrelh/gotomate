@@ -1,7 +1,7 @@
 package define
 
 import (
-	"gotomate-astilectron/fiber/template"
+	"gotomate/fiber/template"
 )
 
 // ArrayTemplate Dialog's Define an Array Template

@@ -1,7 +1,7 @@
 package chronometer
 
 import (
-	"gotomate-astilectron/fiber/template"
+	"gotomate/fiber/template"
 )
 
 // EndTemplate Dialog's End Template

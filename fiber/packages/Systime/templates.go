@@ -1,7 +1,7 @@
 package systime
 
 import (
-	"gotomate-astilectron/fiber/template"
+	"gotomate/fiber/template"
 )
 
 //SysTimeTemplate Dialog's SysTime Template

@@ -1,7 +1,7 @@
 package array
 
 import (
-	"gotomate-astilectron/fiber/template"
+	"gotomate/fiber/template"
 )
 
 // GetArrayLengthTemplate Dialog's GetArrayLength Template

@@ -1,7 +1,7 @@
 package variable
 
 import (
-	"gotomate-astilectron/log"
+	"gotomate/log"
 	"math"
 	"reflect"
 	"strconv"

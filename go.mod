@@ -1,4 +1,4 @@
-module gotomate-astilectron
+module gotomate
 
 go 1.16
 

@@ -1,11 +1,11 @@
 package app
 
 import (
-	"gotomate-astilectron/app/files"
-	"gotomate-astilectron/app/message"
-	"gotomate-astilectron/fiber"
-	"gotomate-astilectron/globals"
-	golog "gotomate-astilectron/log"
+	"gotomate/app/files"
+	"gotomate/app/message"
+	"gotomate/fiber"
+	"gotomate/globals"
+	golog "gotomate/log"
 	"log"
 	"os"
 	"os/exec"

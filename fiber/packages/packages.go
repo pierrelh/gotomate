@@ -5,7 +5,7 @@ import (
 	"go/ast"
 	"go/parser"
 	"go/token"
-	"gotomate-astilectron/log"
+	"gotomate/log"
 	"io"
 	"io/ioutil"
 	"os"
@@ -112,7 +112,7 @@ func ImportPackage(path string) error {
 	for i := 0; i < len(dirs); i++ {
 		dirs[i] = strings.TrimSuffix(dirs[i], "/")
 		packageName := strings.ToLower(dirs[i])
-		packageImport := "// DON'T REMOVE ME / New packages inserted here\n" + packageName + "pack \"gotomate-astilectron/fiber/packages/" + dirs[i] + "\""
+		packageImport := "// DON'T REMOVE ME / New packages inserted here\n" + packageName + "pack \"gotomate/fiber/packages/" + dirs[i] + "\""
 		processing := "// DON'T REMOVE ME / New processing inserted here\n" + "case \"" + dirs[i] + "\":\n nextID = " + packageName + "pack.Processing(funcName, instructionData, finished)"
 
 		// Write in fiber.go (import the package & insert the Processing function)

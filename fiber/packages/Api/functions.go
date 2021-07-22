@@ -1,8 +1,8 @@
 package api
 
 import (
-	"gotomate-astilectron/fiber/variable"
-	"gotomate-astilectron/log"
+	"gotomate/fiber/variable"
+	"gotomate/log"
 	"io/ioutil"
 	"net/http"
 )

@@ -1,7 +1,7 @@
 package json
 
 import (
-	"gotomate-astilectron/fiber/template"
+	"gotomate/fiber/template"
 )
 
 // CreateJsonTemplate Dialog's Define an CreateJson Template

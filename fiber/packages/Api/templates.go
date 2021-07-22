@@ -1,7 +1,7 @@
 package api
 
 import (
-	"gotomate-astilectron/fiber/template"
+	"gotomate/fiber/template"
 )
 
 // GetTemplate Dialog's Get Template

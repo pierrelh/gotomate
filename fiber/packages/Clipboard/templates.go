@@ -1,7 +1,7 @@
 package clipboard
 
 import (
-	"gotomate-astilectron/fiber/template"
+	"gotomate/fiber/template"
 )
 
 // WriteTemplate Dialog's ClipboardWrite Template

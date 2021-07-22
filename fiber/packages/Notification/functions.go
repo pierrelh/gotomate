@@ -1,9 +1,9 @@
 package notification
 
 import (
-	"gotomate-astilectron/fiber/variable"
-	"gotomate-astilectron/globals"
-	"gotomate-astilectron/log"
+	"gotomate/fiber/variable"
+	"gotomate/globals"
+	"gotomate/log"
 
 	"gopkg.in/toast.v1"
 )

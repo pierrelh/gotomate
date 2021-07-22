@@ -1,7 +1,7 @@
 package keyboard
 
 import (
-	"gotomate-astilectron/fiber/template"
+	"gotomate/fiber/template"
 )
 
 // Inputs Define the possibles values of keyboard specials inputs

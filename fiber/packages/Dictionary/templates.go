@@ -1,7 +1,7 @@
 package dictionary
 
 import (
-	"gotomate-astilectron/fiber/template"
+	"gotomate/fiber/template"
 )
 
 // CreateDictionaryTemplate Dialog's Define an CreateDictionary Template

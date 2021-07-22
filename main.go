@@ -1,12 +1,12 @@
 package main
 
 import (
-	"gotomate-astilectron/app"
-	"gotomate-astilectron/app/files"
-	"gotomate-astilectron/app/message"
-	"gotomate-astilectron/fiber"
-	"gotomate-astilectron/fiber/packages"
-	"gotomate-astilectron/log"
+	"gotomate/app"
+	"gotomate/app/files"
+	"gotomate/app/message"
+	"gotomate/fiber"
+	"gotomate/fiber/packages"
+	"gotomate/log"
 	"os"
 
 	"github.com/asticode/go-astilectron"

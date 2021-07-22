@@ -1,6 +1,6 @@
 package flow
 
-import "gotomate-astilectron/fiber/template"
+import "gotomate/fiber/template"
 
 // StartTemplate Dialog's FlowStart Template
 var StartTemplate = &template.InstructionTemplate{

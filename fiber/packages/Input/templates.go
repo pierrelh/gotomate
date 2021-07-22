@@ -1,7 +1,7 @@
 package input
 
 import (
-	"gotomate-astilectron/fiber/template"
+	"gotomate/fiber/template"
 )
 
 // InputTemplate Dialog's Input Template
