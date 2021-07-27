@@ -23,7 +23,7 @@ var EndTemplate = &template.InstructionTemplate{
 			Text: "Output:",
 		},
 		Input: template.TextInput{
-			BindVariable: "Output",
+			Bind: "Output",
 		},
 	}.Build(),
 }
@@ -35,7 +35,7 @@ var StartTemplate = &template.InstructionTemplate{
 			Text: "Output:",
 		},
 		Input: template.TextInput{
-			BindVariable: "Output",
+			Bind: "Output",
 		},
 	}.Build(),
 }

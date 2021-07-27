@@ -40,9 +40,6 @@ func main() {
 
 	// Blocking pattern
 	a.Asti.Wait()
-
-	// Close dev tools
-	// a.Window.CloseDevTools()
 }
 
 // getEvents Receive the message sended by the gui & process them

@@ -34,7 +34,7 @@ func (a *App) Build() *App {
 		Options: astilectron.Options{
 			AppName:            globals.AppName,
 			BaseDirectoryPath:  "gotomate-astilectron",
-			AppIconDefaultPath: globals.DirectoryPath + globals.AppIcon,
+			AppIconDefaultPath: "./img/gotomate.png",
 		},
 		Window: new(astilectron.Window),
 	}
@@ -53,7 +53,6 @@ func (a *App) Build() *App {
 	if err != nil {
 		a.Log.Fatal(golog.Error("main: new window failed: %w", err))
 	}
-	// Handle signals
 	return a
 }
 
