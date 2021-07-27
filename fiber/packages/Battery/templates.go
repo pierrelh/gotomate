@@ -11,7 +11,7 @@ var UserBatteryTemplate = &template.InstructionTemplate{
 			Text: "Output:",
 		},
 		Input: template.TextInput{
-			BindVariable: "Output",
+			Bind: "Output",
 		},
 	}.Build(),
 }
@@ -35,7 +35,7 @@ var ParametersTemplate = &template.InstructionTemplate{
 			Text: "Output:",
 		},
 		Input: template.TextInput{
-			BindVariable: "Output",
+			Bind: "Output",
 		},
 	}.Build(),
 }

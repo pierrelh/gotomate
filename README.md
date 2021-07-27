@@ -16,6 +16,13 @@ Golang
 go get github.com/pierrelh/gotomate
 ```
 
+## Run
+
+Go in the program's directory run:
+```
+go run main.go
+```
+
 ## Build
 
 Go in the program's directory run:
@@ -34,13 +41,13 @@ See the documentation at:
 
 https://production-gotomate.herokuapp.com/documentation
 
-## Example (To be updated)
+## Example
 
-Download the fiber example at this link:
+Download the fiber examples at this link:
 
-https://production-gotomate.herokuapp.com/resources/GetBatStateExemple.json
+https://production-gotomate.herokuapp.com/resources/SavesExemples.zip
 
-& import it in a Gotomate's process then run it to get an exemple of a Gotomate running fiber.
+unzip & import them in a Gotomate's process then run it to get an exemple of a Gotomate running fiber.
 
 ## Create your Packages
 

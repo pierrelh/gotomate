@@ -18,9 +18,7 @@ require (
 	github.com/mitchellh/mapstructure v1.4.1
 	github.com/nu7hatch/gouuid v0.0.0-20131221200532-179d4d0c4d8d // indirect
 	github.com/saintfish/chardet v0.0.0-20120816061221-3af4cd4741ca // indirect
-	github.com/stretchr/testify v1.7.0 // indirect
 	github.com/temoto/robotstxt v1.1.2 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	gopkg.in/toast.v1 v1.0.0-20180812000517-0a84660828b2
-	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
 )
