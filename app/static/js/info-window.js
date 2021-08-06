@@ -9,7 +9,7 @@ class InfoWindow {
 		this.OK			= document.getElementById("InfoOK");
 		this.Options 	=	{
 								0: {
-									identifier: "CreateNewFiber",
+									identifier: "IWCreateNewFiber",
 									title: "This fiber isn't saved, do you really want to open a new one ?",
 								},
 								1: {
@@ -17,7 +17,11 @@ class InfoWindow {
 									title: "Give a name to your fiber to save her.",
 								},
 								2: {
-									identifier: "OpenSavedFiber",
+									identifier: "IWOpenSavedFiber",
+									title: "Your current fiber isn't saved do you want to proceed ?",
+								},
+								3: {
+									identifier: "IWImportFiber",
 									title: "Your current fiber isn't saved do you want to proceed ?",
 								}
 							};

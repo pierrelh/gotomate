@@ -34,7 +34,7 @@ func (a *App) Build() *App {
 		Options: astilectron.Options{
 			AppName:            globals.AppName,
 			BaseDirectoryPath:  "gotomate-astilectron",
-			AppIconDefaultPath: "./img/gotomate.png",
+			AppIconDefaultPath: globals.DirectoryPath + "/img/gotomate.png",
 		},
 		Window: new(astilectron.Window),
 	}

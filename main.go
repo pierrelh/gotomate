@@ -83,7 +83,7 @@ func getEvents() {
 			instruction := newFiber.Instructions.FindInstructionById(int(content["ID"].(float64)))
 			instruction.UpdateDatabinder(content["Databinder"].(map[string]interface{}))
 
-		case "CreateNewFiber":
+		case "IWCreateNewFiber":
 			a.Window.SendMessage(
 				message.New("NewFiber", newFiber.New()),
 			)
@@ -91,7 +91,7 @@ func getEvents() {
 		case "UpdateFiberName":
 			newFiber.SetName(content["name"].(string))
 
-		case "OpenSavedFiber":
+		case "IWOpenSavedFiber":
 			a.Window.SendMessage(
 				message.New("NewFiber", fiber.NewFiber.Open(content["data"].(string))),
 			)
@@ -123,6 +123,17 @@ func getEvents() {
 		case "ImportFiber":
 			a.Window.SendMessage(
 				message.New("NewFiber", fiber.NewFiber.Import(content["File"].(string))),
+			)
+		case "IWImportFiber":
+			extension := ".json"
+			content, path := files.GetHomeJson("home", extension)
+			data := map[string]interface{}{
+				"Path":      path,
+				"Files":     content,
+				"Extension": extension,
+			}
+			a.Window.SendMessage(
+				message.New("ImportFiber", data),
 			)
 
 		case "ExportFiber":

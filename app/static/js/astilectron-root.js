@@ -50,8 +50,7 @@ document.addEventListener('astilectron-ready', function() {
 				break;
 
 			case "InitImportFiber":
-				console.log("To Do")
-				dialog.Show();
+				infoWindow.Set(3);
 				break;
 
 			default:
