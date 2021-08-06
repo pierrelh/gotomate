@@ -18,6 +18,7 @@ import (
 	batterypack "gotomate/fiber/packages/Battery"
 	chronometerpack "gotomate/fiber/packages/Chronometer"
 	clipboardpack "gotomate/fiber/packages/Clipboard"
+	commandpack "gotomate/fiber/packages/Command"
 	conversionpack "gotomate/fiber/packages/Conversion"
 	definepack "gotomate/fiber/packages/Define"
 	dictionarypack "gotomate/fiber/packages/Dictionary"
@@ -241,6 +242,8 @@ func (fiber *Fiber) Run() {
 					nextID = chronometerpack.Processing(funcName, instructionData, finished)
 				case "Clipboard":
 					nextID = clipboardpack.Processing(funcName, instructionData, finished)
+				case "Command":
+					nextID = commandpack.Processing(funcName, instructionData, finished)
 				case "Conversion":
 					nextID = conversionpack.Processing(funcName, instructionData, finished)
 				case "Define":

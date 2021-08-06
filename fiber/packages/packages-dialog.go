@@ -11,6 +11,7 @@ import (
 	batterypack "gotomate/fiber/packages/Battery"
 	chronometerpack "gotomate/fiber/packages/Chronometer"
 	clipboardpack "gotomate/fiber/packages/Clipboard"
+	commandpack "gotomate/fiber/packages/Command"
 	conversionpack "gotomate/fiber/packages/Conversion"
 	definepack "gotomate/fiber/packages/Define"
 	dictionarypack "gotomate/fiber/packages/Dictionary"
@@ -54,6 +55,8 @@ func PackageDecode(packageName string, funcName string) (interface{}, *template.
 		databinder, template = chronometerpack.Build(funcName)
 	case "Clipboard":
 		databinder, template = clipboardpack.Build(funcName)
+	case "Command":
+		databinder, template = commandpack.Build(funcName)
 	case "Conversion":
 		databinder, template = conversionpack.Build(funcName)
 	case "Define":
