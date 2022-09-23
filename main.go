@@ -1,12 +1,12 @@
 package main
 
 import (
-	"gotomate/app"
-	"gotomate/app/files"
-	"gotomate/app/message"
 	"gotomate/fiber"
 	"gotomate/fiber/packages"
 	"gotomate/log"
+	"gotomate/resources/app"
+	"gotomate/resources/app/files"
+	"gotomate/resources/app/message"
 	"os"
 
 	"github.com/asticode/go-astilectron"
@@ -21,7 +21,7 @@ func main() {
 	a.Create()
 
 	// Open dev tools
-	// a.Window.OpenDevTools()
+	a.Window.OpenDevTools()
 
 	// Create the menu
 	a.CreateMenu()
@@ -124,6 +124,7 @@ func getEvents() {
 			a.Window.SendMessage(
 				message.New("NewFiber", fiber.NewFiber.Import(content["File"].(string))),
 			)
+
 		case "IWImportFiber":
 			extension := ".json"
 			content, path := files.GetHomeJson("home", extension)

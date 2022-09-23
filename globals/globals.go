@@ -4,7 +4,7 @@ import "os"
 
 const (
 	AppName string = "Gotomate"
-	AppIcon string = "/img/gotomate.png"
+	AppIcon string = "/resources/gotomate.png"
 )
 
 var (

@@ -88,10 +88,10 @@
 }
 
 .file {
-	background-image: url("../../../img/file.png");
+	background-image: url("../../../../img/file.png");
 }
 .directory {
-	background-image: url("../../../img/directory.png");
+	background-image: url("../../../../img/directory.png");
 }
 
 .selected-content {

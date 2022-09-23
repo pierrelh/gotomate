@@ -10,14 +10,10 @@ import (
 func Divide(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Dividing")
 
-	one, err := variable.Keys{VarName: "VarOneName", IsVarName: "ValueOneIsVar", Name: "ValueOne"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	one, err1 := variable.Keys{VarName: "VarOneName", IsVarName: "ValueOneIsVar", Name: "ValueOne"}.GetValue(instructionData)
+	two, err2 := variable.Keys{VarName: "VarTwoName", IsVarName: "ValueTwoIsVar", Name: "ValueTwo"}.GetValue(instructionData)
 
-	two, err := variable.Keys{VarName: "VarTwoName", IsVarName: "ValueTwoIsVar", Name: "ValueTwo"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil {
 		finished <- true
 		return -1
 	}
@@ -31,14 +27,10 @@ func Divide(instructionData interface{}, finished chan bool) int {
 func Multiply(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Multiplying")
 
-	one, err := variable.Keys{VarName: "VarOneName", IsVarName: "ValueOneIsVar", Name: "ValueOne"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	one, err1 := variable.Keys{VarName: "VarOneName", IsVarName: "ValueOneIsVar", Name: "ValueOne"}.GetValue(instructionData)
+	two, err2 := variable.Keys{VarName: "VarTwoName", IsVarName: "ValueTwoIsVar", Name: "ValueTwo"}.GetValue(instructionData)
 
-	two, err := variable.Keys{VarName: "VarTwoName", IsVarName: "ValueTwoIsVar", Name: "ValueTwo"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil {
 		finished <- true
 		return -1
 	}
@@ -52,14 +44,10 @@ func Multiply(instructionData interface{}, finished chan bool) int {
 func Pow(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Pow")
 
-	one, err := variable.Keys{VarName: "VarOneName", IsVarName: "ValueOneIsVar", Name: "ValueOne"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	one, err1 := variable.Keys{VarName: "VarOneName", IsVarName: "ValueOneIsVar", Name: "ValueOne"}.GetValue(instructionData)
+	two, err2 := variable.Keys{VarName: "VarTwoName", IsVarName: "ValueTwoIsVar", Name: "ValueTwo"}.GetValue(instructionData)
 
-	two, err := variable.Keys{VarName: "VarTwoName", IsVarName: "ValueTwoIsVar", Name: "ValueTwo"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil {
 		finished <- true
 		return -1
 	}
@@ -88,14 +76,10 @@ func Sqrt(instructionData interface{}, finished chan bool) int {
 func Substract(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Substracting")
 
-	one, err := variable.Keys{VarName: "VarOneName", IsVarName: "ValueOneIsVar", Name: "ValueOne"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	one, err1 := variable.Keys{VarName: "VarOneName", IsVarName: "ValueOneIsVar", Name: "ValueOne"}.GetValue(instructionData)
+	two, err2 := variable.Keys{VarName: "VarTwoName", IsVarName: "ValueTwoIsVar", Name: "ValueTwo"}.GetValue(instructionData)
 
-	two, err := variable.Keys{VarName: "VarTwoName", IsVarName: "ValueTwoIsVar", Name: "ValueTwo"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil {
 		finished <- true
 		return -1
 	}
@@ -109,14 +93,10 @@ func Substract(instructionData interface{}, finished chan bool) int {
 func Sum(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Additioning")
 
-	one, err := variable.Keys{VarName: "VarOneName", IsVarName: "ValueOneIsVar", Name: "ValueOne"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	one, err1 := variable.Keys{VarName: "VarOneName", IsVarName: "ValueOneIsVar", Name: "ValueOne"}.GetValue(instructionData)
+	two, err2 := variable.Keys{VarName: "VarTwoName", IsVarName: "ValueTwoIsVar", Name: "ValueTwo"}.GetValue(instructionData)
 
-	two, err := variable.Keys{VarName: "VarTwoName", IsVarName: "ValueTwoIsVar", Name: "ValueTwo"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil {
 		finished <- true
 		return -1
 	}

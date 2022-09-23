@@ -26,14 +26,10 @@ func Click(instructionData interface{}, finished chan bool) int {
 func Drag(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Draging the mouse")
 
-	x, err := variable.Keys{VarName: "XVarName", IsVarName: "XIsVar", Name: "X"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	x, err1 := variable.Keys{VarName: "XVarName", IsVarName: "XIsVar", Name: "X"}.GetValue(instructionData)
+	y, err2 := variable.Keys{VarName: "YVarName", IsVarName: "YIsVar", Name: "Y"}.GetValue(instructionData)
 
-	y, err := variable.Keys{VarName: "YVarName", IsVarName: "YIsVar", Name: "Y"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil {
 		finished <- true
 		return -1
 	}
@@ -49,14 +45,10 @@ func Drag(instructionData interface{}, finished chan bool) int {
 func DragSmooth(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Draging smoothly the mouse")
 
-	x, err := variable.Keys{VarName: "XVarName", IsVarName: "XIsVar", Name: "X"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	x, err1 := variable.Keys{VarName: "XVarName", IsVarName: "XIsVar", Name: "X"}.GetValue(instructionData)
+	y, err2 := variable.Keys{VarName: "YVarName", IsVarName: "YIsVar", Name: "Y"}.GetValue(instructionData)
 
-	y, err := variable.Keys{VarName: "YVarName", IsVarName: "YIsVar", Name: "Y"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil {
 		finished <- true
 		return -1
 	}
@@ -72,14 +64,10 @@ func DragSmooth(instructionData interface{}, finished chan bool) int {
 func Move(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Moving the mouse")
 
-	x, err := variable.Keys{VarName: "XVarName", IsVarName: "XIsVar", Name: "X"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	x, err1 := variable.Keys{VarName: "XVarName", IsVarName: "XIsVar", Name: "X"}.GetValue(instructionData)
+	y, err2 := variable.Keys{VarName: "YVarName", IsVarName: "YIsVar", Name: "Y"}.GetValue(instructionData)
 
-	y, err := variable.Keys{VarName: "YVarName", IsVarName: "YIsVar", Name: "Y"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil {
 		finished <- true
 		return -1
 	}
@@ -93,14 +81,10 @@ func Move(instructionData interface{}, finished chan bool) int {
 func MoveSmooth(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Moving smoothly the mouse")
 
-	x, err := variable.Keys{VarName: "XVarName", IsVarName: "XIsVar", Name: "X"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	x, err1 := variable.Keys{VarName: "XVarName", IsVarName: "XIsVar", Name: "X"}.GetValue(instructionData)
+	y, err2 := variable.Keys{VarName: "YVarName", IsVarName: "YIsVar", Name: "Y"}.GetValue(instructionData)
 
-	y, err := variable.Keys{VarName: "YVarName", IsVarName: "YIsVar", Name: "Y"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil {
 		finished <- true
 		return -1
 	}
@@ -114,14 +98,10 @@ func MoveSmooth(instructionData interface{}, finished chan bool) int {
 func Scroll(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Scrolling the mouse")
 
-	x, err := variable.Keys{VarName: "XVarName", IsVarName: "XIsVar", Name: "X"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	x, err1 := variable.Keys{VarName: "XVarName", IsVarName: "XIsVar", Name: "X"}.GetValue(instructionData)
+	y, err2 := variable.Keys{VarName: "YVarName", IsVarName: "YIsVar", Name: "Y"}.GetValue(instructionData)
 
-	y, err := variable.Keys{VarName: "YVarName", IsVarName: "YIsVar", Name: "Y"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil {
 		finished <- true
 		return -1
 	}

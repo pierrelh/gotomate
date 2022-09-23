@@ -9,20 +9,11 @@ import (
 func For(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("For Statement")
 
-	valueOne, err := variable.Keys{VarName: "ValueOneVarName"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	valueOne, err1 := variable.Keys{VarName: "ValueOneVarName"}.GetValue(instructionData)
+	valueTwo, err2 := variable.Keys{VarName: "ValueTwoVarName", Name: "ValueTwo", IsVarName: "ValueTwoIsVar"}.GetValue(instructionData)
+	comparator, err3 := variable.Keys{Name: "Comparator"}.GetValue(instructionData)
 
-	valueTwo, err := variable.Keys{VarName: "ValueTwoVarName", Name: "ValueTwo", IsVarName: "ValueTwoIsVar"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
-
-	comparator, err := variable.Keys{Name: "Comparator"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil || err3 != nil {
 		finished <- true
 		return -1
 	}
@@ -80,20 +71,11 @@ func For(instructionData interface{}, finished chan bool) int {
 func If(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("If Statement")
 
-	valueOne, err := variable.Keys{VarName: "ValueOneVarName", IsVarName: "ValueOneIsVar", Name: "ValueOne"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	valueOne, err1 := variable.Keys{VarName: "ValueOneVarName", IsVarName: "ValueOneIsVar", Name: "ValueOne"}.GetValue(instructionData)
+	valueTwo, err2 := variable.Keys{VarName: "ValueTwoVarName", IsVarName: "ValueTwoIsVar", Name: "ValueTwo"}.GetValue(instructionData)
+	comparator, err3 := variable.Keys{Name: "Comparator"}.GetValue(instructionData)
 
-	valueTwo, err := variable.Keys{VarName: "ValueTwoVarName", IsVarName: "ValueTwoIsVar", Name: "ValueTwo"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
-
-	comparator, err := variable.Keys{Name: "Comparator"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil || err3 != nil {
 		finished <- true
 		return -1
 	}

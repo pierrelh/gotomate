@@ -20,14 +20,10 @@ func GetMouseColor(instructionData interface{}, finished chan bool) int {
 func GetPixelColor(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Getting a pixel color")
 
-	x, err := variable.Keys{VarName: "XVarName", IsVarName: "XIsVar", Name: "X"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	x, err1 := variable.Keys{VarName: "XVarName", IsVarName: "XIsVar", Name: "X"}.GetValue(instructionData)
+	y, err2 := variable.Keys{VarName: "YVarName", IsVarName: "YIsVar", Name: "Y"}.GetValue(instructionData)
 
-	y, err := variable.Keys{VarName: "YVarName", IsVarName: "YIsVar", Name: "Y"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil {
 		finished <- true
 		return -1
 	}
@@ -52,32 +48,13 @@ func GetScreenSize(instructionData interface{}, finished chan bool) int {
 func PartScreenShot(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Taking a screen shot from a part of the screen")
 
-	path, err := variable.Keys{VarName: "PathVarName", IsVarName: "PathIsVar", Name: "Path"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	path, err1 := variable.Keys{VarName: "PathVarName", IsVarName: "PathIsVar", Name: "Path"}.GetValue(instructionData)
+	x, err2 := variable.Keys{VarName: "XVarName", IsVarName: "XIsVar", Name: "X"}.GetValue(instructionData)
+	y, err3 := variable.Keys{VarName: "YVarName", IsVarName: "YIsVar", Name: "Y"}.GetValue(instructionData)
+	w, err4 := variable.Keys{VarName: "WVarName", IsVarName: "WIsVar", Name: "W"}.GetValue(instructionData)
+	h, err5 := variable.Keys{VarName: "HVarName", IsVarName: "HIsVar", Name: "H"}.GetValue(instructionData)
 
-	x, err := variable.Keys{VarName: "XVarName", IsVarName: "XIsVar", Name: "X"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
-
-	y, err := variable.Keys{VarName: "YVarName", IsVarName: "YIsVar", Name: "Y"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
-
-	w, err := variable.Keys{VarName: "WVarName", IsVarName: "WIsVar", Name: "W"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
-
-	h, err := variable.Keys{VarName: "HVarName", IsVarName: "HIsVar", Name: "H"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil || err3 != nil || err4 != nil || err5 != nil {
 		finished <- true
 		return -1
 	}

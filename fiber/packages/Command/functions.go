@@ -10,14 +10,10 @@ import (
 func Dir(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Setting command's dir")
 
-	command, err := variable.Keys{VarName: "CommandVarName"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	command, err1 := variable.Keys{VarName: "CommandVarName"}.GetValue(instructionData)
+	dir, err2 := variable.Keys{Name: "Dir", IsVarName: "DirIsVar", VarName: "DirVarName"}.GetValue(instructionData)
 
-	dir, err := variable.Keys{Name: "Dir", IsVarName: "DirIsVar", VarName: "DirVarName"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil {
 		finished <- true
 		return -1
 	}
@@ -50,14 +46,10 @@ func GetOutput(instructionData interface{}, finished chan bool) int {
 func New(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Creating a new command tool")
 
-	parameter, err := variable.Keys{Name: "Parameter", IsVarName: "ParameterIsVar", VarName: "ParameterVarName"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	parameter, err1 := variable.Keys{Name: "Parameter", IsVarName: "ParameterIsVar", VarName: "ParameterVarName"}.GetValue(instructionData)
+	progname, err2 := variable.Keys{Name: "Program", IsVarName: "ProgramIsVar", VarName: "ProgramVarName"}.GetValue(instructionData)
 
-	progname, err := variable.Keys{Name: "Program", IsVarName: "ProgramIsVar", VarName: "ProgramVarName"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil {
 		finished <- true
 		return -1
 	}

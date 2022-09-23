@@ -11,14 +11,10 @@ import (
 func AddAllowedDomain(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Adding allowed domain to the scraper")
 
-	scraper, err := variable.Keys{VarName: "ScraperVarName"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	scraper, err1 := variable.Keys{VarName: "ScraperVarName"}.GetValue(instructionData)
+	path, err2 := variable.Keys{VarName: "PathVarName", IsVarName: "PathIsVar", Name: "Path"}.GetValue(instructionData)
 
-	path, err := variable.Keys{VarName: "PathVarName", IsVarName: "PathIsVar", Name: "Path"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil {
 		finished <- true
 		return -1
 	}
@@ -33,14 +29,10 @@ func AddAllowedDomain(instructionData interface{}, finished chan bool) int {
 func AddDisallowedDomain(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Adding disallowed domain to the scraper")
 
-	scraper, err := variable.Keys{VarName: "ScraperVarName"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	scraper, err1 := variable.Keys{VarName: "ScraperVarName"}.GetValue(instructionData)
+	path, err2 := variable.Keys{VarName: "PathVarName", IsVarName: "PathIsVar", Name: "Path"}.GetValue(instructionData)
 
-	path, err := variable.Keys{VarName: "PathVarName", IsVarName: "PathIsVar", Name: "Path"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil {
 		finished <- true
 		return -1
 	}
@@ -55,14 +47,9 @@ func AddDisallowedDomain(instructionData interface{}, finished chan bool) int {
 func IgnoreRobotsTxt(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Setting the ignore robots.txt")
 
-	scraper, err := variable.Keys{VarName: "ScraperVarName"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
-
-	ignore, err := variable.Keys{VarName: "IgnoreVarName", IsVarName: "IgnoreIsVar", Name: "Ignore"}.GetValue(instructionData)
-	if err != nil {
+	scraper, err1 := variable.Keys{VarName: "ScraperVarName"}.GetValue(instructionData)
+	ignore, err2 := variable.Keys{VarName: "IgnoreVarName", IsVarName: "IgnoreIsVar", Name: "Ignore"}.GetValue(instructionData)
+	if err1 != nil || err2 != nil {
 		finished <- true
 		return -1
 	}
@@ -86,26 +73,12 @@ func NewScraper(instructionData interface{}, finished chan bool) int {
 func OnFindScrapAttribute(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Setting the scraper's on find scraping attribute")
 
-	scraper, err := variable.Keys{VarName: "ScraperVarName"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	scraper, err1 := variable.Keys{VarName: "ScraperVarName"}.GetValue(instructionData)
+	element, err2 := variable.Keys{VarName: "ElementVarName", IsVarName: "ElementIsVar", Name: "Element"}.GetValue(instructionData)
+	attribute, err3 := variable.Keys{VarName: "AttributeVarName", IsVarName: "AttributeIsVar", Name: "Attribute"}.GetValue(instructionData)
+	tab, err4 := variable.Keys{VarName: "TabVarName"}.GetValue(instructionData)
 
-	element, err := variable.Keys{VarName: "ElementVarName", IsVarName: "ElementIsVar", Name: "Element"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
-
-	attribute, err := variable.Keys{VarName: "AttributeVarName", IsVarName: "AttributeIsVar", Name: "Attribute"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
-
-	tab, err := variable.Keys{VarName: "TabVarName"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil || err3 != nil || err4 != nil {
 		finished <- true
 		return -1
 	}
@@ -125,32 +98,13 @@ func OnFindScrapAttribute(instructionData interface{}, finished chan bool) int {
 func OnFindScrapChildAttribute(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Setting the scraper's on find scraping child's attribute")
 
-	scraper, err := variable.Keys{VarName: "ScraperVarName"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	scraper, err1 := variable.Keys{VarName: "ScraperVarName"}.GetValue(instructionData)
+	element, err2 := variable.Keys{VarName: "ElementVarName", IsVarName: "ElementIsVar", Name: "Element"}.GetValue(instructionData)
+	attribute, err3 := variable.Keys{VarName: "AttributeVarName", IsVarName: "AttributeIsVar", Name: "Attribute"}.GetValue(instructionData)
+	childAttribute, err4 := variable.Keys{VarName: "ChildAttributeVarName", IsVarName: "ChildAttributeIsVar", Name: "ChildAttribute"}.GetValue(instructionData)
+	tab, err5 := variable.Keys{VarName: "TabVarName"}.GetValue(instructionData)
 
-	element, err := variable.Keys{VarName: "ElementVarName", IsVarName: "ElementIsVar", Name: "Element"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
-
-	attribute, err := variable.Keys{VarName: "AttributeVarName", IsVarName: "AttributeIsVar", Name: "Attribute"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
-
-	childAttribute, err := variable.Keys{VarName: "ChildAttributeVarName", IsVarName: "ChildAttributeIsVar", Name: "ChildAttribute"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
-
-	tab, err := variable.Keys{VarName: "TabVarName"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil || err3 != nil || err4 != nil || err5 != nil {
 		finished <- true
 		return -1
 	}
@@ -170,20 +124,11 @@ func OnFindScrapChildAttribute(instructionData interface{}, finished chan bool) 
 func OnFindScrapText(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Setting the scraper's on find scraping text")
 
-	scraper, err := variable.Keys{VarName: "ScraperVarName"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	scraper, err1 := variable.Keys{VarName: "ScraperVarName"}.GetValue(instructionData)
+	element, err2 := variable.Keys{VarName: "ElementVarName", IsVarName: "ElementIsVar", Name: "Element"}.GetValue(instructionData)
+	tab, err3 := variable.Keys{VarName: "TabVarName"}.GetValue(instructionData)
 
-	element, err := variable.Keys{VarName: "ElementVarName", IsVarName: "ElementIsVar", Name: "Element"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
-
-	tab, err := variable.Keys{VarName: "TabVarName"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil || err3 != nil {
 		finished <- true
 		return -1
 	}
@@ -202,26 +147,12 @@ func OnFindScrapText(instructionData interface{}, finished chan bool) int {
 func OnFindScrapChildText(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Setting the scraper's on find scraping child's text")
 
-	scraper, err := variable.Keys{VarName: "ScraperVarName"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	scraper, err1 := variable.Keys{VarName: "ScraperVarName"}.GetValue(instructionData)
+	element, err2 := variable.Keys{VarName: "ElementVarName", IsVarName: "ElementIsVar", Name: "Element"}.GetValue(instructionData)
+	childAttribute, err3 := variable.Keys{VarName: "ChildAttributeVarName", IsVarName: "ChildAttributeIsVar", Name: "ChildAttribute"}.GetValue(instructionData)
+	tab, err4 := variable.Keys{VarName: "TabVarName"}.GetValue(instructionData)
 
-	element, err := variable.Keys{VarName: "ElementVarName", IsVarName: "ElementIsVar", Name: "Element"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
-
-	childAttribute, err := variable.Keys{VarName: "ChildAttributeVarName", IsVarName: "ChildAttributeIsVar", Name: "ChildAttribute"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
-
-	tab, err := variable.Keys{VarName: "TabVarName"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil || err3 != nil || err4 != nil {
 		finished <- true
 		return -1
 	}
@@ -240,14 +171,10 @@ func OnFindScrapChildText(instructionData interface{}, finished chan bool) int {
 func OnFindVisit(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Setting the scraper's on find visit")
 
-	scraper, err := variable.Keys{VarName: "ScraperVarName"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	scraper, err1 := variable.Keys{VarName: "ScraperVarName"}.GetValue(instructionData)
+	element, err2 := variable.Keys{VarName: "ElementVarName", IsVarName: "ElementIsVar", Name: "Element"}.GetValue(instructionData)
 
-	element, err := variable.Keys{VarName: "ElementVarName", IsVarName: "ElementIsVar", Name: "Element"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil {
 		finished <- true
 		return -1
 	}
@@ -266,20 +193,11 @@ func OnFindVisit(instructionData interface{}, finished chan bool) int {
 func OnFindChildVisit(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Setting the scraper's on find child's visit")
 
-	scraper, err := variable.Keys{VarName: "ScraperVarName"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	scraper, err1 := variable.Keys{VarName: "ScraperVarName"}.GetValue(instructionData)
+	element, err2 := variable.Keys{VarName: "ElementVarName", IsVarName: "ElementIsVar", Name: "Element"}.GetValue(instructionData)
+	childAttribute, err3 := variable.Keys{VarName: "ChildAttributeVarName", IsVarName: "ChildAttributeIsVar", Name: "ChildAttribute"}.GetValue(instructionData)
 
-	element, err := variable.Keys{VarName: "ElementVarName", IsVarName: "ElementIsVar", Name: "Element"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
-
-	childAttribute, err := variable.Keys{VarName: "ChildAttributeVarName", IsVarName: "ChildAttributeIsVar", Name: "ChildAttribute"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil || err3 != nil {
 		finished <- true
 		return -1
 	}
@@ -298,19 +216,17 @@ func OnFindChildVisit(instructionData interface{}, finished chan bool) int {
 func ScraperEndCondition(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Setting the scraper's end condition")
 
-	scraper, err := variable.Keys{VarName: "ScraperVarName"}.GetValue(instructionData)
-	if err != nil {
+	scraper, err1 := variable.Keys{VarName: "ScraperVarName"}.GetValue(instructionData)
+	end, err2 := variable.Keys{VarName: "EndVarName", IsVarName: "EndIsVar", Name: "End"}.GetValue(instructionData)
+	endIsVar, err3 := variable.Keys{Name: "EndIsVar"}.GetValue(instructionData)
+	endVarName, err4 := variable.Keys{Name: "EndVarName"}.GetValue(instructionData)
+
+	if err1 != nil || err2 != nil || err3 != nil || err4 != nil {
 		finished <- true
 		return -1
 	}
 
 	scraper.(*colly.Collector).OnResponse(func(r *colly.Response) {
-
-		end, err := variable.Keys{VarName: "EndVarName", IsVarName: "EndIsVar", Name: "End"}.GetValue(instructionData)
-		if err != nil {
-			finished <- true
-			return
-		}
 
 		end = end.(int) - 1
 
@@ -318,19 +234,7 @@ func ScraperEndCondition(instructionData interface{}, finished chan bool) int {
 			panic("Scrap finished")
 		}
 
-		endIsVar, err := variable.Keys{Name: "EndIsVar"}.GetValue(instructionData)
-		if err != nil {
-			finished <- true
-			return
-		}
-
 		if endIsVar.(bool) {
-
-			endVarName, err := variable.Keys{Name: "EndVarName"}.GetValue(instructionData)
-			if err != nil {
-				finished <- true
-				return
-			}
 			variable.SetVariable(instructionData, endVarName.(string), end.(int))
 		} else {
 			variable.SetVariable(instructionData, "End", end.(int64))
@@ -347,14 +251,10 @@ func ScraperEndCondition(instructionData interface{}, finished chan bool) int {
 func ScrapStart(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Starting the Scraper")
 
-	scraper, err := variable.Keys{VarName: "ScraperVarName"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	scraper, err1 := variable.Keys{VarName: "ScraperVarName"}.GetValue(instructionData)
+	url, err2 := variable.Keys{VarName: "UrlVarName", IsVarName: "UrlIsVar", Name: "Url"}.GetValue(instructionData)
 
-	url, err := variable.Keys{VarName: "UrlVarName", IsVarName: "UrlIsVar", Name: "Url"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil {
 		finished <- true
 		return -1
 	}

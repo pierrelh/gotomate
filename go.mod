@@ -4,10 +4,12 @@ go 1.16
 
 require (
 	github.com/PuerkitoBio/goquery v1.7.1 // indirect
+	github.com/akavel/rsrc v0.10.2 // indirect
 	github.com/antchfx/htmlquery v1.2.3 // indirect
 	github.com/antchfx/xmlquery v1.3.6 // indirect
 	github.com/asticode/go-astikit v0.21.1
-	github.com/asticode/go-astilectron v0.24.0
+	github.com/asticode/go-astilectron v0.25.0
+	github.com/asticode/go-astilectron-bundler v0.7.12 // indirect
 	github.com/distatus/battery v0.10.0
 	github.com/go-vgo/robotgo v0.94.1
 	github.com/gobwas/glob v0.2.3 // indirect

@@ -42,8 +42,10 @@ func Get(instructionData interface{}, finished chan bool) int {
 func Post(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Sending POST request")
 
-	data, err := variable.Keys{VarName: "DataVarName"}.GetValue(instructionData)
-	if err != nil {
+	data, err1 := variable.Keys{VarName: "DataVarName"}.GetValue(instructionData)
+	path, err2 := variable.Keys{VarName: "PathVarName", IsVarName: "PathIsVar", Name: "Path"}.GetValue(instructionData)
+
+	if err1 != nil || err2 != nil {
 		finished <- true
 		return -1
 	}
@@ -52,12 +54,6 @@ func Post(instructionData interface{}, finished chan bool) int {
 	values := make(map[string][]string)
 	for key, element := range datas {
 		values[key] = variable.ToArrayOfString(element)
-	}
-
-	path, err := variable.Keys{VarName: "PathVarName", IsVarName: "PathIsVar", Name: "Path"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
 	}
 
 	resp, err := http.PostForm(path.(string), values)

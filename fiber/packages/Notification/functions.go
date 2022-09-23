@@ -12,14 +12,10 @@ import (
 func Create(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Creating a notification")
 
-	title, err := variable.Keys{VarName: "TitleVarName", IsVarName: "TitleIsVar", Name: "Title"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	title, err1 := variable.Keys{VarName: "TitleVarName", IsVarName: "TitleIsVar", Name: "Title"}.GetValue(instructionData)
+	msg, err2 := variable.Keys{VarName: "MessageVarName", IsVarName: "MessageIsVar", Name: "Message"}.GetValue(instructionData)
 
-	msg, err := variable.Keys{VarName: "MessageVarName", IsVarName: "MessageIsVar", Name: "Message"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil {
 		finished <- true
 		return -1
 	}

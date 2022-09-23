@@ -58,14 +58,10 @@ func Read(instructionData interface{}, finished chan bool) int {
 func Write(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Writing a File")
 
-	path, err := variable.Keys{VarName: "PathVarName", IsVarName: "PathIsVar", Name: "Path"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	path, err1 := variable.Keys{VarName: "PathVarName", IsVarName: "PathIsVar", Name: "Path"}.GetValue(instructionData)
+	content, err2 := variable.Keys{VarName: "ContentVarName", IsVarName: "ContentIsVar", Name: "Content"}.GetValue(instructionData)
 
-	content, err := variable.Keys{VarName: "ContentVarName", IsVarName: "ContentIsVar", Name: "Content"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil {
 		finished <- true
 		return -1
 	}

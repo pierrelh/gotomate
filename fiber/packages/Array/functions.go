@@ -35,14 +35,10 @@ func GetArrayLength(instructionData interface{}, finished chan bool) int {
 func GetValue(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Getting a value from an array")
 
-	array, err := variable.Keys{VarName: "ArrayVarName"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	array, err1 := variable.Keys{VarName: "ArrayVarName"}.GetValue(instructionData)
+	index, err2 := variable.Keys{VarName: "IndexVarName", IsVarName: "IndexIsVar", Name: "Index"}.GetValue(instructionData)
 
-	index, err := variable.Keys{VarName: "IndexVarName", IsVarName: "IndexIsVar", Name: "Index"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil {
 		finished <- true
 		return -1
 	}
@@ -65,14 +61,10 @@ func GetValue(instructionData interface{}, finished chan bool) int {
 func PopAt(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Poping value of array at index")
 
-	array, err := variable.Keys{VarName: "ArrayVarName"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	array, err1 := variable.Keys{VarName: "ArrayVarName"}.GetValue(instructionData)
+	index, err2 := variable.Keys{VarName: "IndexVarName", IsVarName: "IndexIsVar", Name: "Index"}.GetValue(instructionData)
 
-	index, err := variable.Keys{VarName: "IndexVarName", IsVarName: "IndexIsVar", Name: "Index"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil {
 		finished <- true
 		return -1
 	}
@@ -147,20 +139,11 @@ func PopLast(instructionData interface{}, finished chan bool) int {
 func PushAt(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Pushing value in array at index")
 
-	array, err := variable.Keys{VarName: "ArrayVarName"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	array, err1 := variable.Keys{VarName: "ArrayVarName"}.GetValue(instructionData)
+	index, err2 := variable.Keys{VarName: "IndexVarName", IsVarName: "IndexIsVar", Name: "Index"}.GetValue(instructionData)
+	value, err3 := variable.Keys{VarName: "ValueVarName"}.GetValue(instructionData)
 
-	index, err := variable.Keys{VarName: "IndexVarName", IsVarName: "IndexIsVar", Name: "Index"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
-
-	value, err := variable.Keys{VarName: "ValueVarName"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil || err3 != nil {
 		finished <- true
 		return -1
 	}
@@ -195,14 +178,10 @@ func PushAt(instructionData interface{}, finished chan bool) int {
 func PushLast(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Pushing value in array at end")
 
-	array, err := variable.Keys{VarName: "ArrayVarName"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	array, err1 := variable.Keys{VarName: "ArrayVarName"}.GetValue(instructionData)
+	value, err2 := variable.Keys{VarName: "ValueVarName"}.GetValue(instructionData)
 
-	value, err := variable.Keys{VarName: "ValueVarName"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil {
 		finished <- true
 		return -1
 	}
@@ -229,14 +208,10 @@ func PushLast(instructionData interface{}, finished chan bool) int {
 func RemoveAt(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Removing value from array at index")
 
-	array, err := variable.Keys{VarName: "ArrayVarName"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	array, err1 := variable.Keys{VarName: "ArrayVarName"}.GetValue(instructionData)
+	index, err2 := variable.Keys{VarName: "IndexVarName", IsVarName: "IndexIsVar", Name: "Index"}.GetValue(instructionData)
 
-	index, err := variable.Keys{VarName: "IndexVarName", IsVarName: "IndexIsVar", Name: "Index"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil {
 		finished <- true
 		return -1
 	}
@@ -327,20 +302,11 @@ func Shuffle(instructionData interface{}, finished chan bool) int {
 func UpdateValue(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Updating a value in an array by index")
 
-	array, err := variable.Keys{VarName: "ArrayVarName"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	array, err1 := variable.Keys{VarName: "ArrayVarName"}.GetValue(instructionData)
+	index, err2 := variable.Keys{VarName: "IndexVarName", IsVarName: "IndexIsVar", Name: "Index"}.GetValue(instructionData)
+	value, err3 := variable.Keys{VarName: "ValueVarName"}.GetValue(instructionData)
 
-	index, err := variable.Keys{VarName: "IndexVarName", IsVarName: "IndexIsVar", Name: "Index"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
-
-	value, err := variable.Keys{VarName: "ValueVarName"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil || err3 != nil {
 		finished <- true
 		return -1
 	}

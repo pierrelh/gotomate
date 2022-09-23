@@ -17,6 +17,7 @@
 *_REMOTE_*.txt
 
 **/*.exe
+**/bind_darwin_amd64.go
 
 # Crash log files
 crash.log

@@ -19,20 +19,11 @@ func CreateDictionary(instructionData interface{}, finished chan bool) int {
 func CreateEntry(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Create an entry in a Dictionary")
 
-	dict, err := variable.Keys{VarName: "DictVarName"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	dict, err1 := variable.Keys{VarName: "DictVarName"}.GetValue(instructionData)
+	key, err2 := variable.Keys{VarName: "KeyVarName", IsVarName: "KeyIsVar", Name: "Key"}.GetValue(instructionData)
+	value, err3 := variable.Keys{VarName: "ValueVarName", IsVarName: "ValueIsVar", Name: "Value"}.GetValue(instructionData)
 
-	key, err := variable.Keys{VarName: "KeyVarName", IsVarName: "KeyIsVar", Name: "Key"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
-
-	value, err := variable.Keys{VarName: "ValueVarName", IsVarName: "ValueIsVar", Name: "Value"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil || err3 != nil {
 		finished <- true
 		return -1
 	}
@@ -70,14 +61,10 @@ func DictionaryToJson(instructionData interface{}, finished chan bool) int {
 func RemoveEntry(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Removing an entry from a Dictionay")
 
-	dict, err := variable.Keys{VarName: "DictVarName"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
+	dict, err1 := variable.Keys{VarName: "DictVarName"}.GetValue(instructionData)
+	key, err2 := variable.Keys{VarName: "KeyVarName", IsVarName: "KeyIsVar", Name: "Key"}.GetValue(instructionData)
 
-	key, err := variable.Keys{VarName: "KeyVarName", IsVarName: "KeyIsVar", Name: "Key"}.GetValue(instructionData)
-	if err != nil {
+	if err1 != nil || err2 != nil {
 		finished <- true
 		return -1
 	}

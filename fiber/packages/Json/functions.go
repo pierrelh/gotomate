@@ -55,19 +55,15 @@ func JsonToDictionary(instructionData interface{}, finished chan bool) int {
 func SaveJson(instructionData interface{}, finished chan bool) int {
 	log.FiberInfo("Saving a Json to a path")
 
-	json, err := variable.Keys{VarName: "JsonVarName"}.GetValue(instructionData)
-	if err != nil {
+	json, err1 := variable.Keys{VarName: "JsonVarName"}.GetValue(instructionData)
+	path, err2 := variable.Keys{VarName: "PathVarName", IsVarName: "PathIsVar", Name: "Path"}.GetValue(instructionData)
+
+	if err1 != nil || err2 != nil {
 		finished <- true
 		return -1
 	}
 
-	path, err := variable.Keys{VarName: "PathVarName", IsVarName: "PathIsVar", Name: "Path"}.GetValue(instructionData)
-	if err != nil {
-		finished <- true
-		return -1
-	}
-
-	err = ioutil.WriteFile(path.(string), json.([]byte), 0644)
+	err := ioutil.WriteFile(path.(string), json.([]byte), 0644)
 	if err != nil {
 		log.FiberError("Unable to write the new json file")
 		finished <- true
